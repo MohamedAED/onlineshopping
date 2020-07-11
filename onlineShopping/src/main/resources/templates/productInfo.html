@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Product Details</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css" />
+</head>
+<body>
+<div id="global">
+    <p>
+    <h5>Product Details:</h5>
+    Product Name: <span th:text="${product.name}"></span><br />
+    Description: <span th:text="${product.description}"></span><br />
+    Stock Quantity: <span th:text="${product.stockQuantity}"></span><br />
+    Description: <span th:text="${product.description}"></span><br />
+    Seller: <span th:text="${product.seller.getName}"></span><br />
+    <tr th:each="review: ${product.reviews}">
+        <td th:text="${review.description}" />
+    </tr>
+
+
+<!--    <form action="listproducts" method="get">
+        <input id="submit" type="submit" value="List products">
+    </form>-->
+
+</div>
+</body>
+</html>
