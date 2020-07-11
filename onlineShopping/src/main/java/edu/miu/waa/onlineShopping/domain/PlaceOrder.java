@@ -1,12 +1,21 @@
 package edu.miu.waa.onlineShopping.domain;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import edu.miu.waa.onlineShopping.domain.enums.OrderStatus;
 
-import javax.persistence.*;
-import java.util.List;
-
 @Entity
-public class Order {
+public class PlaceOrder {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,14 +23,15 @@ public class Order {
 
 	private String orderNumber;
 
-	private double totalPrice = 0;
+	private double totalPrice;
 
 	private OrderStatus status;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = CascadeType.PERSIST)
-	private List<CartItem> items;
+	@OneToMany(cascade = CascadeType.ALL)
+	@Fetch(FetchMode.JOIN)
+	private Set<CartItem> items;
 
-	public Order() {
+	public PlaceOrder() {
 	}
 
 	public Long getId() {
@@ -56,11 +66,11 @@ public class Order {
 		this.status = status;
 	}
 
-	public List<CartItem> getItems() {
+	public Set<CartItem> getItems() {
 		return items;
 	}
 
-	public void setItems(List<CartItem> items) {
+	public void setItems(Set<CartItem> items) {
 		this.items = items;
 	}
 }

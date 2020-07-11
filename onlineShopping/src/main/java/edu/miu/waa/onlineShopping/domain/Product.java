@@ -1,10 +1,23 @@
 package edu.miu.waa.onlineShopping.domain;
 
-import org.springframework.web.multipart.MultipartFile;
+import java.util.Set;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class Product {
@@ -35,13 +48,12 @@ public class Product {
 	@Column(name = "photo", columnDefinition = "BLOB")
 	private byte[] photo;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "seller_id")
-	Seller seller;
+	@ManyToOne
+	private Seller seller;
 
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "review_id")
-	List<Review> reviews;
+	@OneToMany(cascade = CascadeType.ALL)
+	@Fetch(FetchMode.JOIN)
+	private Set<Review> reviews;
 
 	public Product() {
 	}
@@ -54,11 +66,11 @@ public class Product {
 		this.stockQuantity = stockQuantity;
 	}
 
-	public List<Review> getReviews() {
+	public Set<Review> getReviews() {
 		return reviews;
 	}
 
-	public void setReviews(List<Review> reviews) {
+	public void setReviews(Set<Review> reviews) {
 		this.reviews = reviews;
 	}
 

@@ -1,9 +1,15 @@
 package edu.miu.waa.onlineShopping.domain;
 
-import edu.miu.waa.onlineShopping.domain.enums.ReviewStatus;
-
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
+
+import edu.miu.waa.onlineShopping.domain.enums.ReviewStatus;
 
 @Entity
 public class Review {
@@ -17,7 +23,7 @@ public class Review {
 
 	private ReviewStatus reviewStatus;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "buyer_id")
 	private Buyer buyer;
 

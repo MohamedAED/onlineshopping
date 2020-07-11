@@ -1,7 +1,16 @@
 package edu.miu.waa.onlineShopping.domain;
 
-import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 public class ShoppingCart {
@@ -9,9 +18,9 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
-    @JoinColumn(name = "cartItem_id")
-    private List<CartItem> items;
+    @OneToMany(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
+    private Set<CartItem> items;
 
     private Double totalPrice;
 
@@ -26,11 +35,11 @@ public class ShoppingCart {
         this.id = id;
     }
 
-    public List<CartItem> getItems() {
+    public Set<CartItem> getItems() {
         return items;
     }
 
-    public void setItems(List<CartItem> items) {
+    public void setItems(Set<CartItem> items) {
         this.items = items;
     }
 

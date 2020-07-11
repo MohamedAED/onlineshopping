@@ -1,13 +1,30 @@
 package edu.miu.waa.onlineShopping.domain;
 
-import edu.miu.waa.onlineShopping.domain.enums.Role;
-import org.springframework.format.annotation.DateTimeFormat;
-import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.Set;
 
-@Entity
-@Table(name = "users")
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import edu.miu.waa.onlineShopping.domain.enums.Role;
+
+@MappedSuperclass
 public class User {
 
 	@Id
@@ -42,11 +59,24 @@ public class User {
 	@NotEmpty
 	private String password;
 
-	@OneToOne(cascade = { CascadeType.ALL })
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "address_id")
 	private Address address;
 
+	@OneToMany(cascade = CascadeType.ALL)
+	@Fetch(FetchMode.JOIN)
+	private Set<PlaceOrder> orders;
+	
 	@Transient
 	private String passwordCheck;
+
+	public Set<PlaceOrder> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Set<PlaceOrder> orders) {
+		this.orders = orders;
+	}
 
 	@Column(name = "role")
 	private Role role;
