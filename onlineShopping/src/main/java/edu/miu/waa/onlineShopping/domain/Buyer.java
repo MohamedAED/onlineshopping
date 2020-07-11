@@ -24,8 +24,42 @@ public class Buyer extends User {
 	@Fetch(FetchMode.JOIN)
 	private Set<Seller> followingSellers;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "billing_address_id")
+	private BillingAddress billingAddress;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "shipping_address_id")
+	private ShippingAddress shippingAddress;
+	
 	public Buyer() {
 	}
+
+
+
+	public BillingAddress getBillingAddress() {
+		return billingAddress;
+	}
+
+
+
+	public void setBillingAddress(BillingAddress billingAddress) {
+		this.billingAddress = billingAddress;
+	}
+
+
+
+	public ShippingAddress getShippingAddress() {
+		return shippingAddress;
+	}
+
+
+
+	public void setShippingAddress(ShippingAddress shippingAddress) {
+		this.shippingAddress = shippingAddress;
+	}
+
+
 
 	public int getPoints() {
 		return points;
