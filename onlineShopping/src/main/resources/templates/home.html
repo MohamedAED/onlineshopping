@@ -1,13 +1,15 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns:th="http://www.thymeleaf.org/">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>403 error</title>
-	<link href="css/main.css" type="text/css" rel="stylesheet">
-	<link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css" />
-</head>
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{layouts/dashboard_layout}"
+	  xmlns:th="http://www.thymeleaf.org">
 
+<head>
+	<title>Home Page</title>
+</head>
 <body>
-<h1> hello world </h1>
+
+<div class="col" layout:fragment="main-content">
+	<h1>Welcome to CS545, <span th:text="${firstName}" th:remove="tag"></span></h1>
+</div>
+
 </body>
 </html>
