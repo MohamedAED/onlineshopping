@@ -1,7 +1,16 @@
 package edu.miu.waa.onlineShopping.domain;
 
-import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 public class ProductCategory {
@@ -12,9 +21,9 @@ public class ProductCategory {
 
     private String name;
 
-    @OneToMany
-    @JoinColumn( name = "product_id")
-    private List<Product> products;
+    @OneToMany(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
+    private Set<Product> products;
 
     public ProductCategory() {
     }
@@ -35,11 +44,11 @@ public class ProductCategory {
         this.name = name;
     }
 
-    public List<Product> getProducts() {
+    public Set<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(Set<Product> products) {
         this.products = products;
     }
 }
