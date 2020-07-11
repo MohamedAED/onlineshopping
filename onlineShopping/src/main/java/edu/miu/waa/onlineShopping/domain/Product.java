@@ -55,7 +55,17 @@ public class Product {
 	@Fetch(FetchMode.JOIN)
 	private Set<Review> reviews;
 
+	private String categoryName;
+
 	public Product() {
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 	public Long getStockQuantity() {

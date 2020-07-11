@@ -1,27 +1,52 @@
 package edu.miu.waa.onlineShopping.serviceImpl;
 
 import edu.miu.waa.onlineShopping.domain.Product;
+import edu.miu.waa.onlineShopping.domain.ProductCategory;
+import edu.miu.waa.onlineShopping.repository.ProductRepository;
 import edu.miu.waa.onlineShopping.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-
+    @Autowired
+    ProductRepository productRepository;
 
     @Override
-    public List<Process> getAllProducts() {
-        return null;
+    public List<Product> getAllProducts() {
+        Iterable<Product> iterable = productRepository.findAll();
+        List<Product> productList = new ArrayList<>();
+        for (Product product : iterable) {
+            productList.add(product);
+        }
+        return productList;
     }
 
     @Override
     public Product getProductById(Long productId) {
-        return null;
+
+        Iterable<Product> iterable = productRepository.findAll();
+        Product product = null;
+        for (Product p : iterable) {
+            if(p.getId() == productId)
+            {
+                product = p;
+            }
+        }
+        return product;
     }
 
     @Override
     public List<Product> getAllProducts(Long ProductCategoryId) {
-        return null;
+        Iterable<Product> iterable = productRepository.findAll();
+        List<Product> productList = new ArrayList<>();
+        for (Product product : iterable) {
+            productList.add(product);
+        }
+        return productList;
+
     }
 }

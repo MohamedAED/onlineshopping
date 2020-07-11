@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class ProductRepository extends CrudRepository<Product,Long>{
+public interface ProductRepository extends CrudRepository<Product,Long>{
 
 }
