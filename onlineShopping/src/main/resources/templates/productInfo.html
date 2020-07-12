@@ -42,6 +42,7 @@
 <section class="container">
     <div class="row">
         <div class="col-md-5">
+            <img th:src="@{'/images/products/' + ${product.id} + '.jpg'}" width="250" height="290"><br/>
            <h3 th:text="${product.name}"></h3>
             <p th:text="${product.description}"></p>
             <p>
@@ -55,7 +56,6 @@
             </p>
             <h4><span th:text="${product.price}" th:remove="tag"></span>USD</h4>
             <p>
-
                 <a  class="btn btn-warning btn-large order-btn" th:data="${product.id}">
                     <span class="glyphicon-shopping-cart glyphicon"></span> Order Now </a>
 

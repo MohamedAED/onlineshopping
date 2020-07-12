@@ -41,35 +41,14 @@
     </tr>
 </div>
 
-<!--<section class="container">
-    <div class="row">
-        <div class="col-sm-6 col-md-3" th:each="product : ${products}">
-            <div class="thumbnail">
-                <div class="caption">
-                    <h3 th:text="${product.name}"></h3>
-                    <p th:text="${product.description}"></p>
-                    <p>$<span th:text="${product.price}"></span></p>
-                    <p><span th:text="${product.getSeller().getName()}"></span></p>
-                    <p>Available <span th:text="${product.stockQuantity}"></span> units in stock</p>
-                    <p><a th:href="@{/products/product(id=${product.id})}" class="btn btn-primary"><span class="glyphicon-info-sign glyphicon"/></span> Details</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>-->
-
-
 
 <section class="container">
     <div class="row">
         <div class="col-sm-6 col-md-3" th:each="product : ${products}">
-            <div class="Product">
-                <img src="" th:src="@{/images/products/}"/>
-                <div class="Strap">
-                    <i class="fas fa-star Star"></i>
-                </div>
-                <div class="ProductFooter">
-                    <h3 th:text="${product.name}"></h3>
+            <div class="thumbnail">
+                <div class="caption">
+                    <h2 th:text="${product.name}"></h2>
+                    <img th:src="@{'/images/products/' + ${product.id} + '.jpg'}" width="250" height="290">
                     <p th:text="${product.description}"></p>
                     <p>$<span th:text="${product.price}"></span></p>
                     <p><span th:text="${product.getSeller().getName()}"></span></p>
@@ -80,6 +59,9 @@
         </div>
     </div>
 </section>
+
+
+
 
 
 
