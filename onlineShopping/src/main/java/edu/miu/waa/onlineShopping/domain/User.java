@@ -7,8 +7,8 @@ import javax.validation.constraints.*;
 import edu.miu.waa.onlineShopping.domain.enums.UserStatus;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.format.annotation.DateTimeFormat;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import edu.miu.waa.onlineShopping.domain.enums.Role;
 
 
@@ -50,8 +50,9 @@ public class User {
 	@Size(min = 5)
 	private String password;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@Fetch(FetchMode.JOIN)
+	
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<PlaceOrder> orders;
 	
 	@Transient

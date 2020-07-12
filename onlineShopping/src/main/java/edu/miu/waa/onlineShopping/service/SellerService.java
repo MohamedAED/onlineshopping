@@ -1,6 +1,7 @@
 package edu.miu.waa.onlineShopping.service;
 
 
+
 import edu.miu.waa.onlineShopping.domain.Seller;
 
 import java.util.List;
@@ -11,6 +12,7 @@ public interface SellerService {
     List<Seller> findUnapprovedSellers();
     Seller saveUser(Seller seller) ;
     void approveSeller(Long id);
-
+     Seller save(Seller seller);
+     void deleteById(Long seller_id);
+     Seller findById(Long seller_id);
 }
-

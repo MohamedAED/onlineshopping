@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 --Shopping Cart
 INSERT INTO SHOPPING_CART (Total_Price)
 Values (800.00),(0.00),(0.00);
@@ -51,3 +52,10 @@ Values (1,100.00,1),(3,100.00,3),(5,80.00,2);
 --Shopping Cart Items
 INSERT INTO SHOPPING_CART_CART_ITEMS(shopping_cart_id, cart_items_id, cart_items_key)
 Values (1, 1, 1),(1, 2, 3),(1, 3, 2);
+
+--Added BY Kelany...
+INSERT INTO PLACE_ORDER (ORDER_NUMBER,STATUS,TOTAL_PRICE,SELLER_USER_ID)
+VALUES (123, 4, 123, 2), (456, 4, 456, 2), (789, 4, 789, 1);
+
+INSERT INTO SELLER_ORDERS (SELLER_USER_ID, ORDERS_ID)VALUES(2, 1), (2, 2), (1, 3);
+

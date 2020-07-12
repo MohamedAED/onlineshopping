@@ -4,16 +4,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import edu.miu.waa.onlineShopping.domain.enums.OrderStatus;
 
@@ -31,14 +25,30 @@ public class PlaceOrder {
 	private OrderStatus status;
 	
 	private LocalDate orderDate;
-
 	private LocalDate orderDeliveryDate;
-	
 	private LocalDate orderShippingDate;
-	
-	@OneToMany(cascade = CascadeType.ALL)
+
+/*	@OneToMany(cascade = CascadeType.ALL)
 	@Fetch(FetchMode.JOIN)
 	private Set<CartItem> cartItems;
+=======*/
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<CartItem> cartItems;
+	
+	@JsonIgnore
+	@ManyToOne
+	private Seller seller;
+
+	public Set<CartItem> getCartItems() {
+		return cartItems;
+	}
+
+	public PlaceOrder() {
+	}
+
+	public void setCartItems(Set<CartItem> cartItems) {
+		this.cartItems = cartItems;
+	}
 
 	public PlaceOrder(BigDecimal totalPrice, Set<CartItem> cartItems) {
 		this.orderNumber = "1111";
@@ -112,4 +122,13 @@ public class PlaceOrder {
 	public void setItems(Set<CartItem> cartItems) {
 		this.cartItems = cartItems;
 	}
+
+	public Seller getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Seller seller) {
+		this.seller = seller;
+	}
+	
 }

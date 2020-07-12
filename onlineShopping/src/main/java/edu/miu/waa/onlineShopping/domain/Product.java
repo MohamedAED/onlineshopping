@@ -20,6 +20,8 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Product {
 
@@ -49,12 +51,16 @@ public class Product {
 	@Column(name = "photo", columnDefinition = "BLOB")
 	private byte[] photo;
 
+	@JsonIgnore
 	@ManyToOne
 	private Seller seller;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(FetchMode.JOIN)
 	private Set<Review> reviews;
+	
+	@ManyToOne
+	private ProductCategory productCategory;
 
 	@ManyToOne
 	private ProductCategory productCategory;
