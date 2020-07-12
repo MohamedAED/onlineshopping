@@ -1,7 +1,10 @@
 package edu.miu.waa.onlineShopping.ServiceImpl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
+import edu.miu.waa.onlineShopping.domain.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +42,42 @@ public class ProductServiceImpl implements ProductService{
 	public Set<Product> findProductsBySellerId(Long seller_id){
 		return productRepository.findByCategoryId(seller_id);
 	}
-	
 
+
+	@Override
+	public List<Product> getAllProducts() {
+		Iterable<Product> iterable = productRepository.findAll();
+		List<Product> productList = new ArrayList<>();
+		for (Product product : iterable) {
+			productList.add(product);
+		}
+		return productList;
+	}
+
+	@Override
+	public Product getProductById(Long productId) {
+		Iterable<Product> iterable = productRepository.findAll();
+		Product product = null;
+		for (Product p : iterable) {
+			if(p.getId() == productId)
+				product = p;
+		}
+		return product;
+	}
+
+	@Override
+	public List<Product> getAllProductsPerCategory(Long ProductCategoryId) {
+		Iterable<Product> iterable = productRepository.findAll();
+		List<Product> productList = new ArrayList<>();
+		for (Product p : iterable) {
+			if(p.getProductCategory().getId() == ProductCategoryId)
+				productList.add(p);
+		}
+		return productList;
+	}
+
+	@Override
+	public Set<Review> getProductReviews(Long productId) {
+		return getProductById(productId).getReviews();
+	}
 }

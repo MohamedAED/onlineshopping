@@ -58,9 +58,6 @@ public class Product {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(FetchMode.JOIN)
 	private Set<Review> reviews;
-	
-	@ManyToOne
-	private ProductCategory productCategory;
 
 	@ManyToOne
 	private ProductCategory productCategory;

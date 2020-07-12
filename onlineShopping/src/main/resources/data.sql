@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 --Shopping Cart
 INSERT INTO SHOPPING_CART (Total_Price)
 Values (800.00),(0.00),(0.00);

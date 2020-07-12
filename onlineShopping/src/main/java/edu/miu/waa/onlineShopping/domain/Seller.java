@@ -13,7 +13,6 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Seller extends User {
-	private Boolean approved;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable
