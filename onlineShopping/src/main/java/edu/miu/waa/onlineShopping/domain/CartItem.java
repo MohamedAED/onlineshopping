@@ -1,5 +1,7 @@
 package edu.miu.waa.onlineShopping.domain;
 
+import java.math.BigDecimal;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,10 +22,19 @@ public class CartItem {
     private Product product;
 
     private Integer quantity;
+    
+    private BigDecimal totalPrice;
 
     public CartItem() {
     }
 
+    public CartItem(Product product) {
+		super();
+		this.product = product;
+		this.quantity = 1;
+		this.totalPrice = product.getPrice();
+	}
+    
     public Long getId() {
         return id;
     }
@@ -38,6 +49,7 @@ public class CartItem {
 
     public void setProduct(Product product) {
         this.product = product;
+        this.updateTotalPrice();
     }
 
     public Integer getQuantity() {
@@ -46,5 +58,18 @@ public class CartItem {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+        this.updateTotalPrice();
     }
+
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+    
+	public void updateTotalPrice() {
+		totalPrice = this.product.getPrice().multiply(new BigDecimal(this.quantity));
+	}
 }

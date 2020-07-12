@@ -32,34 +32,36 @@ public class Buyer extends User {
 	@JoinColumn(name = "shipping_address_id")
 	private ShippingAddress shippingAddress;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "shoppingCart_id")
+	private ShoppingCart shoppingCart;
+	
 	public Buyer() {
 	}
-
-
 
 	public BillingAddress getBillingAddress() {
 		return billingAddress;
 	}
 
+	public ShoppingCart getShoppingCart() {
+		return shoppingCart;
+	}
 
+	public void setShoppingCart(ShoppingCart shoppingCart) {
+		this.shoppingCart = shoppingCart;
+	}
 
 	public void setBillingAddress(BillingAddress billingAddress) {
 		this.billingAddress = billingAddress;
 	}
 
-
-
 	public ShippingAddress getShippingAddress() {
 		return shippingAddress;
 	}
 
-
-
 	public void setShippingAddress(ShippingAddress shippingAddress) {
 		this.shippingAddress = shippingAddress;
 	}
-
-
 
 	public int getPoints() {
 		return points;

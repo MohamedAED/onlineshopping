@@ -1,6 +1,7 @@
 package edu.miu.waa.onlineShopping.domain;
 
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -20,9 +21,9 @@ public class ShoppingCart {
 
     @OneToMany(cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
-    private Set<CartItem> items;
+    private Map<Long, CartItem> cartItems;
 
-    private Double totalPrice;
+    private BigDecimal totalPrice;
 
     public ShoppingCart() {
     }
@@ -35,19 +36,44 @@ public class ShoppingCart {
         this.id = id;
     }
 
-    public Set<CartItem> getItems() {
-        return items;
+    public Map<Long, CartItem> getItems() {
+        return cartItems;
     }
 
-    public void setItems(Set<CartItem> items) {
-        this.items = items;
+    public void setItems(Map<Long, CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 
-    public Double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Double totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
+    
+    public void updateTotalPrice() {
+    	totalPrice = new BigDecimal(0);
+		for (CartItem item : cartItems.values()) {
+			totalPrice = totalPrice.add(item.getTotalPrice().multiply(new BigDecimal(item.getQuantity())));
+		}
+	}
+    
+    public void addCartItem(CartItem item) {
+		Long productId = item.getProduct().getId();
+		if (cartItems.containsKey(productId)) {
+			CartItem existingCartItem = cartItems.get(productId);
+			existingCartItem.setQuantity(existingCartItem.getQuantity() + item.getQuantity());
+			cartItems.put(productId, existingCartItem);
+		} else {
+			cartItems.put(productId, item);
+		}
+		updateTotalPrice();
+	}
+
+	public void removeCartItem(CartItem item) {
+		Long productId = item.getProduct().getId();
+		cartItems.remove(productId);
+		updateTotalPrice();
+	}
 }
