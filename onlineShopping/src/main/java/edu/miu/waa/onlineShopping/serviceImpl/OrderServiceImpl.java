@@ -1,4 +1,4 @@
-package edu.miu.waa.onlineShopping.ServiceImpl;
+package edu.miu.waa.onlineShopping.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
