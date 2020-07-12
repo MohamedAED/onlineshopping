@@ -1,16 +1,16 @@
 package edu.miu.waa.onlineShopping.domain;
 
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import edu.miu.waa.onlineShopping.domain.enums.OrderStatus;
 
@@ -27,9 +27,12 @@ public class PlaceOrder {
 
 	private OrderStatus status;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@Fetch(FetchMode.JOIN)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<CartItem> items;
+	
+	@JsonIgnore
+	@ManyToOne
+	private Seller seller;
 
 	public PlaceOrder() {
 	}
@@ -73,4 +76,13 @@ public class PlaceOrder {
 	public void setItems(Set<CartItem> items) {
 		this.items = items;
 	}
+
+	public Seller getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Seller seller) {
+		this.seller = seller;
+	}
+	
 }

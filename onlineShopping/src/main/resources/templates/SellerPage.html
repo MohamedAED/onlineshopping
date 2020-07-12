@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+	<meta charset="ISO-8859-1">
+	<style>
+		table, th, td {
+		  border: 1px solid black;
+		  border-collapse: collapse;
+		}
+	</style>
+	<title>Insert title here</title>
+</head>
+<body>
+
+	Seller Page ...
+	<br/>
+	<br/>
+	<h1>Add Product</h1>
+	<form action="#"
+		th:action="@{/seller/addProduct(seller_id=${seller.userId})}"
+		th:object="${product}" method="post">
+		
+		<table>
+			<tbody>
+				<tr>
+					<td><p>Name: </p></td>
+					<td><input type="text" th:field="*{name}" /></td>
+				</tr>
+				<tr>
+					<td><p>Description: </p></td>
+					<td><input type="text" th:field="*{description}" /></td>
+				</tr>
+				<tr>
+					<td><p>Price: </p></td>
+					<td><input type="text" th:field="*{price}" /></td>
+				</tr>
+				<tr>
+					<td><p>Stock Quantity: </p></td>
+					<td><input type="text" th:field="*{stockQuantity}" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<p>
+			<input type="submit" value="Submit" /> <input type="reset"
+				value="Reset" />
+		</p>
+	</form>
+	<h1>My Products</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Price</th>
+				<th>Stock Quantity</th>
+				<th>Delete</th>
+				<th>Edit</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${seller.products.empty}">
+				<td colspan="7">No Products Available</td>
+			</tr>
+			<tr th:each="product : ${seller.products}">
+				<td><span th:text="${product.id}"> Id </span></td>
+				<td><span th:text="${product.name}"> Name </span></td>
+				<td><span th:text="${product.description}"> Description </span></td>
+				<td><span th:text="${product.price}"> Price </span></td>
+				<td><span th:text="${product.stockQuantity}"> Stock Quantity </span></td>
+				<td> 
+					<a th:href="@{/seller/deleteProduct(product_id=${product.id},seller_id=${seller.userId})}">Delete</a>
+				</td>
+				<td> 
+					<a th:href="@{/seller/updateProductPage(product_id=${product.id},seller_id=${seller.userId})}">Edit</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<br />
+	<br />
+	<h1>My Orders</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Order Number</th>
+				<th>Total Price</th>
+				<th>Status</th>
+				<th>Edit</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${seller.orders.empty}">
+				<td colspan="5">No Orders Available</td>
+			</tr>
+			<tr th:each="order : ${seller.orders}">
+				<td><span th:text="${order.id}"> Id </span></td>
+				<td><span th:text="${order.orderNumber}"> Order Number </span></td>
+				<td><span th:text="${order.totalPrice}"> Total Price </span></td>
+				<td><span th:text="${order.status}"> Status </span></td>
+				<td> 
+					<a th:href="@{/seller/reviewOrder(order_id=${order.id},seller_id=${seller.userId})}">Edit</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>
