@@ -1,16 +1,15 @@
 package edu.miu.waa.onlineShopping.domain;
 
+import org.hibernate.validator.constraints.CreditCardNumber;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class CardPayment {
@@ -25,8 +24,8 @@ public class CardPayment {
 
 	@NotNull
 	@Future
-	@DateTimeFormat(pattern = "MM/YY")
-	private LocalDate expiryDate;
+	@DateTimeFormat(pattern = "MM-YY")
+	private Date expiryDate;
 
 	@NotEmpty
 	@Size(min = 3, max = 3)
@@ -55,11 +54,11 @@ public class CardPayment {
 		this.cardNumber = cardNumber;
 	}
 
-	public LocalDate getExpiryDate() {
+	public Date getExpiryDate() {
 		return expiryDate;
 	}
 
-	public void setExpiryDate(LocalDate expiryDate) {
+	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
 	}
 

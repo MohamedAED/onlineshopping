@@ -3,6 +3,7 @@ package edu.miu.waa.onlineShopping.domain;
 import java.util.Date;
 import java.util.Set;
 
+<<<<<<< HEAD
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+=======
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+>>>>>>> omar_branch
 
+import edu.miu.waa.onlineShopping.domain.enums.UserStatus;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,12 +36,14 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long userId;
 
+	private UserStatus approved;
+
 	@Column(name = "first_name")
-	@NotEmpty
+	@NotBlank
 	private String firstName;
 
 	@Column(name = "last_name")
-	@NotEmpty
+	@NotBlank
 	private String lastName;
 
 	@Column(name = "date_of_birth")
@@ -54,17 +63,27 @@ public class User {
 	private String username;
 
 	@Column(name = "password")
-	@NotEmpty
+	@NotBlank
+	@Size(min = 5)
 	private String password;
 
+<<<<<<< HEAD
 	
 
+=======
+>>>>>>> omar_branch
 	@OneToMany(cascade = CascadeType.ALL)
 	@Fetch(FetchMode.JOIN)
 	private Set<PlaceOrder> orders;
 	
 	@Transient
 	private String passwordCheck;
+
+	@Column(name = "role")
+	private Role role;
+
+	public User() {
+	}
 
 	public Set<PlaceOrder> getOrders() {
 		return orders;
@@ -74,13 +93,17 @@ public class User {
 		this.orders = orders;
 	}
 
-	@Column(name = "role")
-	private Role role;
-
-	public User() {
+	public UserStatus getApproved() {
+		return approved;
 	}
 
+<<<<<<< HEAD
 	
+=======
+	public void setApproved(UserStatus approved) {
+		this.approved = approved;
+	}
+>>>>>>> omar_branch
 
 	public Role getRole() {
 		return role;
@@ -161,7 +184,5 @@ public class User {
 	public void setPasswordCheck(String passwordCheck) {
 		this.passwordCheck = passwordCheck;
 	}
-
-
 
 }
