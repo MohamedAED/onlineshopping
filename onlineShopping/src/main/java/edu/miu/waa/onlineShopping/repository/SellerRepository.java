@@ -1,5 +1,6 @@
-package edu.miu.waa.onlineShopping.repositry;
+package edu.miu.waa.onlineShopping.repository;
 
+import edu.miu.waa.onlineShopping.domain.Review;
 import edu.miu.waa.onlineShopping.domain.Seller;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,7 +10,6 @@ import java.util.List;
 
 @Repository
 public interface SellerRepository extends JpaRepository<Seller,Long> {
-
     Seller findByUsername(String username);
 
     @Query("select s from Seller s where s.approved = 0 ")

@@ -19,10 +19,9 @@ import java.util.List;
 @Controller
 public class AdminController {
     @Autowired
-    private SellerService sellerService;
-
+    SellerService sellerService;
     @Autowired
-    private BuyerService buyerService;
+    BuyerService buyerService;
 
     @RequestMapping("/approveUsers")
     public String approveUsers(Model model) {

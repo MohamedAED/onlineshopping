@@ -55,7 +55,18 @@ public class Product {
 	@Fetch(FetchMode.JOIN)
 	private Set<Review> reviews;
 
+	@ManyToOne
+	private ProductCategory productCategory;
+
 	public Product() {
+	}
+
+	public ProductCategory getProductCategory() {
+		return productCategory;
+	}
+
+	public void setProductCategory(ProductCategory productCategory) {
+		this.productCategory = productCategory;
 	}
 
 	public Long getStockQuantity() {

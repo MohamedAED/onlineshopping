@@ -3,7 +3,6 @@ package edu.miu.waa.onlineShopping.config;
 import edu.miu.waa.onlineShopping.domain.*;
 import edu.miu.waa.onlineShopping.domain.enums.Role;
 import edu.miu.waa.onlineShopping.domain.enums.UserStatus;
-import edu.miu.waa.onlineShopping.repositry.AdminRepository;
 import edu.miu.waa.onlineShopping.service.AdminService;
 import edu.miu.waa.onlineShopping.service.BuyerService;
 import edu.miu.waa.onlineShopping.service.SellerService;
@@ -16,7 +15,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @Component
 public class OnApplicationStartUp {
@@ -33,14 +31,8 @@ public class OnApplicationStartUp {
 
 	@EventListener
 	public void onApplicationEvent(ContextRefreshedEvent event) throws Exception {
-//		List<User> users = userRepo.findAll();
-//		Long count = users.stream().filter(userElm -> userElm.getUsername().equalsIgnoreCase("admin")).count();
-//		if (count > 0)
-//			return;
 		createAdminUser();
 		createSeller();
-//		createBuyer();
-
 	}
 
 	private void createAdminUser() throws ParseException, IOException {
@@ -69,24 +61,6 @@ public class OnApplicationStartUp {
 		user.setApproved(UserStatus.APPROVED);
 		user.setRole(Role.ADMIN);
 		sellerService.saveUser(user);
-
-//		Product product4 = new Product();
-//		product4.setName("Pepsi");
-//		product4.setSeller(user);
-//		product4.setDescription("Best Pepsi");
-//		product4.setQuantity(new Long(2));
-//		product4.setPrice(new Double(90));
-//		product4.setPhoto(productPhoto());
-//		productRepository.save(product4);
-//
-//		Product product5 = new Product();
-//		product5.setName("Instant Pot");
-//		product5.setSeller(user);
-//		product5.setDescription("great healthy one-pot meals");
-//		product5.setQuantity(new Long(2));
-//		product5.setPrice(new Double(120));
-//		product5.setPhoto(productPhoto());
-//		productRepository.save(product5);
 	}
 
 	private void createBuyer() throws ParseException, IOException {
@@ -111,13 +85,13 @@ public class OnApplicationStartUp {
 		cardPayment.setNameOnCard("omar albaarah");
 		user.setCardPayment(cardPayment);
 
-		Address address = new Address();
+		ShippingAddress address = new ShippingAddress();
 		address.setCountry("usa");
 		address.setState("iowa");
 		address.setCity("fairfield");
 		address.setStreet("1000 north");
 		address.setZipCode("52557");
-		user.setAddress(address);
+		user.setShippingAddress(address);
 		buyerService.saveUser(user);
 
 

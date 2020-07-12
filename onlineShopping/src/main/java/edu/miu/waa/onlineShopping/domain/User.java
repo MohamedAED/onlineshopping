@@ -1,33 +1,16 @@
 package edu.miu.waa.onlineShopping.domain;
 
-import java.util.Date;
-import java.util.Set;
-
-<<<<<<< HEAD
+import java.util.*;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-=======
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.*;
->>>>>>> omar_branch
-
 import edu.miu.waa.onlineShopping.domain.enums.UserStatus;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import edu.miu.waa.onlineShopping.domain.enums.Role;
+
 
 @MappedSuperclass
 public class User {
@@ -67,11 +50,6 @@ public class User {
 	@Size(min = 5)
 	private String password;
 
-<<<<<<< HEAD
-	
-
-=======
->>>>>>> omar_branch
 	@OneToMany(cascade = CascadeType.ALL)
 	@Fetch(FetchMode.JOIN)
 	private Set<PlaceOrder> orders;
@@ -97,13 +75,15 @@ public class User {
 		return approved;
 	}
 
-<<<<<<< HEAD
-	
-=======
+
 	public void setApproved(UserStatus approved) {
 		this.approved = approved;
 	}
->>>>>>> omar_branch
+
+	public String getName()
+	{
+		return lastName+", " + firstName;
+	}
 
 	public Role getRole() {
 		return role;

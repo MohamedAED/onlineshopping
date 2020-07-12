@@ -1,4 +1,4 @@
-package edu.miu.waa.onlineShopping.repositry;
+package edu.miu.waa.onlineShopping.repository;
 
 import edu.miu.waa.onlineShopping.domain.Admin;
 import edu.miu.waa.onlineShopping.domain.User;

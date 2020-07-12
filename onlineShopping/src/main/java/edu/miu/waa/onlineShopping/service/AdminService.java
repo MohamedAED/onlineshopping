@@ -1,8 +1,7 @@
 package edu.miu.waa.onlineShopping.service;
 
 import edu.miu.waa.onlineShopping.domain.Admin;
-import edu.miu.waa.onlineShopping.domain.Seller;
-import edu.miu.waa.onlineShopping.repositry.AdminRepository;
+import edu.miu.waa.onlineShopping.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

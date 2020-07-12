@@ -1,15 +1,99 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title> hi </title>
 </head>
+=======
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{layouts/dashboard_layout}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+>>>>>>> Mega_Branch
 
+    <title>Online Shopping</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/home_product.css}">
+</head>
 <body>
+<<<<<<< HEAD
 	<h1 >Success login By</h1>
 	<h2 th:text="${role}"> </h2>
 	<div><a th:href="@{/approveUsers}"> click here to approve users</a></div>
 	<div><a th:href="@{/approveReviews}">click here to approve reviews</a></div>
+=======
+
+<span th:if="${userRole} == 'buyer'">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="logout">Logout</a>
+    <a class="navbar-brand" href="cart">Cart</a>
+</nav>
+</span>
+<span th:if="${userRole} == 'seller'" >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="login">Login</a>
+</nav>
+</span>
+<span th:if="${userRole} == 'admin'" >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="logout">Logout</a>
+</nav>
+</span>
+
+
+<div class="LeftPanel" id="categoriesList">
+    <tr th:block th:each="category : ${cats}">
+        <a th:href="@{/showByCategory(categoryID=${category.id})}" >
+            <span class="CategoryLink" th:text="${category.name}"/></span>
+        </a>
+        <br>
+    </tr>
+</div>
+
+
+<section class="container">
+    <div class="row">
+        <div class="col-sm-6 col-md-3" th:each="product : ${products}">
+            <div class="thumbnail">
+                <div class="caption">
+                    <h2 th:text="${product.name}"></h2>
+                    <img th:src="@{'/images/products/' + ${product.id} + '.jpg'}" width="250" height="290">
+                    <p th:text="${product.description}"></p>
+                    <p>$<span th:text="${product.price}"></span></p>
+                    <p><span th:text="${product.getSeller().getName()}"></span></p>
+                    <p>Available <span th:text="${product.stockQuantity}"></span> units in stock</p>
+                    <p><a th:href="@{/products/product(id=${product.id})}" class="btn btn-primary"><span class="glyphicon-info-sign glyphicon"/></span> Details</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+>>>>>>> Mega_Branch
 </body>
 </html>
