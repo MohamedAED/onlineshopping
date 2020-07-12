@@ -31,3 +31,27 @@
     color: darkred;
     margin-left: 20px;
 }
+
+.Product {
+    height: 400px;
+    width: 250px;
+    background-color: #10afab;
+    float: right;
+    margin: 0px 0px 10px 10px;
+}
+
+.Product .Strap {
+    background-color: #f05423;
+    width: 59px;
+    height: 27px;
+    position: relative;
+    float: right;
+    color: white;
+    bottom: 180px;
+}
+
+.Product .ProductFooter {
+    height: 72px;
+    text-align: center;
+    align-content: stretch;
+}

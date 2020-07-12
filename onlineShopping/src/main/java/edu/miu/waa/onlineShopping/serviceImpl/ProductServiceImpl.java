@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
             if(p.getId() == productId)
                 product = p;
         }
-        return product;/**/
+        return product;
     }
 
     @Override
