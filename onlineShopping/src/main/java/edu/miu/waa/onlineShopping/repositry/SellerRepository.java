@@ -1,6 +1,6 @@
 package edu.miu.waa.onlineShopping.repositry;
 
-import edu.miu.waa.onlineShopping.domain.User;
+import edu.miu.waa.onlineShopping.domain.Seller;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,13 +8,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface SellerRepository extends JpaRepository<Seller,Long> {
 
-    User findByEmail(String email);
+    Seller findByUsername(String username);
 
-    @Query("select u from User u where u.approved = false ")
-    List<User> findAllUnApprovedUsers();
+    @Query("select s from Seller s where s.approved = 0 ")
+    List<Seller> findAllUnApprovedUsers();
 
-    @Query("select u from User u where u.userId=:id")
-    User findUserById(Long id);
+    @Query("select s from Seller s where s.userId=:id")
+    Seller findUserById(Long id);
 }

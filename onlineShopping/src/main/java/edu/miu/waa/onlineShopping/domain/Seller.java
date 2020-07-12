@@ -13,22 +13,12 @@ import org.hibernate.annotations.FetchMode;
 @Entity
 public class Seller extends User {
 
-	private Boolean approved = false;
-
 	@OneToMany(cascade = CascadeType.ALL)
 	@Fetch(FetchMode.JOIN)
 	@JoinTable
 	private Set<Product> products;
 
 	public Seller() {
-	}
-
-	public Boolean getApproved() {
-		return approved;
-	}
-
-	public void setApproved(Boolean approved) {
-		this.approved = approved;
 	}
 
 	public Set<Product> getProducts() {

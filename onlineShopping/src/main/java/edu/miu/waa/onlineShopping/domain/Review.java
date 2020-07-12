@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 import edu.miu.waa.onlineShopping.domain.enums.ReviewStatus;
@@ -18,7 +19,7 @@ public class Review {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotEmpty
+	@NotBlank
 	private String description;
 
 	private ReviewStatus reviewStatus;

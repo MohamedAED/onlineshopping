@@ -1,7 +1,10 @@
 package edu.miu.waa.onlineShopping.service;
 
+import edu.miu.waa.onlineShopping.domain.Seller;
 import edu.miu.waa.onlineShopping.domain.User;
+import edu.miu.waa.onlineShopping.domain.enums.UserStatus;
 import edu.miu.waa.onlineShopping.repositry.SellerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -9,26 +12,28 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Service
-public class UserService {
+public class SellerService {
 
-    private SellerRepository userRepository;
+    @Autowired
+    private SellerRepository sellerRepository;
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserService(SellerRepository userRepository,
-                       BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userRepository = userRepository;
+    public SellerService(SellerRepository sellerRepository,
+                         BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.sellerRepository = sellerRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public User findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public Seller findUserByUsername(String username) {
+        return sellerRepository.findByUsername(username);
     }
 
-    public List<User> findUnapprovedUsers(){
-        return userRepository.findAllUnApprovedUsers();
+    public List<Seller> findUnapprovedSellers(){
+        return sellerRepository.findAllUnApprovedUsers();
     }
-    public void approveUser(Long id){
-        User oldUser = userRepository.findUserById(id);
+    public void approveSeller(Long id){
+        Seller oldUser = sellerRepository.findUserById(id);
         if(oldUser == null){
             try {
                 throw new SQLException("error while approving the user");
@@ -36,13 +41,13 @@ public class UserService {
                 throwables.printStackTrace();
             }
         }
-        oldUser.setApproved(true);
-        userRepository.save(oldUser);
+        oldUser.setApproved(UserStatus.APPROVED);
+        sellerRepository.save(oldUser);
     }
 
-    public User saveUser(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+    public Seller saveUser(Seller seller) {
+        seller.setPassword(bCryptPasswordEncoder.encode(seller.getPassword()));
+        return sellerRepository.save(seller);
     }
 
 }

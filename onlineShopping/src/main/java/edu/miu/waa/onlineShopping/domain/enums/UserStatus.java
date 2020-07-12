@@ -1,6 +1,6 @@
 package edu.miu.waa.onlineShopping.domain.enums;
 
-public enum SellerStatus {
+public enum UserStatus {
     PENDING,
     REJECTED,
     APPROVED

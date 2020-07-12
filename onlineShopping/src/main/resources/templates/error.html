@@ -9,15 +9,6 @@
 	<center>
 		<img th:src="@{/images/error_page.jpg}" alt="Page not found  JSP!!!">
 
-		//<H2 th:error="${#httpServletRequest.e}"></H2>
-		<ul th:if="${#fields.hasErrors('*')}">
-			<li th:each="err : ${#fields.errors('*')}" th:text="${err}" >Input is incorrect</li>
-		</ul>
-
-		<p>
-<!--			<button type=button onclick=window.location.href=@{/employee_input}  />">Home</button>-->
-			<button type="button" onclick = th:window.location.href="@{employee_input}" />Home</button>
-		</p>
 	</center>
 </body>
 </html>
