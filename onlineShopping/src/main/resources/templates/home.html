@@ -10,33 +10,37 @@
 
     <title>Online Shopping</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
-    <style type="text/css">
-        .CategoryLink{
-            width: 150px;
-            height: 100px;
-            background-color: crimson;
-            color: greenyellow;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/home_product.css}">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="login">Login</a>
-    <a class="navbar-brand" href="register">Register</a>
 
+<span th:if="${userRole} == 'buyer'">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="logout">Logout</a>
     <a class="navbar-brand" href="cart">Cart</a>
 </nav>
+</span>
+<span th:if="${userRole} == 'seller'" >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="login">Login</a>
+</nav>
+</span>
+<span th:if="${userRole} == 'admin'" >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="logout">Logout</a>
+</nav>
+</span>
 
 
-<div class="container">
+<div class="LeftPanel" id="categoriesList">
     <tr th:block th:each="category : ${cats}">
-<!--        <td th:text="${category.name}"></td>
-        <td th:text="${category.id}" class="button"></td>-->
-        <a th:href="@{/showByCategory(id=${category.id})}" class="btn btn-primary"><span class="CategoryLink"/></span> ${category.name}</a>
-
+        <a th:href="@{/showByCategory(categoryID=${category.id})}" >
+            <span class="CategoryLink" th:text="${category.name}"/></span>
+        </a>
+        <br>
     </tr>
 </div>
+
 <section class="container">
     <div class="row">
         <div class="col-sm-6 col-md-3" th:each="product : ${products}">
@@ -44,13 +48,10 @@
                 <div class="caption">
                     <h3 th:text="${product.name}"></h3>
                     <p th:text="${product.description}"></p>
-                    <p>$<span th:text="${product.price}" th:remove="tag"></span></p>
-                    <p>$<span th:text="${product.getSeller().getName()}" th:remove="tag"></span></p>
-                    <p>Available <span th:text="${product.getStockQuantity()}" th:remove="tag"></span> units in stock</p>
-                    <p>
-                        <a th:href="@{/products/product(id=${product.id})}" class="btn btn-primary"><span class="glyphicon-info-sign glyphicon"/></span> Details</a>
-                    </p>
-
+                    <p>$<span th:text="${product.price}"></span></p>
+                    <p><span th:text="${product.getSeller().getName()}"></span></p>
+                    <p>Available <span th:text="${product.stockQuantity}"></span> units in stock</p>
+                    <p><a th:href="@{/products/product(id=${product.id})}" class="btn btn-primary"><span class="glyphicon-info-sign glyphicon"/></span> Details</a></p>
                 </div>
             </div>
         </div>
@@ -75,5 +76,6 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 </body>
 </html>

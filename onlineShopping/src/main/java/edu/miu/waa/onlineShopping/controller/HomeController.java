@@ -7,16 +7,13 @@ import edu.miu.waa.onlineShopping.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 public class HomeController {
-    private String strCurrentUserRole = "buyer";
+    private String strCurrentUserRole = "seller";
     @Autowired
     ProductCategoryService productCategoryService;
     @Autowired
@@ -38,14 +35,11 @@ public class HomeController {
         return "home";
     }
 
-
-/*
-    @RequestMapping("/showByCategory/{categoryID}")
-    public String showByCategory(Model model, @PathVariable("categoryID") Long productCategory) {
-        model.addAttribute("products",productService.getAllProducts());
+    @GetMapping("/showByCategory")
+    public String showByCategory(@RequestParam("categoryID") Long productCategoryID, Model model) {
+        model.addAttribute("products",productService.getAllProductsPerCategory(productCategoryID));
         return "home";
     }
-*/
 
 
 }

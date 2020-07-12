@@ -1,45 +1,61 @@
 package edu.miu.waa.onlineShopping.controller;
 
 import edu.miu.waa.onlineShopping.domain.Product;
+import edu.miu.waa.onlineShopping.domain.ProductCategory;
+import edu.miu.waa.onlineShopping.domain.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import edu.miu.waa.onlineShopping.service.*;
 
+import java.util.List;
+import java.util.Set;
+
 @Controller
 @RequestMapping("products")
 public class ProductController {
+    private String strCurrentUserRole = "seller";
+    private Long currentUserID = 1l;
 
+    @Autowired
+    ProductCategoryService productCategoryService;
     @Autowired
     ProductService productService;
 
-    @RequestMapping("/product")
+    @ModelAttribute("userRole")
+    public String getUserRole() {
+        return strCurrentUserRole;
+    }
+
+    @ModelAttribute("cats")
+    public List<ProductCategory> getAllCategories() {
+        return productCategoryService.getAllProductCategory();
+    }
+
+    @GetMapping("/product")
     public String getProductById(@RequestParam("id") Long productId, Model model) {
         Product product = productService.getProductById(productId);
+        Set<Review> reviews = product.getReviews();
         model.addAttribute("product",product );
+        model.addAttribute("reviews",reviews);
         return "productInfo";
     }
-/*
-    @GetMapping("/follow/{sellerId}")
-    public String followSeller(@PathVariable("sellerId") Long sellerId, Model model){
-        Product product = productService.getProductById(productId);
-        model.addAttribute("product",product);
+    @GetMapping("/showByCategory")
+    public String showByCategory(@RequestParam("categoryID") Long productCategoryID, Model model) {
+        model.addAttribute("products",productService.getAllProductsPerCategory(productCategoryID));
+        return "home";
+    }
+
+    @GetMapping("/followSeller")
+    public String followSeller(@RequestParam("sellerId") Long sellerID, Model model) {
 
         return "productInfo";
     }
-    @GetMapping("/unfollow/{sellerId}")
-    public String unfollowSeller(@PathVariable("sellerId") Long sellerId, Model model){
-        Product product =productService.getProductById(productId);
-        model.addAttribute("product",product);
+
+    @GetMapping("/unfollowSeller")
+    public String unfollowSeller(@RequestParam("sellerId") Long sellerID, Model model) {
 
         return "productInfo";
     }
-    @GetMapping("/addToCart/{productId}")
-    public String addToCart(@PathVariable("productId") Long productId, Model model){
-        Product product =productService.getProductById(productId);
-        model.addAttribute("product",product);
-
-        return "productInfo";
-    }*/
 }

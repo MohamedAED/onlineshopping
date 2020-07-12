@@ -1,0 +1,33 @@
+.CategoryLink{
+    margin-left: 10px;
+    margin-bottom: 5px;
+    height: 100px;
+    width: 100%;
+    color: #bdbebf;
+    font-weight: bold;
+    background-color: darkslateblue ;
+    color: greenyellow;
+    font-family: Arial;
+    font-size: 18px;
+}
+.LeftPanel{
+    width: 17%;
+    float: left;
+}
+.RightPanel{
+    background-color: cornsilk;
+    float: right;
+}
+
+.BuyerName
+{
+    font-size: small;
+    font-weight: bold;
+    color: darkblue;
+}
+.BuyerComment{
+    font-size: smaller;
+    font-weight: bold;
+    color: darkred;
+    margin-left: 20px;
+}

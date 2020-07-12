@@ -22,6 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import edu.miu.waa.onlineShopping.domain.enums.Role;
 
+
 @MappedSuperclass
 public class User {
 

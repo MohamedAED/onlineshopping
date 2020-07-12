@@ -2,11 +2,42 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Product Details</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/home_product.css}">
 
 </head>
 <body>
 
+<span th:if="${userRole} == 'buyer'">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="logout">Logout</a>
+    <a class="navbar-brand" href="cart">Cart</a>
+</nav>
+</span>
+<span th:if="${userRole} == 'seller'" >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="login">Login</a>
+</nav>
+</span>
+<span th:if="${userRole} == 'admin'" >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="logout">Logout</a>
+</nav>
+</span>
+
+<div class="LeftPanel" id="categoriesList">
+    <tr th:block th:each="category : ${cats}">
+        <a th:href="@{/showByCategory(categoryID=${category.id})}" >
+            <span class="CategoryLink" th:text="${category.name}"/></span>
+        </a>
+        <br>
+    </tr>
+</div>
 
 <section class="container">
     <div class="row">
@@ -16,9 +47,6 @@
             <p>
                 <strong>Item Code : </strong><span class="label label-warning" th:text="${product.id}"></span>
             </p>
-           <p>
-                <strong>category</strong> : <span th:text="${product.}" th:remove="tag"></span>
-            </p>&ndash;&gt;
             <p>
                 <strong>Availble units in stock </strong> : <span th:text="${product.stockQuantity}" th:remove="tag"></span>
             </p>
@@ -28,18 +56,34 @@
             <h4><span th:text="${product.price}" th:remove="tag"></span>USD</h4>
             <p>
 
-                <a href="#" class="btn btn-warning btn-large order-btn" th:data="${product.id}">
+                <a  class="btn btn-warning btn-large order-btn" th:data="${product.id}">
                     <span class="glyphicon-shopping-cart glyphicon"></span> Order Now </a>
-                <a href="#" class="btn btn-warning btn-large order-btn" th:data="${product.seller.userId}">
+
+                <a th:href="@{/followSeller(sellerId=${product.seller.userId})}" class="btn btn-warning btn-large order-btn" th:data="${product.seller.userId}">
                     <span class="glyphicon glyphicon-heart-empty"></span> Follow </a>
-                <a href="#" class="btn btn-warning btn-large order-btn" th:data="${product.seller.userId}">
+                <a th:href="@{/unfollowSeller(sellerId=${product.seller.userId})}" class="btn btn-warning btn-large order-btn" th:data="${product.seller.userId}">
                     <span class="glyphicon glyphicon-thumbs-down"></span> Unfollow </a>
 
             </p>
-            <!-- -->
+            <h5>Product Reviews...</h5>
+                <div th:each="review : ${reviews}">
+                    <div>
+                        <span class="BuyerName" th:text="${review.buyer.name}"></span><br/>
+                        <span class="BuyerComment" th:text="${review.description}"></span>
+                        <hr width="300"/>
+                    </div>
+                </div>
+        </div>
         </div>
     </div>
+
 </section>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 </body>
 </html>
