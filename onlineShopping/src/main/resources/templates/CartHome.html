@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Shopping Cart</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+
+<body>
+	<section>
+	    <div class="pull-right" style="padding-right:50px">
+	        <a th:href="@{/}">Products</a> | <a th:href="@{/shoppingCart(buyerId=1)}">Shopping Cart</a>
+	    </div>
+	</section>
+	<h1>Welcome Shopping</h1>
+</body>
+</html>

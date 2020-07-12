@@ -1,3 +1,6 @@
+--Shopping Cart
+INSERT INTO SHOPPING_CART (Total_Price)
+Values (800.00),(0.00),(0.00);
 --Billing Address
 INSERT INTO BILLING_ADDRESS(CITY,Country,State,Street,Zip_Code)
 Values('Giza','Egypt','GA','Street 1','41526'),
@@ -30,35 +33,21 @@ Values('2010-01-01 10:00:00+01','Mega@hotmail.com','China','Style','12345','1221
 --Products
 INSERT INTO Product(DESCRIPTION,NAME,PHOTO,PRICE,STOCK_QUANTITY,SELLER_USER_ID,PRODUCT_CATEGORY_ID )
 Values('Desc1','Product1',null,100,12,1,1),
-       ('Desc2','Product2',null,80,10,1,1),
-       ('Desc3','Product3',null,100,12,1,2),
-       ('Desc4','Product4',null,100,20,2,2),
-       ('Desc5','Product5',null,85,20,2,3);
+      ('Desc2','Product2',null,80,10,1,1),
+      ('Desc3','Product3',null,100,12,1,2),
+      ('Desc4','Product4',null,100,20,2,2),
+      ('Desc5','Product5',null,85,20,2,3);
 
 INSERT INTO PRODUCT_CATEGORY_PRODUCTS(PRODUCT_CATEGORY_ID,PRODUCTS_ID)
 VALUES ( 1,1 ),( 1,2 ),(2,3),(2,4),(3,5);
 --Buyer
-INSERT INTO BUYER(Date_Of_Birth,Email,First_Name,Last_Name,Password,Phone_Number,Role,User_Name,Points,BILLING_ADDRESS_id,Shipping_ADDRESS_id,Card_Payment_Id)
-Values('2011-01-01 10:00:00+01','Mohamedsaleh1984@hotmail.com','Mostafa','Salem','12345','122123',2,'buyer1',10,1,1,1),
-      ('1982-01-01 10:00:00+01','Mega_unknown@hotmail.com','Mohamed','Saleh','12345','122123',2,'buyer2',30,2,2,2),
-      ('1982-01-01 10:00:00+01','Dummy@hotmail.com','Mohamed','Saleh','12345','122123',2,'buyer3',30,2,3,3);
-
---Reviews
-INSERT INTO REVIEW (DESCRIPTION,REVIEW_STATUS,BUYER_ID)
-VALUES ('good product',2,1),
-       ('bad product',1,1),
-       ('recommend product 2',2,1),
-       ('recommend product 1',2,2);
-
---Reviews + Products
-
-INSERT INTO PRODUCT_REVIEWS (PRODUCT_ID,REVIEWS_ID)
-VALUES ( 1,1 ),( 1,2 ),( 1,3 );/*;,( 2,1 );
-,( 2,2 ),( 2,3 );*/
-
---For Follow and Unfollow
--- BUYER_FOLLOWING_SELLERS
-INSERT INTO  BUYER_FOLLOWING_SELLERS(BUYER_USER_ID, FOLLOWING_SELLERS_USER_ID)
-values (1,1)
-
-
+INSERT INTO BUYER(Date_Of_Birth,Email,First_Name,Last_Name,Password,Phone_Number,Role,User_Name,Points,BILLING_ADDRESS_id,Shipping_ADDRESS_id,Card_Payment_Id,shopping_cart_id)
+Values('2011-01-01 10:00:00+01','Mohamedsaleh1984@hotmail.com','Mostafa','Salem','12345','122123',2,'buyer1',10,1,1,1,1),
+      ('1982-01-01 10:00:00+01','Mega_unknown@hotmail.com','Mohamed','Saleh','12345','122123',2,'buyer2',30,2,2,2,2),
+      ('1982-01-01 10:00:00+01','Dummy@hotmail.com','Mohamed','Saleh','12345','122123',2,'buyer3',30,2,3,3,3);
+--Cart Items
+INSERT INTO CART_ITEM(quantity, total_price, product_id)
+Values (1,100.00,1),(3,100.00,3),(5,80.00,2);
+--Shopping Cart Items
+INSERT INTO SHOPPING_CART_CART_ITEMS(shopping_cart_id, cart_items_id, cart_items_key)
+Values (1, 1, 1),(1, 2, 3),(1, 3, 2);

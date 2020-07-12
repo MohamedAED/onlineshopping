@@ -1,20 +1,16 @@
 package edu.miu.waa.onlineShopping.serviceImpl;
 
-import edu.miu.waa.onlineShopping.domain.Product;
-import edu.miu.waa.onlineShopping.domain.ProductCategory;
-import edu.miu.waa.onlineShopping.domain.Review;
+import edu.miu.waa.onlineShopping.domain.*;
 import edu.miu.waa.onlineShopping.repository.ProductRepository;
 import edu.miu.waa.onlineShopping.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.CollectionUtils;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
     @Autowired
     ProductRepository productRepository;
 

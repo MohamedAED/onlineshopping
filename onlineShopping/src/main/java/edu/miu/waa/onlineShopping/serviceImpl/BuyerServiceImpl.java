@@ -28,6 +28,10 @@ public class BuyerServiceImpl implements BuyerService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    public Buyer findUserById(Long id) {
+        return buyerRepository.findById(id).get();
+    }
+
     public Buyer findUserByUsername(String username) {
         return buyerRepository.findByUsername(username);
     }
@@ -36,7 +40,7 @@ public class BuyerServiceImpl implements BuyerService {
         return buyerRepository.findAllUnApprovedUsers();
     }
     public void approveBuyer(Long id){
-        Buyer oldUser = buyerRepository.findUserById(id);
+        Buyer oldUser = buyerRepository.findById(id).get();
         if(oldUser == null){
             try {
                 throw new SQLException("error while approving the user");

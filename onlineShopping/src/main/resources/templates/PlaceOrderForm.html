@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Shopping Cart</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/cart.js}"></script>
+    <style>
+    .re{
+    width:300px;
+    }
+    .max{
+    	width:500px;
+    }
+    </style>
+</head>
+
+<body>
+	
+<section>
+    <div class="pull-right" style="padding-right:50px">
+        <a th:href="@{/}">Products</a> | <a th:href="@{/shoppingCart(buyerId=${buyerId})}">Shopping Cart</a>
+    </div>
+</section>
+
+<input type="hidden" id="buyerId" name="buyerId" th:value="${buyerId}" />
+	
+<section class="container">
+	<div id="global">
+	    <form action="#" th:action="@{/order}" method="post">
+	    	<fieldset>
+				<legend><span th:text="#{shippingAddress.form.title}">Shipping Address</span></legend>
+				<p>
+					<label for="street"><span th:text="#{shippingAddress.form.street}">Street: </span></label> 
+					<input type="text" th:field="${shippingAddress.street}" disabled/>
+				</p>
+				<p>
+					<label for="state"><span th:text="#{shippingAddress.form.state}">State: </span></label> 
+					<input type="text" th:field="${shippingAddress.state}" disabled/>
+				</p>
+				<p>
+					<label for="zipCode"><span th:text="#{shippingAddress.form.zipCode}">Zip: </span></label> 
+					<input type="text" th:field="${shippingAddress.zipCode}" disabled/>
+				</p>
+				<p>
+					<label for="city"><span th:text="#{shippingAddress.form.city}">City: </span></label> 
+					<input type="text" th:field="${shippingAddress.city}" disabled/>
+				</p>
+				<p>
+					<label for="country"><span th:text="#{shippingAddress.form.country}">Country: </span></label> 
+					<input type="text" th:field="${shippingAddress.country}" disabled/>
+				</p>
+			</fieldset>
+			<p></p>
+			<fieldset>
+				<legend><span th:text="#{billingAddress.form.title}">Billing Address</span></legend>
+				<p>
+					<label for="street"><span th:text="#{billingAddress.form.street}">Street: </span></label> 
+					<input type="text" th:field="${billingAddress.street}" disabled/>
+				</p>
+				<p>
+					<label for="state"><span th:text="#{billingAddress.form.state}">State: </span></label> 
+					<input type="text" th:field="${billingAddress.state}" disabled/>
+				</p>
+				<p>
+					<label for="zipCode"><span th:text="#{billingAddress.form.zipCode}">Zip: </span></label> 
+					<input type="text" th:field="${billingAddress.zipCode}" disabled/>
+				</p>
+				<p>
+					<label for="city"><span th:text="#{billingAddress.form.city}">City: </span></label> 
+					<input type="text" th:field="${billingAddress.city}" disabled/>
+				</p>
+				<p>
+					<label for="country"><span th:text="#{billingAddress.form.country}">Country: </span></label> 
+					<input type="text" th:field="${billingAddress.country}" disabled/>
+				</p>
+			</fieldset>
+			<p></p>
+			<fieldset>
+				<legend><span th:text="#{cardPayment.form.title}">Payment Information</span></legend>
+				<p>
+					<label for="cardNumber"><span th:text="#{cardPayment.form.cardNumber}">Card Number: </span></label> 
+					<input type="text" th:field="${cardPayment.cardNumber}" disabled/>
+				</p>
+				<p>
+					<label for="expiryDate"><span th:text="#{cardPayment.form.expiryDate}">Expiration Date: </span></label> 
+					<input type="text" th:field="${cardPayment.expiryDate}" disabled/>
+				</p>
+				<p>
+					<label for="cvv"><span th:text="#{cardPayment.form.cvv}">CVV: </span></label> 
+					<input type="text" th:field="${cardPayment.cvv}" disabled/>
+				</p>
+				<p>
+					<label for="nameOnCard"><span th:text="#{cardPayment.form.nameOnCard}">Name On Card: </span></label> 
+					<input type="text" th:field="${cardPayment.nameOnCard}" disabled/>
+				</p>
+			</fieldset>
+			<p></p>
+	    </form>
+	    <div>
+	    	<a th:href="@{/}" class="btn btn-default"><span class="glyphicon-hand-left glyphicon"></span> Continue shopping </a>
+            <a th:href="@{/placeOrder(buyerId=${buyerId})}" class="btn btn-success pull-right"> <span class="glyphicon-shopping-cart glyphicon"></span> Place Order</a>
+        </div>
+	</div>
+</section>
+</body>
+</html>

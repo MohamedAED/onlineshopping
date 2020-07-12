@@ -35,20 +35,19 @@ public class LoginController {
 		// check the user.
 		String role;
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if(sellerService.findUserByUsername(principal.getName()) != null){
+		if (sellerService.findUserByUsername(principal.getName()) != null) {
 			role = "seller";
-		}
-		else if (adminService.findUserByUsername(principal.getName()) != null){
+		} else if (adminService.findUserByUsername(principal.getName()) != null) {
 			role = "admin";
-		}
-		else{
+		} else {
 			role = "buyer";
 		}
-		model.addAttribute("role",role);
-		return "home";
+		model.addAttribute("role", role);
+		return "AdminHomePage";
 	}
 
-	@RequestMapping(value={"/","/login"}, method = RequestMethod.GET)
+
+	@RequestMapping(value={"/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("login");

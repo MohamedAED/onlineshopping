@@ -1,5 +1,6 @@
 package edu.miu.waa.onlineShopping.domain;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -33,7 +34,7 @@ public class Product {
 	private String description;
 
 	@NotNull
-	private Double price;
+	private BigDecimal price;
 
 	@NotNull
 	private Long stockQuantity;
@@ -109,11 +110,11 @@ public class Product {
 		this.description = description;
 	}
 
-	public Double getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
