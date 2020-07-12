@@ -17,6 +17,9 @@ import java.util.Set;
 public class ProductController {
     private String strCurrentUserRole = "seller";
     private Long currentUserID = 1l;
+    private Product product;
+    @Autowired
+    BuyerService buyerService;
 
     @Autowired
     ProductCategoryService productCategoryService;
@@ -36,26 +39,33 @@ public class ProductController {
     @GetMapping("/product")
     public String getProductById(@RequestParam("id") Long productId, Model model) {
         Product product = productService.getProductById(productId);
+        this.product = product;
         Set<Review> reviews = product.getReviews();
         model.addAttribute("product",product );
         model.addAttribute("reviews",reviews);
+
+        model.addAttribute("following",buyerService.IsFollowing(currentUserID,product.getSeller().getUserId()));
+
+
         return "productInfo";
     }
     @GetMapping("/showByCategory")
     public String showByCategory(@RequestParam("categoryID") Long productCategoryID, Model model) {
         model.addAttribute("products",productService.getAllProductsPerCategory(productCategoryID));
+
+        
         return "home";
     }
 
     @GetMapping("/followSeller")
     public String followSeller(@RequestParam("sellerId") Long sellerID, Model model) {
-
+        model.addAttribute("product",product );
         return "productInfo";
     }
 
     @GetMapping("/unfollowSeller")
     public String unfollowSeller(@RequestParam("sellerId") Long sellerID, Model model) {
-
+        model.addAttribute("product",product );
         return "productInfo";
     }
 }

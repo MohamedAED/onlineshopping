@@ -53,7 +53,12 @@ VALUES ('good product',2,1),
 --Reviews + Products
 
 INSERT INTO PRODUCT_REVIEWS (PRODUCT_ID,REVIEWS_ID)
-VALUES ( 1,1 ),( 1,2 ),( 1,3 ),( 2,1 )/*,( 2,2 ),( 2,3 );
-*/
+VALUES ( 1,1 ),( 1,2 ),( 1,3 );/*;,( 2,1 );
+,( 2,2 ),( 2,3 );*/
+
+--For Follow and Unfollow
+-- BUYER_FOLLOWING_SELLERS
+INSERT INTO  BUYER_FOLLOWING_SELLERS(BUYER_USER_ID, FOLLOWING_SELLERS_USER_ID)
+values (1,1)
 
 

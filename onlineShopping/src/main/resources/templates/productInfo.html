@@ -19,11 +19,13 @@
     <a class="navbar-brand" href="cart">Cart</a>
 </nav>
 </span>
+
 <span th:if="${userRole} == 'seller'" >
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="login">Login</a>
 </nav>
 </span>
+
 <span th:if="${userRole} == 'admin'" >
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="logout">Logout</a>
@@ -32,9 +34,7 @@
 
 <div class="LeftPanel" id="categoriesList">
     <tr th:block th:each="category : ${cats}">
-        <a th:href="@{/showByCategory(categoryID=${category.id})}" >
-            <span class="CategoryLink" th:text="${category.name}"/></span>
-        </a>
+        <a th:href="@{/showByCategory(categoryID=${category.id})}" ><span class="CategoryLink" th:text="${category.name}"/></span></a>
         <br>
     </tr>
 </div>
@@ -56,13 +56,26 @@
             <h4><span th:text="${product.price}" th:remove="tag"></span>USD</h4>
             <p>
 
+                <h1> <span th:text="${following}"></span></h1>
+
                 <a  class="btn btn-warning btn-large order-btn" th:data="${product.id}">
                     <span class="glyphicon-shopping-cart glyphicon"></span> Order Now </a>
 
-                <a th:href="@{/followSeller(sellerId=${product.seller.userId})}" class="btn btn-warning btn-large order-btn" th:data="${product.seller.userId}">
-                    <span class="glyphicon glyphicon-heart-empty"></span> Follow </a>
-                <a th:href="@{/unfollowSeller(sellerId=${product.seller.userId})}" class="btn btn-warning btn-large order-btn" th:data="${product.seller.userId}">
-                    <span class="glyphicon glyphicon-thumbs-down"></span> Unfollow </a>
+                <span th:if="${following} == false" >
+                   <a th:href="@{/products/followSeller(sellerId=${product.seller.userId})}"
+                      class="btn btn-success btn-large order-btn">
+                    <span class="glyphicon glyphicon-heart-empty"></span> Follow Seller </a>
+                </span>
+
+                <span th:if="${following} == true" >
+                  <a th:href="@{/products/unfollowSeller(sellerId=${product.seller.userId})}"
+                     class="btn btn-danger btn-large order-btn">
+                    <span class="glyphicon glyphicon-thumbs-down"></span> Un-follow Seller</a>
+                </span>
+
+                <h1> <span th:text="${following}"></span></h1>
+
+
 
             </p>
             <h5>Product Reviews...</h5>
