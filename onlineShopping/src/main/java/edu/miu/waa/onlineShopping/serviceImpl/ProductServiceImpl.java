@@ -1,4 +1,4 @@
-package edu.miu.waa.onlineShopping.ServiceImpl;
+package edu.miu.waa.onlineShopping.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
