@@ -18,6 +18,7 @@ public class ProductController {
     private String strCurrentUserRole = "seller";
     private Long currentUserID = 1l;
     private Product product;
+
     @Autowired
     BuyerService buyerService;
 
@@ -41,31 +42,31 @@ public class ProductController {
         Product product = productService.getProductById(productId);
         this.product = product;
         Set<Review> reviews = product.getReviews();
-        model.addAttribute("product",product );
+        model.addAttribute("product",product);
         model.addAttribute("reviews",reviews);
-
+        model.addAttribute("currentUserID",currentUserID);
         model.addAttribute("following",buyerService.IsFollowing(currentUserID,product.getSeller().getUserId()));
-
-
         return "productInfo";
     }
     @GetMapping("/showByCategory")
     public String showByCategory(@RequestParam("categoryID") Long productCategoryID, Model model) {
         model.addAttribute("products",productService.getAllProductsPerCategory(productCategoryID));
-
-        
         return "home";
     }
 
     @GetMapping("/followSeller")
     public String followSeller(@RequestParam("sellerId") Long sellerID, Model model) {
         model.addAttribute("product",product );
-        return "productInfo";
+        //Add Seller To Buyer Following List
+        buyerService.followSeller(currentUserID,sellerID);
+        return "redirect:/products/product?id=" + product.getId();
     }
 
     @GetMapping("/unfollowSeller")
     public String unfollowSeller(@RequestParam("sellerId") Long sellerID, Model model) {
         model.addAttribute("product",product );
-        return "productInfo";
+        //Remove Seller From Following List
+        buyerService.unfollowSeller(currentUserID,product.getSeller().getUserId());
+        return "redirect:/products/product?id=" + product.getId();
     }
 }
