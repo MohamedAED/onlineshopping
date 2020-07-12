@@ -1,6 +1,6 @@
 --Shopping Cart
 INSERT INTO SHOPPING_CART (Total_Price) 
-Values (0),(0),(0);
+Values (800.00),(0.00),(0.00);
 --Billing Address
 INSERT INTO BILLING_ADDRESS(CITY,Country,State,Street,Zip_Code)
 Values('Giza','Egypt','GA','Street 1','41526'),
@@ -47,7 +47,7 @@ Values('2011-01-01 10:00:00+01','Mohamedsaleh1984@hotmail.com','Mostafa','Salem'
       ('1982-01-01 10:00:00+01','Dummy@hotmail.com','Mohamed','Saleh','12345','122123',2,'buyer3',30,2,3,3,3);
 --Cart Items
 INSERT INTO CART_ITEM(quantity, total_price, product_id)
-Values (1,100.00,1),(3,300.00,3),(5,400.00,2);
+Values (1,100.00,1),(3,100.00,3),(5,80.00,2);
 --Shopping Cart Items
 INSERT INTO SHOPPING_CART_CART_ITEMS(shopping_cart_id, cart_items_id, cart_items_key)
 Values (1, 1, 1),(1, 2, 3),(1, 3, 2);

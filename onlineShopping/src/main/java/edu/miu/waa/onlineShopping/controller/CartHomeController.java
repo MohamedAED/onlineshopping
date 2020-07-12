@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/")
-public class HomeController {
+public class CartHomeController {
 
 	@RequestMapping
 	public String goHome() {
-		return "home";
+		return "CartHome";
 	}
 	
 }

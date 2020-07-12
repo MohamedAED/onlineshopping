@@ -49,7 +49,7 @@ public class CartItem {
 
     public void setProduct(Product product) {
         this.product = product;
-        this.updateTotalPrice();
+        //this.updateTotalPrice();
     }
 
     public Integer getQuantity() {
@@ -58,7 +58,7 @@ public class CartItem {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-        this.updateTotalPrice();
+        //this.updateTotalPrice();
     }
 
 	public BigDecimal getTotalPrice() {
