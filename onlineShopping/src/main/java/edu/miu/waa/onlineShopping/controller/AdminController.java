@@ -28,6 +28,7 @@ public class AdminController {
         model.addAttribute("unapprovedUsers",getUnapprovedUsers());
         return "approveUsers";
     }
+
     @RequestMapping("/approve")
     public String approveUsers(@RequestParam("userId") String userId, @RequestParam("role") String role, Model model) {
         Long id = Long.parseLong(userId);
@@ -39,6 +40,7 @@ public class AdminController {
         model.addAttribute("unapprovedUsers",getUnapprovedUsers());
         return "approveUsers";
     }
+
     public List<User> getUnapprovedUsers(){
         List<User> unapprovedUsers = new ArrayList<>();
         unapprovedUsers.addAll(sellerService.findUnapprovedSellers());

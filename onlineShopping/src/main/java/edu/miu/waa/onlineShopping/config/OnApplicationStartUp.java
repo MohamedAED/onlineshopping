@@ -14,6 +14,10 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 
 @Component
@@ -33,6 +37,7 @@ public class OnApplicationStartUp {
 	public void onApplicationEvent(ContextRefreshedEvent event) throws Exception {
 		createAdminUser();
 		createSeller();
+		createBuyer();
 	}
 
 	private void createAdminUser() throws ParseException, IOException {
@@ -59,32 +64,28 @@ public class OnApplicationStartUp {
 		user.setUsername("seller");
 		user.setPassword("seller");
 		user.setApproved(UserStatus.APPROVED);
-		user.setRole(Role.ADMIN);
+		user.setRole(Role.SELLER);
 		sellerService.saveUser(user);
 	}
 
 	private void createBuyer() throws ParseException, IOException {
 		Buyer user = new Buyer();
-		user.setFirstName("buyer");
-		user.setLastName("buyer");
-		user.setEmail("buyer@miu.edu");
+		user.setFirstName("buyer4");
+		user.setLastName("buyer4");
+		user.setEmail("buyer4@miu.edu");
 		user.setPhoneNumber("6418192921");
 		user.setDateOfBirth(new SimpleDateFormat("MM/dd/yyyy").parse("03/22/1990"));
-		user.setUsername("buyer");
-		user.setPassword("buyer");
+		user.setUsername("mega_unknown");
+		user.setPassword("123456789");
 		user.setApproved(UserStatus.APPROVED);
-		user.setRole(Role.ADMIN);
-
-		Date date = new Date();
-		date.setYear(2022);
-		date.setMonth(9);
+		user.setRole(Role.BUYER);
+		user.setShoppingCart(new ShoppingCart());
 		CardPayment cardPayment = new CardPayment();
-		cardPayment.setCardNumber("123456781234");
-		cardPayment.setExpiryDate(date);
+		cardPayment.setCardNumber("1234567812345678");
+		cardPayment.setExpiryDate("09/24");
 		cardPayment.setCvv("123");
 		cardPayment.setNameOnCard("omar albaarah");
 		user.setCardPayment(cardPayment);
-
 		ShippingAddress address = new ShippingAddress();
 		address.setCountry("usa");
 		address.setState("iowa");
@@ -92,12 +93,15 @@ public class OnApplicationStartUp {
 		address.setStreet("1000 north");
 		address.setZipCode("52557");
 		user.setShippingAddress(address);
+		BillingAddress billingAddress = new BillingAddress();
+		billingAddress.setCountry("usa");
+		billingAddress.setState("iowa");
+		billingAddress.setCity("fairfield");
+		billingAddress.setStreet("1000 north");
+		billingAddress.setZipCode("52557");
+		user.setBillingAddress(billingAddress);
 		buyerService.saveUser(user);
-
-
-//		Review review = new Review();
-//		review.setReview("nice one");
-//		review.setBuyer(user);
-//		reviewService.save(review);
 	}
+
+
 }

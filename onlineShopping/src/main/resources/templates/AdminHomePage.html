@@ -6,8 +6,7 @@
     <title>Title</title>
 </head>
 <body>
-<h1 >Success login By</h1>
-<h2 th:text="${role}"> </h2>
+<h1 >Success login By <span th:text="${UserRole}"></span> </h1>
 <div><a th:href="@{/approveUsers}"> click here to approve users</a></div>
 <div><a th:href="@{/approveReviews}">click here to approve reviews</a></div>
 </body>

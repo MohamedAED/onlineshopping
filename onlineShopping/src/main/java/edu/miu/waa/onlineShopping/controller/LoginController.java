@@ -12,12 +12,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
-@SessionAttributes("user")
+@SessionAttributes({"UserRole","UserInfo"})
 public class LoginController {
 
 	@Autowired
@@ -29,21 +30,38 @@ public class LoginController {
 	@Autowired
 	private AdminService adminService;
 
+	@Autowired
+	UserService userService;
+
 	@RequestMapping("/goHome")
 	public String goHome(Principal principal, Model model) {
-		// TODO: 7/11/2020  
-		// check the user.
-		String role;
+
+		String role ="";
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (sellerService.findUserByUsername(principal.getName()) != null) {
+		String pageURL="";
+
+		if(sellerService.findUserByUsername(principal.getName()) != null){
 			role = "seller";
-		} else if (adminService.findUserByUsername(principal.getName()) != null) {
-			role = "admin";
-		} else {
-			role = "buyer";
+			pageURL = "forward:/seller/find";
+			Seller seller = sellerService.findUserByUsername(principal.getName());
+			model.addAttribute("UserInfo",seller);
 		}
-		model.addAttribute("role", role);
-		return "AdminHomePage";
+		else if (adminService.findUserByUsername(principal.getName()) != null){
+			role = "admin";
+			pageURL = "AdminHomePage";
+			Admin admin =  adminService.findUserByUsername(principal.getName());
+			model.addAttribute("UserInfo",admin);
+		}
+		else if (buyerService.findUserByUsername(principal.getName()) != null){
+
+			Buyer buyer =  buyerService.findUserByUsername(principal.getName());
+			model.addAttribute("UserInfo",buyer);
+			role = "buyer";
+			pageURL = "forward:/SignedIn?UserId=" + buyer.getUserId() +"&UserRole=" + role;
+		}
+		model.addAttribute("UserRole",role);
+
+		return pageURL;
 	}
 
 
@@ -95,6 +113,7 @@ public class LoginController {
 		}
 		if (!bindingResult.hasErrors()) {
 			buyer.setApproved(UserStatus.PENDING);
+			buyer.setShoppingCart(new ShoppingCart());
 			buyerService.saveUser(buyer);
 			modelAndView.addObject("successMessage", "User has been registered successfully");
 		}
@@ -102,6 +121,15 @@ public class LoginController {
 		modelAndView.addObject("type", "buyer");
 		modelAndView.setViewName("registration");
 		return modelAndView;
+	}
+
+	/*
+	* Added By Mohamed Saleh
+	* */
+	@GetMapping("/logout")
+	public String Logout()
+	{
+		return "home";
 	}
 
 }

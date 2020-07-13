@@ -14,9 +14,9 @@ Values('IOWA','USA','MM','Street','11111'),
       ('City 3','USA','MM','Street','14852');
 --Card Payment
 INSERT INTO CARD_PAYMENT (CARD_NUMBER,CVV,EXPIRY_DATE,NAME_ON_CARD)
-Values ('12142569875','124','2010-01-01','MOHAMED SALEH'),
-       ('12345698765','987','2023-01-01','Ahmed Mostafa'),
-       ('12345674765','980','2025-01-01','Mostafa Abdel');
+Values ('12142569875','124','14/25','MOHAMED SALEH'),
+       ('12345698765','987','14/25','Ahmed Mostafa'),
+       ('12345674765','980','14/25','Mostafa Abdel');
 --Categories
 INSERT INTO PRODUCT_CATEGORY(NAME)
 Values ('Clothing'),
@@ -57,4 +57,22 @@ INSERT INTO PLACE_ORDER (ORDER_NUMBER,STATUS,TOTAL_PRICE,SELLER_USER_ID)
 VALUES (123, 4, 123, 2), (456, 4, 456, 2), (789, 4, 789, 1);
 
 INSERT INTO SELLER_ORDERS (SELLER_USER_ID, ORDERS_ID)VALUES(2, 1), (2, 2), (1, 3);
+
+--Reviews
+INSERT INTO REVIEW (DESCRIPTION,REVIEW_STATUS,BUYER_ID)
+VALUES ('good product',2,1),
+       ('bad product',1,1),
+       ('recommend product 2',2,1),
+       ('recommend product 1',2,2);
+
+--Reviews + Products
+
+INSERT INTO PRODUCT_REVIEWS (PRODUCT_ID,REVIEWS_ID)
+VALUES ( 1,1 ),( 1,2 ),( 1,3 );/*;,( 2,1 );
+,( 2,2 ),( 2,3 );*/
+
+--For Follow and Unfollow
+-- BUYER_FOLLOWING_SELLERS
+INSERT INTO  BUYER_FOLLOWING_SELLERS(BUYER_USER_ID, FOLLOWING_SELLERS_USER_ID)
+values (3,1)
 
