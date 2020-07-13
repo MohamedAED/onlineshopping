@@ -57,7 +57,7 @@
             Price $<span th:text="${product.price}"></span><br/>
             <p>
                 <input type="hidden" id="buyerId" name="buyerId" th:value="${buyerId}"/>
-                
+
                 <span th:if="${UserRole} == 'buyer'">
                     <input type="button" name="product-order-btn" id="product-order-btn" value="Add to Cart"  th:data="${product.id}" class="btn btn-success"/>
                 </span>
