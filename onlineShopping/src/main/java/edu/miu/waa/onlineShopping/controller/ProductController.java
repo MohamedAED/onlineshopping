@@ -42,8 +42,9 @@ public class ProductController {
         }
         else
         {
+            Product product = productService.getProductById(productId);
             Buyer buyer =(Buyer) buyerService.findUserById(buyerId);
-            model.addAttribute("following",true);//buyerService.IsFollowing(buyer.getUserId(),product.getSeller().getUserId()));
+            model.addAttribute("following",buyerService.IsFollowing(buyer.getUserId(),product.getSeller().getUserId()));
             model.addAttribute("buyerId",buyer.getUserId());
             model.addAttribute("UserInfo",buyer);
         }
@@ -80,21 +81,22 @@ public class ProductController {
         return "home";
     }
 
+
     @GetMapping("/followSeller")
-    public String followSeller(@RequestParam("sellerId") Long sellerID, Model model) {
-        User user =(User) model.getAttribute("UserInfo");
+    public String followSeller(@RequestParam("sellerId") Long sellerID,@RequestParam("buyerid") Long buyerid, Model model) {
         model.addAttribute("product",product );
+        model.addAttribute("following",buyerService.IsFollowing(buyerid,sellerID));
         //Add Seller To Buyer Following List
-        buyerService.followSeller(user.getUserId(),sellerID);
-        return "redirect:/products/product?id=" + product.getId();
+        buyerService.followSeller(buyerid,sellerID);
+        return "forward:/products/product?id=" + product.getId()+"&buyerid="+buyerid;
     }
 
     @GetMapping("/unfollowSeller")
-    public String unfollowSeller(@RequestParam("sellerId") Long sellerID, Model model) {
-        User user =(User) model.getAttribute("UserInfo");
+    public String unfollowSeller(@RequestParam("sellerId") Long sellerID,@RequestParam("buyerid") Long buyerid, Model model) {
         model.addAttribute("product",product );
+        model.addAttribute("following",buyerService.IsFollowing(buyerid,sellerID));
         //Remove Seller From Following List
-        buyerService.unfollowSeller(user.getUserId(),product.getSeller().getUserId());
-        return "redirect:/products/product?id=" + product.getId();
+        buyerService.unfollowSeller(buyerid,sellerID);
+        return "forward:/products/product?id=" + product.getId()+"&buyerid="+buyerid;
     }
 }

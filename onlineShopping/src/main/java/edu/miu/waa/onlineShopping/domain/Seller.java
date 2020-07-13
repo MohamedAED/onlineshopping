@@ -3,13 +3,10 @@ package edu.miu.waa.onlineShopping.domain;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class Seller extends User {
@@ -21,6 +18,10 @@ public class Seller extends User {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable
 	private Set<PlaceOrder> orders;
+
+	@ManyToMany(mappedBy = "followingSellers")
+	private Set<Buyer> followedSeller;
+
 
 	public Seller() {
 	}

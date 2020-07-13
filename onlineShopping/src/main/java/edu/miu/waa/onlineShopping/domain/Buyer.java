@@ -18,8 +18,10 @@ public class Buyer extends User {
 	@JoinColumn(name = "cardPayment_id")
 	private CardPayment cardPayment;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@Fetch(FetchMode.JOIN)
+	@ManyToMany
+	@JoinTable(name = "FollowingBuyer",
+			joinColumns = @JoinColumn(name = "buyer_id"),
+			inverseJoinColumns = @JoinColumn(name = "seller_id"))
 	private Set<Seller> followingSellers;
 
 	@OneToOne(cascade = CascadeType.ALL)

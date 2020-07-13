@@ -3,15 +3,14 @@
     margin-bottom: 5px;
     height: 100px;
     width: 100%;
-    color: #bdbebf;
+    color:  #581845 ;
     font-weight: bold;
-    background-color: darkslateblue ;
-    color: greenyellow;
     font-family: Arial;
-    font-size: 18px;
+    font-size: 16px;
 }
+
 .LeftPanel{
-    width: 17%;
+    width: 15%;
     float: left;
 }
 .RightPanel{
@@ -25,6 +24,7 @@
     font-weight: bold;
     color: darkblue;
 }
+
 .BuyerComment{
     font-size: smaller;
     font-weight: bold;

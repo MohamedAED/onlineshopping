@@ -98,6 +98,7 @@ public class BuyerServiceImpl implements BuyerService {
         Buyer buyer = buyerRepository.findById(buyerId).get();
         Seller seller = sellerRepository.findById(sellerId).get();
         buyer.getFollowingSellers().add(seller);
+
         buyerRepository.save(buyer);
     }
 
@@ -106,6 +107,7 @@ public class BuyerServiceImpl implements BuyerService {
         Buyer buyer = buyerRepository.findById(buyerId).get();
         Seller seller = sellerRepository.findById(sellerId).get();
         buyer.getFollowingSellers().remove(seller);
+
         buyerRepository.save(buyer);
     }
 
