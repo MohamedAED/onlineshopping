@@ -54,7 +54,7 @@ public class SellerController {
 		product.setSeller(seller);
 		seller.getProducts().add(product);
 
-		seller = sellerService.save(seller);
+		seller = sellerService.saveUser(seller);
 
 		model.addAttribute("seller", seller);
 		return "sellerPage";
@@ -87,7 +87,7 @@ public class SellerController {
 		old_product.setPrice(product.getPrice());
 		old_product.setStockQuantity(product.getStockQuantity());
 
-		sellerService.save(seller);
+		sellerService.saveUser(seller);
 
 		model.addAttribute("seller", seller);
 		model.addAttribute("product", new Product());
@@ -103,7 +103,7 @@ public class SellerController {
 		Seller seller = sellerService.findById(seller_id);
 		seller.getProducts().removeIf(p -> p.getId() == product_id);
 
-		sellerService.save(seller);
+		sellerService.saveUser(seller);
 
 		model.addAttribute("seller", seller);
 		model.addAttribute("product", new Product());
@@ -136,7 +136,7 @@ public class SellerController {
 
 		old_order.setStatus(OrderStatus.valueOf(orderStatus));
 
-		sellerService.save(seller);
+		sellerService.saveUser(seller);
 
 		model.addAttribute("seller", seller);
 		model.addAttribute("product", new Product());

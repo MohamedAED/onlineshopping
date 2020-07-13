@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Approve Reviews</title>
+</head>
+<body>
+<h1 > approve users list</h1>
+<span th:if="${unapprovedReviews!=null and !unapprovedReviews.isEmpty()}" >
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Description</th>
+            <th scope="col">Made By</th>
+            <th scope="col">Approve</th>
+            <th scope="col">&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="review: ${unapprovedReviews}">
+                <td scope="col">#</td>
+                <td th:text="${review.description}" />
+                <td th:text="${review.buyer.firstName}"/>
+                <td><a th:href="@{/approveReviewById(reviewId=${review.id}, status=${2})}" >Approve</a>/
+                <a th:href="@{/approveReviewById(reviewId=${review.id}, status=${1})}" >Reject</a></td>
+                <td>&nbsp;</td>
+            </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+</span>
+<span th:if="${unapprovedReviews == null or unapprovedReviews.isEmpty()}" >
+    <h2> There is No New List!</h2>
+</span>
+</body>
+</html>

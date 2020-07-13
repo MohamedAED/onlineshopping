@@ -24,7 +24,7 @@ public class Review {
 
 	private ReviewStatus reviewStatus;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name = "buyer_id")
 	private Buyer buyer;
 

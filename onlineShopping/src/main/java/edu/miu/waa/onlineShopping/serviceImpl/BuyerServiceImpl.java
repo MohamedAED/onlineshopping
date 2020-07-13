@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -39,7 +40,7 @@ public class BuyerServiceImpl implements BuyerService {
     public List<Buyer> findUnapprovedBuyers(){
         return buyerRepository.findAllUnApprovedUsers();
     }
-    public void approveBuyer(Long id){
+    public void approveBuyer(Long id, String statusId){
         Buyer oldUser = buyerRepository.findById(id).get();
         if(oldUser == null){
             try {
@@ -48,7 +49,10 @@ public class BuyerServiceImpl implements BuyerService {
                 throwables.printStackTrace();
             }
         }
-        oldUser.setApproved(UserStatus.APPROVED);
+        if(Integer.parseInt(statusId)==2)
+            oldUser.setApproved(UserStatus.APPROVED);
+        else
+            oldUser.setApproved(UserStatus.REJECTED);
         buyerRepository.save(oldUser);
     }
 

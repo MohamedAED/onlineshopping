@@ -9,6 +9,7 @@ import edu.miu.waa.onlineShopping.domain.Seller;
 import edu.miu.waa.onlineShopping.repository.SellerRepository;
 import edu.miu.waa.onlineShopping.service.SellerService;
 
+import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -21,11 +22,6 @@ public class SellerServiceImpl implements SellerService {
 	SellerRepository sellerRepository;
 
 	@Override
-	public Seller save(Seller seller) {
-		return sellerRepository.save(seller);
-	}
-
-	@Override
 	public void deleteById(Long seller_id) {
 		sellerRepository.deleteById(seller_id);
 	}
@@ -34,6 +30,7 @@ public class SellerServiceImpl implements SellerService {
 	public Seller findById(Long seller_id) {
 		return sellerRepository.findById(seller_id).get();
 	}
+
 
 	@Override
 	public Seller findUserByUsername(String username) {
@@ -60,13 +57,14 @@ public class SellerServiceImpl implements SellerService {
 	}
 
 	@Override
+
 	public Seller saveUser(Seller seller) {
 		seller.setPassword(bCryptPasswordEncoder.encode(seller.getPassword()));
 		return sellerRepository.save(seller);
 	}
 
 	@Override
-	public void approveSeller(Long id){
+	public void approveSeller(Long id, String statusId){
 		Seller oldUser = sellerRepository.findUserById(id);
 		if(oldUser == null){
 			try {
@@ -75,7 +73,10 @@ public class SellerServiceImpl implements SellerService {
 				throwables.printStackTrace();
 			}
 		}
-		oldUser.setApproved(UserStatus.APPROVED);
+		if(Integer.parseInt(statusId)==2)
+			oldUser.setApproved(UserStatus.APPROVED);
+		else
+			oldUser.setApproved(UserStatus.REJECTED);
 		sellerRepository.save(oldUser);
 	}
 }

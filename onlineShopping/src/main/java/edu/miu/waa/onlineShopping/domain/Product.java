@@ -20,8 +20,6 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class Product {
 
@@ -47,11 +45,11 @@ public class Product {
 	@Transient
 	private String photoBase64;
 
+	@Transient
 	@Lob
 	@Column(name = "photo", columnDefinition = "BLOB")
 	private byte[] photo;
 
-	@JsonIgnore
 	@ManyToOne
 	private Seller seller;
 

@@ -17,7 +17,6 @@ import javax.sql.DataSource;
 
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -36,14 +35,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/loginPage").permitAll()
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/registration_buyer").permitAll()
                 .antMatchers("/registration_seller").permitAll()
                 .antMatchers("/error").permitAll()
                 .antMatchers("/home").permitAll().anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
-                .loginPage("/login").failureUrl("/login?error=true")
+                .loginPage("/loginPage").failureUrl("/loginPage?error=true")
                 .defaultSuccessUrl("/goHome")
                 .usernameParameter("email")
                 .passwordParameter("password")
@@ -56,7 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/console/**","/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+        web.ignoring().antMatchers("/products/product","/console/**","/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
     }
 
 

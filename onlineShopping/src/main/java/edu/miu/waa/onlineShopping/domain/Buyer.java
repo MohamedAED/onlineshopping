@@ -22,10 +22,12 @@ public class Buyer extends User {
 	@Fetch(FetchMode.JOIN)
 	private Set<Seller> followingSellers;
 
+	@Valid
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "billing_address_id")
 	private BillingAddress billingAddress;
-	
+
+	@Valid
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "shipping_address_id")
 	private ShippingAddress shippingAddress;

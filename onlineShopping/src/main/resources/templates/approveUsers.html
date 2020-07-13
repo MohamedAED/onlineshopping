@@ -33,7 +33,8 @@
                 <td th:text="${user.lastName}" />
                 <td th:text="${user.email}" />
                 <td th:text="${user.role}" />
-                <td><a th:href="@{/approve(userId=${user.userId},role=${user.role})}" >Approve me<a/></td>
+                <td><a th:href="@{/approveUserById(userId=${user.userId},role=${user.role}, status=2)}" >Approve me</a>/
+                <a th:href="@{/approveUserById(userId=${user.userId},role=${user.role}, status=1)}" >Reject</a> me</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>

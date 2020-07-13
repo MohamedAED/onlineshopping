@@ -1,6 +1,7 @@
 package edu.miu.waa.onlineShopping.service;
 
 import edu.miu.waa.onlineShopping.domain.*;
+
 import java.util.*;
 
 public interface BuyerService {
@@ -11,7 +12,7 @@ public interface BuyerService {
     void unfollowSeller(Long buyerId, Long sellerId);
     Buyer findUserByUsername(String username);
     List<Buyer> findUnapprovedBuyers();
-    void approveBuyer(Long id);
+    void approveBuyer(Long id, String statusId);
     Buyer saveUser(Buyer buyer);
     Buyer findUserById(Long id);
 }
