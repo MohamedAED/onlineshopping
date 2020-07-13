@@ -62,13 +62,12 @@
                     <p><span th:text="${product.getSeller().getName()}"></span></p>
                     <p>Available <span th:text="${product.stockQuantity}"></span> units in stock</p>
 
-                    <p><a th:href="@{/products/product(id=${product.id},buyerid=${buyerId})}" class="btn btn-primary">
-                        <span class="glyphicon-info-sign glyphicon"/></span> Details</a>
-                    </p>
-
-                    <p><a th:href="@{/products/product(id=${product.id})}" class="btn btn-primary">
-                        <span class="glyphicon-info-sign glyphicon"/></span> Details</a>
-                    </p>
+                    <span th:if="${UserRole== null or UserRole.isEmpty()} ">
+                        <a th:href="@{/products/productView(id=${product.id})}" class="btn btn-primary glyphicon-info-sign glyphicon"> Details</a>
+                    </span>
+                    <span th:if="${UserRole== 'buyer'} ">
+                        <a th:href="@{/products/product(id=${product.id},buyerid=${buyerId})}" class="btn btn-primary glyphicon-info-sign glyphicon"> Details</a>
+                    </span>
                 </div>
             </div>
         </div>

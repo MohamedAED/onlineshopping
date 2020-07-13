@@ -42,9 +42,10 @@ public class ProductController {
         }
         else
         {
-            Buyer buyer =(Buyer) model.getAttribute("UserInfo");
-            model.addAttribute("following",buyerService.IsFollowing(buyer.getUserId(),product.getSeller().getUserId()));
+            Buyer buyer =(Buyer) buyerService.findUserById(buyerId);
+            model.addAttribute("following",true);//buyerService.IsFollowing(buyer.getUserId(),product.getSeller().getUserId()));
             model.addAttribute("buyerId",buyer.getUserId());
+            model.addAttribute("UserInfo",buyer);
         }
 
         Product product = productService.getProductById(productId);
@@ -53,10 +54,25 @@ public class ProductController {
         model.addAttribute("product",product);
         model.addAttribute("reviews",reviews);
         model.addAttribute("UserRole",userRole);
+        model.addAttribute("buyerId",buyerId);
 
         return "productinfo";
     }
 
+    @GetMapping("/productView")
+    public String getProductByIdView(@RequestParam("id") Long productId,
+                                 Model model, HttpSession session) {
+
+        Product product = productService.getProductById(productId);
+        this.product = product;
+        Set<Review> reviews = product.getReviews();
+        model.addAttribute("product",product);
+        model.addAttribute("reviews",reviews);
+        model.addAttribute("UserRole","");
+        model.addAttribute("buyerId","");
+
+        return "productinfo";
+    }
 
     @GetMapping("/showByCategory")
     public String showByCategory(@RequestParam("categoryID") Long productCategoryID, Model model) {
