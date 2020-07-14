@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import edu.miu.waa.onlineShopping.domain.Buyer;
@@ -16,7 +17,9 @@ import edu.miu.waa.onlineShopping.domain.PlaceOrder;
 import edu.miu.waa.onlineShopping.domain.Seller;
 import edu.miu.waa.onlineShopping.domain.ShoppingCart;
 import edu.miu.waa.onlineShopping.repository.PlaceOrderRepository;
+import edu.miu.waa.onlineShopping.service.AdminService;
 import edu.miu.waa.onlineShopping.service.BuyerService;
+import edu.miu.waa.onlineShopping.service.EmailSenderService;
 import edu.miu.waa.onlineShopping.service.PlaceOrderService;
 import edu.miu.waa.onlineShopping.service.SellerService;
 import edu.miu.waa.onlineShopping.service.ShoppingCartService;
@@ -37,6 +40,12 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
 	
 	@Autowired
 	PlaceOrderRepository placeOrderRepository;
+	
+	@Autowired
+	EmailSenderService emailSenderService;
+	
+	@Autowired
+	AdminService adminService;
 	
 	@Override
 	public PlaceOrder create(PlaceOrder placeOrder) {
@@ -66,6 +75,7 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
 		PlaceOrder placeOrder;
 		BigDecimal cartItemsTotalPrice;
 		Seller seller = new Seller();
+		String emailMessage = "Thank you for purchasing with SOKS (Group 7 - WAA Project), This is a confirmation mail for your order/s ";
 		
 		for(CartItem item : shoppingCart.getItems().values()) {
 			if(sellerProducts.containsKey(item.getProduct().getSeller())) {
@@ -84,7 +94,10 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
 				seller = cartItem.getProduct().getSeller();
 				cartItemsTotalPrice = cartItemsTotalPrice.add(cartItem.evaluateTotalPrice());
 			}
-			placeOrder = new PlaceOrder(cartItemsTotalPrice, sellerCartItems, seller, buyer.getShippingAddress(), buyer.getBillingAddress());
+			int randomValue = (int) (1000 + (Math.random() * 9999));
+			String orderNumber = "ORDER # - 111-" + randomValue;
+			placeOrder = new PlaceOrder(orderNumber, cartItemsTotalPrice, sellerCartItems, seller, buyer.getShippingAddress(), buyer.getBillingAddress());
+			emailMessage = emailMessage + orderNumber + ", ";
 			create(placeOrder);
 			placedOrders.add(placeOrder);
 			seller.getOrders().add(placeOrder);
@@ -106,7 +119,21 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
 		shoppingCart.setTotalPrice(new BigDecimal(0.00));
 		shoppingCartService.update(shoppingCart);
 		
+		sendConfirmationMail(buyer, emailMessage) ;
+		
 		return placedOrders;
+	}
+	
+	private void sendConfirmationMail(Buyer buyer, String emailMessage) {
+
+		// sending confirmation email
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+		mailMessage.setTo(buyer.getEmail());
+		mailMessage.setSubject(adminService.getConfirmationSubject());
+		mailMessage.setText(emailMessage);
+
+		emailSenderService.sendEmail(mailMessage);
+
 	}
 
 }
