@@ -20,7 +20,7 @@
 	
 <section>
     <div class="pull-right" style="padding-right:50px">
-        <a th:href="@{/}">Products</a> | <a th:href="@{/shoppingCart(buyerId=${buyerId})}">Shopping Cart</a>
+        <a th:href="@{/SignedIn}">Products</a> | <a th:href="@{/shoppingCart(buyerId=${buyerId})}">Shopping Cart</a>
     </div>
 </section>
 
@@ -33,23 +33,23 @@
 				<legend><span th:text="#{shippingAddress.form.title}">Shipping Address</span></legend>
 				<p>
 					<label for="street"><span th:text="#{shippingAddress.form.street}">Street: </span></label> 
-					<input type="text" th:field="${shippingAddress.street}" disabled/>
+					<input id="street" type="text" th:field="${shippingAddress.street}" disabled/>
 				</p>
 				<p>
 					<label for="state"><span th:text="#{shippingAddress.form.state}">State: </span></label> 
-					<input type="text" th:field="${shippingAddress.state}" disabled/>
+					<input id="state" type="text" th:field="${shippingAddress.state}" disabled/>
 				</p>
 				<p>
 					<label for="zipCode"><span th:text="#{shippingAddress.form.zipCode}">Zip: </span></label> 
-					<input type="text" th:field="${shippingAddress.zipCode}" disabled/>
+					<input id="zipCode" type="text" th:field="${shippingAddress.zipCode}" disabled/>
 				</p>
 				<p>
 					<label for="city"><span th:text="#{shippingAddress.form.city}">City: </span></label> 
-					<input type="text" th:field="${shippingAddress.city}" disabled/>
+					<input id="city" type="text" th:field="${shippingAddress.city}" disabled/>
 				</p>
 				<p>
 					<label for="country"><span th:text="#{shippingAddress.form.country}">Country: </span></label> 
-					<input type="text" th:field="${shippingAddress.country}" disabled/>
+					<input id="country" type="text" th:field="${shippingAddress.country}" disabled/>
 				</p>
 			</fieldset>
 			<p></p>
@@ -81,19 +81,19 @@
 				<legend><span th:text="#{cardPayment.form.title}">Payment Information</span></legend>
 				<p>
 					<label for="cardNumber"><span th:text="#{cardPayment.form.cardNumber}">Card Number: </span></label> 
-					<input type="text" th:field="${cardPayment.cardNumber}" disabled/>
+					<input id="cardNumber" type="text" th:field="${cardPayment.cardNumber}" disabled/>
 				</p>
 				<p>
 					<label for="expiryDate"><span th:text="#{cardPayment.form.expiryDate}">Expiration Date: </span></label> 
-					<input type="text" th:field="${cardPayment.expiryDate}" disabled/>
+					<input id="expiryDate" type="text" th:field="${cardPayment.expiryDate}" disabled/>
 				</p>
 				<p>
 					<label for="cvv"><span th:text="#{cardPayment.form.cvv}">CVV: </span></label> 
-					<input type="text" th:field="${cardPayment.cvv}" disabled/>
+					<input id="cvv" type="text" th:field="${cardPayment.cvv}" disabled/>
 				</p>
 				<p>
 					<label for="nameOnCard"><span th:text="#{cardPayment.form.nameOnCard}">Name On Card: </span></label> 
-					<input type="text" th:field="${cardPayment.nameOnCard}" disabled/>
+					<input id="nameOnCard" type="text" th:field="${cardPayment.nameOnCard}" disabled/>
 				</p>
 			</fieldset>
 			<p></p>

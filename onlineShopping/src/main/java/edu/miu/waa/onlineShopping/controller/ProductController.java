@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import edu.miu.waa.onlineShopping.service.*;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
@@ -76,13 +77,12 @@ public class ProductController {
     }
 
     @GetMapping("/showByCategory")
-    public String showByCategory(@RequestParam("categoryID") Long productCategoryID, Model model) {
-
-        /*
-        model.addAttribute("UserInfo",buyer);
-        model.addAttribute("buyerId",UserId);
-        model.addAttribute("UserRole",userRole);
-        * */
+    public String showByCategory(@RequestParam("categoryID") Long productCategoryID, Model model, Principal principal) {
+        Buyer buyer2= buyerService.findUserByUsername(principal.getName());
+        model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("UserInfo",buyer2);
+        model.addAttribute("buyerId",buyer2.getUserId());
+        model.addAttribute("UserRole",buyer2.getRole().toString().toLowerCase());
 
         model.addAttribute("products",productService.getAllProductsPerCategory(productCategoryID));
         return "forward:/";

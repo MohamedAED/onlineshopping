@@ -21,7 +21,7 @@
 <!--<a th:href="@{/products/product(id=${product.id})}"-->
 
 <span th:if="${UserRole== null or UserRole.isEmpty()} ">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-ligh">
         <a class="navbar-brand" th:href="@{/registration(type='buyer')}" >Register</a>
         <a class="navbar-brand" th:href="@{/login}">Login</a>
     </nav>
@@ -45,12 +45,20 @@
 
 <div class="LeftPanel" id="categoriesList">
     <tr th:block th:each="category : ${cats}">
+        <span th:if="${UserRole== null or UserRole.isEmpty()} ">
         <a th:href="@{/showByCategory(categoryID=${category.id})}" >
-            <span class="CategoryLink" th:text="${category.name}"/></span>
+            <span class="CategoryLink" th:text="${category.name}"/></a></span>
+        </span>
+        <span th:if="${UserRole != null} ">
+        <a th:href="@{/showByCategoryLoggedIn(categoryID=${category.id})}" >
+            <span class="CategoryLink" th:text="${category.name}"/></a></span>
         </a>
+        </span>
         <br>
     </tr>
 </div>
+
+
 
 <!--<h1 th:text="${buyerId}"/>-->
 
