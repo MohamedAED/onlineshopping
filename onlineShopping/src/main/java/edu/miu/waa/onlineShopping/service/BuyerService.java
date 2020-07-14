@@ -11,7 +11,6 @@ public interface BuyerService {
     void followSeller(Long buyerId, Long sellerId);
     void unfollowSeller(Long buyerId, Long sellerId);
     Buyer findUserByUsername(String username);
-    List<Buyer> findUnapprovedBuyers();
     void approveBuyer(Long id, String statusId);
     Buyer saveUser(Buyer buyer);
     Buyer findUserById(Long id);

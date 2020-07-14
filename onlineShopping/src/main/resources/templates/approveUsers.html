@@ -6,11 +6,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>Approve Users</title>
-    
+    <title>Users</title>
+
 </head>
 <body>
-<h1 > approve users list</h1>
 <span th:if="${unapprovedUsers!=null and !unapprovedUsers.isEmpty()}" >
     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
     <table class="table table-striped" id="myTable" name="myTable">
@@ -22,7 +21,8 @@
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
             <th scope="col">Role</th>
-            <th scope="col">Approve</th>
+            <th scope="col">Status</th>
+            <th scope="col">Approval Action</th>
             <th scope="col">&nbsp;</th>
             <th scope="col">&nbsp;</th>
         </tr>
@@ -35,8 +35,14 @@
                 <td th:text="${user.lastName}" />
                 <td th:text="${user.email}" />
                 <td th:text="${user.role}" />
-                <td><a th:href="@{/approveUserById(userId=${user.userId},role=${user.role}, status=2)}" >Approve me</a>/
-                <a th:href="@{/approveUserById(userId=${user.userId},role=${user.role}, status=1)}" >Reject</a> me</td>
+                <td th:text="${user.approved}" />
+                <td>
+                    <span th:if="${user.approved.name() == 'APPROVED'}">Approve/
+                        <a th:href="@{/approveUserById(userId=${user.userId},role=${user.role}, status=1)}" >Block</a></span>
+                    <span th:if="${user.approved.name() == 'PENDING'}"><a th:href="@{/approveUserById(userId=${user.userId},role=${user.role}, status=2)}" >Approve</a>/
+                             <a th:href="@{/approveUserById(userId=${user.userId},role=${user.role}, status=1)}" >Block</a></span>
+                    <span th:if="${user.approved.name() == 'REJECTED'}">This user is blocked!</span>
+                </td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>

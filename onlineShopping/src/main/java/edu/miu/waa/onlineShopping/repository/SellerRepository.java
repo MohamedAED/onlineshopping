@@ -9,9 +9,6 @@ import java.util.List;
 public interface SellerRepository extends JpaRepository<Seller,Long> {
     Seller findByUsername(String username);
 
-    @Query("select s from Seller s where s.approved = 0 ")
-    List<Seller> findAllUnApprovedUsers();
-
     @Query("select s from Seller s where s.userId=:id")
     Seller findUserById(Long id);
 }

@@ -50,8 +50,8 @@ public class AdminController {
     }
     public List<User> getUnapprovedUsers(){
         List<User> unapprovedUsers = new ArrayList<>();
-        unapprovedUsers.addAll(sellerService.findUnapprovedSellers());
-        unapprovedUsers.addAll(buyerService.findUnapprovedBuyers());
+        unapprovedUsers.addAll(sellerService.findAll());
+        unapprovedUsers.addAll(buyerService.getAllBuyer());
         return unapprovedUsers;
     }
 }

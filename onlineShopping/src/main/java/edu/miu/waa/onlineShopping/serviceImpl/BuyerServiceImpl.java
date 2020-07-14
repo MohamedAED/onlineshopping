@@ -37,9 +37,7 @@ public class BuyerServiceImpl implements BuyerService {
         return buyerRepository.findByUsername(username);
     }
 
-    public List<Buyer> findUnapprovedBuyers(){
-        return buyerRepository.findAllUnApprovedUsers();
-    }
+
     public void approveBuyer(Long id, String statusId){
         Buyer oldUser = buyerRepository.findById(id).get();
         if(oldUser == null){

@@ -11,6 +11,7 @@ import edu.miu.waa.onlineShopping.service.SellerService;
 
 import javax.transaction.Transactional;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -52,8 +53,8 @@ public class SellerServiceImpl implements SellerService {
 	}
 
 	@Override
-	public List<Seller> findUnapprovedSellers(){
-		return sellerRepository.findAllUnApprovedUsers();
+	public List<Seller> findAll() {
+		return sellerRepository.findAll();
 	}
 
 	@Override
