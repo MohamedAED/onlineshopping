@@ -3,6 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Shopping Cart</title>
+	<link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script type="text/javascript" th:src="@{/js/cart.js}"></script>
@@ -23,7 +24,13 @@
 <ul>
 	<li><a href="#">SOKS</a></li>
 	<li style="float:right">
-		<a th:href="@{/contShopping}">Home</a> | <a th:href="@{/buyerOrders(buyerId=${buyerId})}">Your Orders</a> | <a th:href="@{/shoppingCart(buyerId=${buyerId})}">Shopping Cart</a>
+		<a th:href="@{/contShopping}">Home</a> |
+	</li>
+	<li style="float:right">
+		<a th:href="@{/buyerOrders(buyerId=${buyerId})}">Your Orders</a>|
+	</li>
+	<li style="float: right">
+		<a th:href="@{/shoppingCart(buyerId=${buyerId})}">Shopping Cart</a>
 	</li>
 </ul>
 

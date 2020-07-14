@@ -3,19 +3,23 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Shopping Cart</title>
-	<link rel="stylesheet" th:href="@{/css/header.css}">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-
+	<link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 
 <body>
 
 <ul>
 	<li><a href="#">SOKS</a></li>
+
 	<li style="float:right">
 		<a th:href="@{/logout}">Logout</a>
-		<a th:href="@{/}">Products</a> | <a th:href="@{/shoppingCart(buyerId=1)}">Shopping Cart</a>
+	</li>
+	<li style="float:right">
+		<a th:href="@{/}">Products</a> |
+	</li>
+	<li style="float: right">
+		<a th:href="@{/shoppingCart(buyerId=1)}">Shopping Cart</a>
 	</li>
 </ul>
 	<h1>Welcome Shopping</h1>
