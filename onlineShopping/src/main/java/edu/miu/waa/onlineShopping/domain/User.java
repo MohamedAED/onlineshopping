@@ -5,8 +5,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import edu.miu.waa.onlineShopping.domain.enums.UserStatus;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import edu.miu.waa.onlineShopping.domain.enums.Role;
@@ -29,7 +27,9 @@ public class User {
 	@NotBlank
 	private String lastName;
 
+	@NotNull
 	@Column(name = "date_of_birth")
+	@Past
 	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	private Date dateOfBirth;
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org/">
 <head>
 	<meta charset="ISO-8859-1">
 	<style>
@@ -38,6 +38,10 @@
 				<tr>
 					<td><p>Stock Quantity: </p></td>
 					<td><input type="text" th:field="*{stockQuantity}" /></td>
+				</tr>
+				<tr>
+					<td><p>Product Number: </p></td>
+					<td><input type="text" th:field="*{productNumber}" /></td>
 				</tr>
 			</tbody>
 		</table>

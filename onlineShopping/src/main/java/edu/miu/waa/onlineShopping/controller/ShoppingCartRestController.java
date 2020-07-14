@@ -24,7 +24,7 @@ import edu.miu.waa.onlineShopping.service.ShoppingCartService;
 public class ShoppingCartRestController {
 
 	@Autowired
-	private BuyerService buyerService;
+	BuyerService buyerService;
 	
 	@Autowired
 	private ProductService productService;
@@ -35,13 +35,9 @@ public class ShoppingCartRestController {
 	@RequestMapping(value = "/add/{productId}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void addItem(@PathVariable Long productId, @RequestParam("buyerId") Long buyerId) {
-		
 		Buyer buyer = buyerService.findUserById(buyerId);
 		ShoppingCart shoppingCart = buyer.getShoppingCart();
 
-        System.out.println("-----------ADDING-------" + productId);
-        System.out.println("-----------ADDING-------" + productService);
-        
         Product product = productService.getProductById(productId);
         System.out.println("product: " + product);
         

@@ -6,12 +6,17 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>Approve Users</title>
+    <title>Users</title>
 </head>
 <body>
-<h1 > approve users list</h1>
+
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="/goHome">Admin Home Page</a>
+    <a class="navbar-brand" th:href="@{/logout}">Logout</a>
+</nav>
 <span th:if="${unapprovedUsers!=null and !unapprovedUsers.isEmpty()}" >
-    <table class="table table-striped">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+    <table class="table table-striped" id="myTable" name="myTable">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -20,7 +25,8 @@
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
             <th scope="col">Role</th>
-            <th scope="col">Approve</th>
+            <th scope="col">Status</th>
+            <th scope="col">Approval Action</th>
             <th scope="col">&nbsp;</th>
             <th scope="col">&nbsp;</th>
         </tr>
@@ -33,7 +39,14 @@
                 <td th:text="${user.lastName}" />
                 <td th:text="${user.email}" />
                 <td th:text="${user.role}" />
-                <td><a th:href="@{/approve(userId=${user.userId},role=${user.role})}" >Approve me<a/></td>
+                <td th:text="${user.approved}" />
+                <td>
+                    <span th:if="${user.approved.name() == 'APPROVED'}">Approve/
+                        <a th:href="@{/approveUserById(userId=${user.userId},role=${user.role}, status=1)}" >Block</a></span>
+                    <span th:if="${user.approved.name() == 'PENDING'}"><a th:href="@{/approveUserById(userId=${user.userId},role=${user.role}, status=2)}" >Approve</a>/
+                             <a th:href="@{/approveUserById(userId=${user.userId},role=${user.role}, status=1)}" >Block</a></span>
+                    <span th:if="${user.approved.name() == 'REJECTED'}">This user is blocked!</span>
+                </td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
@@ -44,5 +57,26 @@
 <span th:if="${unapprovedUsers == null or unapprovedUsers.isEmpty()}" >
     <h2> There is No New List!</h2>
 </span>
+
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 </body>
 </html>

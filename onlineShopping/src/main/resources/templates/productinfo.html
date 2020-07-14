@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Product Details</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/home_product.css}">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/add.js}"></script>
+</head>
+<body>
+
+<span th:if="${UserRole== null or UserRole.isEmpty()} ">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" th:href="@{/registration(type='buyer')}" >Register</a>
+        <a class="navbar-brand" th:href="@{/login}">Login</a>
+    </nav>
+</span>
+
+<span th:if="${UserRole == 'buyer'}">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+     <!--<H4>Hello <span th:text="${buyerId}"></span></H4>-->
+    <a class="navbar-brand" th:href="@{/logout}">Logout</a>
+    <a class="navbar-brand" th:href="@{/shoppingCart(buyerId= ${UserInfo.getUserId()})}">Cart</a></nav>
+</span>
+
+<span th:if="${UserRole== 'seller'} " >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light"><a class="navbar-brand" th:href="@{/logout}">Logout</a></nav>
+</span>
+
+
+<div class="LeftPanel" id="categoriesList">
+    <tr th:block th:each="category : ${cats}">
+        <span th:if="${UserRole== null or UserRole.isEmpty()} ">
+        <a th:href="@{/showByCategory(categoryID=${category.id})}" >
+            <span class="CategoryLink" th:text="${category.name}"/></a></span>
+        </span>
+        <span th:if="${UserRole != null and !UserRole.isEmpty()} ">
+        <a th:href="@{/showByCategoryLoggedIn(categoryID=${category.id})}" >
+            <span class="CategoryLink" th:text="${category.name}"/></a></span>
+        </a>
+        </span>
+        <br>
+    </tr>
+</div>
+<section class="container">
+    <div class="row">
+        <div class="col-md-5">
+
+            <img th:src="@{'/images/products/' + ${product.id} + '.jpg'}" width="250" height="290"><br/>
+            <strong>Product Code : </strong><span class="label label-warning" th:text="${product.id}"></span><br/>
+            <strong>Product Name : <span th:text="${product.name}"></span></strong><br/>
+            Description :<span th:text="${product.description}"></span><br/>
+            Seller <span class="label label-warning" th:text="${product.getSeller().getName()}"></span><br/>
+            Available Stock <span th:text="${product.stockQuantity}"></span> units in stock<br/>
+            Seller <span th:text="${product.getSeller().getName()}"></span><br/>
+            Price $<span th:text="${product.price}"></span><br/>
+            <p>
+                <input type="hidden" id="buyerId" name="buyerId" th:value="${buyerId}"/>
+
+                <span th:if="${UserRole} == 'buyer'">
+                    <input type="button" name="product-order-btn" id="product-order-btn" value="Add to Cart"  th:data="${product.id}" class="btn btn-success"/>
+                </span>
+
+                <span th:if="${following} == false" >
+                   <a th:href="@{/products/followSeller(sellerId=${product.seller.userId},buyerid=${buyerId})}"
+                      class="btn btn-success btn-large order-btn">
+                    <span class="glyphicon glyphicon-heart-empty"></span> Follow Seller </a>
+                </span>
+
+                <span th:if="${following} == true" >
+                  <a th:href="@{/products/unfollowSeller(sellerId=${product.seller.userId},buyerid=${buyerId})}"
+                     class="btn btn-danger btn-large order-btn">
+                    <span class="glyphicon glyphicon-thumbs-down"></span> Un-follow Seller</a>
+                </span>
+            </p>
+            <h5>Product Reviews...</h5>
+                <div th:each="review : ${reviews}">
+                    <div>
+                        <span class="BuyerName" th:text="${review.buyer.name}"></span><br/>
+                        <span class="BuyerComment" th:text="${review.description}"></span>
+                        <hr width="300"/>
+                    </div>
+                </div>
+        </div>
+        </div>
+    </div>
+
+</section>
+
+</body>
+</html>

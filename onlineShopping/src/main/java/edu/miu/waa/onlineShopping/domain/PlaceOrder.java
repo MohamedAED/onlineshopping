@@ -4,8 +4,16 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,11 +35,15 @@ public class PlaceOrder {
 	private LocalDate orderDate;
 	private LocalDate orderDeliveryDate;
 	private LocalDate orderShippingDate;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "shippingAddress_id", referencedColumnName = "id")
+	private ShippingAddress shippingAddress;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "billingAddress_id", referencedColumnName = "id")
+	private BillingAddress billingAddress;
 
-/*	@OneToMany(cascade = CascadeType.ALL)
-	@Fetch(FetchMode.JOIN)
-	private Set<CartItem> cartItems;
-=======*/
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<CartItem> cartItems;
 	
@@ -50,13 +62,16 @@ public class PlaceOrder {
 		this.cartItems = cartItems;
 	}
 
-	public PlaceOrder(BigDecimal totalPrice, Set<CartItem> cartItems) {
-		this.orderNumber = "1111";
+	public PlaceOrder(String orderNumber, BigDecimal totalPrice, Set<CartItem> cartItems, Seller seller, ShippingAddress shippingAddress, BillingAddress billingAddress) {
+		this.orderNumber = orderNumber;
 		this.totalPrice = totalPrice;
 		this.status = OrderStatus.PLACED;
 		this.orderDate = LocalDate.now();
 		this.cartItems = new HashSet<CartItem>();
 		this.cartItems.addAll(cartItems);
+		this.seller = seller;
+		this.shippingAddress = shippingAddress;
+		this.billingAddress = billingAddress;
 	}
 
 	public Long getId() {
@@ -129,6 +144,22 @@ public class PlaceOrder {
 
 	public void setSeller(Seller seller) {
 		this.seller = seller;
+	}
+
+	public ShippingAddress getShippingAddress() {
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(ShippingAddress shippingAddress) {
+		this.shippingAddress = shippingAddress;
+	}
+
+	public BillingAddress getBillingAddress() {
+		return billingAddress;
+	}
+
+	public void setBillingAddress(BillingAddress billingAddress) {
+		this.billingAddress = billingAddress;
 	}
 	
 }

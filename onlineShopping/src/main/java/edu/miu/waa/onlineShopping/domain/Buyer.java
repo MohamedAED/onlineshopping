@@ -1,7 +1,10 @@
 package edu.miu.waa.onlineShopping.domain;
 
+import java.math.BigDecimal;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.Valid;
 
@@ -18,14 +21,18 @@ public class Buyer extends User {
 	@JoinColumn(name = "cardPayment_id")
 	private CardPayment cardPayment;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@Fetch(FetchMode.JOIN)
+	@ManyToMany
+	@JoinTable(name = "FollowingBuyer",
+			joinColumns = @JoinColumn(name = "buyer_id"),
+			inverseJoinColumns = @JoinColumn(name = "seller_id"))
 	private Set<Seller> followingSellers;
 
+	@Valid
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "billing_address_id")
 	private BillingAddress billingAddress;
-	
+
+	@Valid
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "shipping_address_id")
 	private ShippingAddress shippingAddress;
@@ -72,5 +79,8 @@ public class Buyer extends User {
 	}
 	public void setFollowingSellers(Set<Seller> followingSellers) {
 		this.followingSellers = followingSellers;
+	}
+	public void gainPoints(BigDecimal totalPrice) {
+		this.points = this.points + totalPrice.divideToIntegralValue(new BigDecimal(2)).intValue();
 	}
 }

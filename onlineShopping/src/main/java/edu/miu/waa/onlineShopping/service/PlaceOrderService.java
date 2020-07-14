@@ -1,7 +1,9 @@
 package edu.miu.waa.onlineShopping.service;
 
 import java.util.Optional;
+import java.util.Set;
 
+import edu.miu.waa.onlineShopping.domain.Buyer;
 import edu.miu.waa.onlineShopping.domain.PlaceOrder;
 import edu.miu.waa.onlineShopping.domain.ShoppingCart;
 
@@ -15,6 +17,6 @@ public interface PlaceOrderService {
 
 	void delete(Long placeOrderId);
 	
-	PlaceOrder placeOrders(ShoppingCart shoppingCart);
+	Set<PlaceOrder> placeOrders(ShoppingCart shoppingCart, Buyer buyer, String paymentType);
 	
 }

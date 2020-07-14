@@ -1,99 +1,131 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="ISO-8859-1">
-	<style>
-		table, th, td {
-		  border: 1px solid black;
-		  border-collapse: collapse;
-		}
-	</style>
-	<title>Insert title here</title>
+    <meta charset="ISO-8859-1">
+    <title>Seller home page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 </head>
 <body>
 
-	Seller Page ...
-	<br/>
-	<br/>
-	<h1>Add Product</h1>
-	<form action="#"
-		th:action="@{/seller/addProduct(seller_id=${seller.userId})}"
-		th:object="${product}" method="post">
-		
-		<table>
-			<tbody>
-				<tr>
-					<td><p>Name: </p></td>
-					<td><input type="text" th:field="*{name}" /></td>
-				</tr>
-				<tr>
-					<td><p>Description: </p></td>
-					<td><input type="text" th:field="*{description}" /></td>
-				</tr>
-				<tr>
-					<td><p>Price: </p></td>
-					<td><input type="text" th:field="*{price}" /></td>
-				</tr>
-				<tr>
-					<td><p>Stock Quantity: </p></td>
-					<td><input type="text" th:field="*{stockQuantity}" /></td>
-				</tr>
-			</tbody>
-		</table>
-		<p>
-			<input type="submit" value="Submit" /> <input type="reset"
-				value="Reset" />
-		</p>
-	</form>
-	<h1>My Products</h1>
-	<table>
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{/logout}">Logout</a>
+</nav>
+
+<h1>Add Product</h1>
+<form autocomplete="off" enctype="multipart/form-data" action="#"
+      th:action="@{/seller/addProduct}"
+      th:object="${product}" method="post" class="form-horizontal"
+      role="form">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h2>Product Information</h2>
+            <div class="form-group">
+                <div class="col-sm-9">
+                    <label>name</label>
+                    <input type="text" th:field="*{name}"
+                           placeholder="" class="form-control"/> <label
+                        th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                        class="validation-message"></label>
+                </div>
+                <div class="col-sm-9">
+                    <label>Description</label>
+                    <input type="text" th:field="*{description}"
+                           placeholder="" class="form-control"/> <label
+                        th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                        class="validation-message"></label>
+                </div>
+                <div class="col-sm-9">
+                    <label>Price</label>
+                    <input type="text" th:field="*{price}"
+                           placeholder="" class="form-control"/> <label
+                        th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+                        class="validation-message"></label>
+                </div>
+                <div class="col-sm-9">
+                    <label>Stock Quantity</label>
+                    <input type="text" th:field="*{stockQuantity}"
+                           placeholder="" class="form-control"/> <label
+                        th:if="${#fields.hasErrors('stockQuantity')}" th:errors="*{stockQuantity}"
+                        class="validation-message"></label>
+                </div>
+                <div class="col-sm-9">
+                    <label>Product Number</label>
+                    <input type="text" th:field="*{productNumber}"
+                           placeholder="" class="form-control"/> <label
+                        th:if="${#fields.hasErrors('productNumber')}" th:errors="*{productNumber}"
+                        class="validation-message"></label>
+                </div>
+                <div class="col-sm-9">
+                    <label>Image</label>
+                    <span th:text="*{image}">Product Image: </span></label>
+                    <input th:field="*{image}" type="file"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-9">
+                    <button type="submit" class="btn btn-primary btn-block">Add product</button>
+                    <button type="reset" class="btn btn-primary btn-block">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<h1>My Products</h1>
+<span th:if="${seller.products.isEmpty() == null or seller.products.isEmpty()}">
+    <h2> There is No New List!</h2>
+	</span>
+<span th:if="${seller.products.isEmpty() != null and !seller.products.isEmpty()}">
+		<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>Id</th>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Price</th>
-				<th>Stock Quantity</th>
-				<th>Delete</th>
-				<th>Edit</th>
+				<th scope="col">Id</th>
+				<th scope="col">Name</th>
+				<th scope="col">Description</th>
+				<th scope="col">Price</th>
+				<th scope="col">Stock Quantity</th>
+				<th scope="col">Product Number</th>
+				<th scope="col">Image</th>
+				<th scope="col">Delete</th>
+				<th scope="col">Edit</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:if="${seller.products.empty}">
-				<td colspan="7">No Products Available</td>
-			</tr>
 			<tr th:each="product : ${seller.products}">
 				<td><span th:text="${product.id}"> Id </span></td>
 				<td><span th:text="${product.name}"> Name </span></td>
 				<td><span th:text="${product.description}"> Description </span></td>
 				<td><span th:text="${product.price}"> Price </span></td>
 				<td><span th:text="${product.stockQuantity}"> Stock Quantity </span></td>
-				<td> 
+				<td><span th:text="${product.productNumber}"> Product Number </span></td>
+				<th><img th:src="@{'/product/' + ${product.productNumber} + '.png'}" width="300" height="300"/></th>
+				<td>
 					<a th:href="@{/seller/deleteProduct(product_id=${product.id},seller_id=${seller.userId})}">Delete</a>
 				</td>
-				<td> 
+				<td>
 					<a th:href="@{/seller/updateProductPage(product_id=${product.id},seller_id=${seller.userId})}">Edit</a>
 				</td>
 			</tr>
 		</tbody>
 	</table>
-	<br />
-	<br />
-	<h1>My Orders</h1>
-	<table>
+	</span>
+<h1>My Orders</h1>
+<span th:if="${seller.orders.isEmpty() == null or seller.orders.isEmpty()}">
+    <h2>No Orders Available!</h2>
+	</span>
+<span th:if="${seller.orders.isEmpty() != null and !seller.orders.isEmpty()}">
+		<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>Id</th>
-				<th>Order Number</th>
-				<th>Total Price</th>
-				<th>Status</th>
-				<th>Edit</th>
+				<th scope="col">Id</th>
+				<th scope="col">Order Number</th>
+				<th scope="col">Total Price</th>
+				<th scope="col">Status</th>
+				<th scope="col">Edit</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:if="${seller.orders.empty}">
-				<td colspan="5">No Orders Available</td>
-			</tr>
 			<tr th:each="order : ${seller.orders}">
 				<td><span th:text="${order.id}"> Id </span></td>
 				<td><span th:text="${order.orderNumber}"> Order Number </span></td>
@@ -105,6 +137,6 @@
 			</tr>
 		</tbody>
 	</table>
-
+	</span>
 </body>
 </html>

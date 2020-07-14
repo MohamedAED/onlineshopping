@@ -16,7 +16,7 @@ public class Address {
 	private long id;
 
 	@NotBlank
-	@Size(min = 5, max = 20)
+	@Size(min = 1, max = 20)
 	private String street;
 
 	@NotBlank

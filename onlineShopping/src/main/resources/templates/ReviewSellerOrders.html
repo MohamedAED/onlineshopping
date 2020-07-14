@@ -1,10 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org/">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
-	msa msa
+	<form action="#"
+		th:action="@{/seller/updateOrderStatus(seller_id=${seller_id}, order_id=${order_id})}"
+		th:object="${order}" method="post">
+		
+		<table>
+			<tbody>
+				<tr>
+					<td><p>Id: </p></td>
+					<td><input type="text" th:field="*{id}" disabled /></td>
+				</tr>
+				<tr>
+					<td><p>Order Number: </p></td>
+					<td><input type="text" th:field="*{orderNumber}" disabled /></td>
+				</tr>
+				<tr>
+					<td><p>Total Price: </p></td>
+					<td><input type="text" th:field="*{totalPrice}" disabled /></td>
+				</tr>
+				<tr>
+					<td><p>Order Status: </p></td>
+					<td>
+						<select name="status" th:field="*{status}">
+					        <option th:each="status : ${T(edu.miu.waa.onlineShopping.domain.enums.OrderStatus).values()}"
+					                th:value="${status}" th:text="${status}"></option>
+					    </select>
+				    </td>
+				</tr>
+			</tbody>
+		</table>
+		<p>
+			<input type="submit" value="Submit" /> <input type="reset" value="Reset" />
+		</p>
+	</form>
 </body>
 </html>
