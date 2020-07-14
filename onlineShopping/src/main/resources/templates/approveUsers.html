@@ -7,11 +7,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Approve Users</title>
+    
 </head>
 <body>
 <h1 > approve users list</h1>
 <span th:if="${unapprovedUsers!=null and !unapprovedUsers.isEmpty()}" >
-    <table class="table table-striped">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+    <table class="table table-striped" id="myTable" name="myTable">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -45,5 +47,26 @@
 <span th:if="${unapprovedUsers == null or unapprovedUsers.isEmpty()}" >
     <h2> There is No New List!</h2>
 </span>
+
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 </body>
 </html>

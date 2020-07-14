@@ -5,6 +5,8 @@ import edu.miu.waa.onlineShopping.domain.*;
 import edu.miu.waa.onlineShopping.domain.enums.*;
 import edu.miu.waa.onlineShopping.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,7 +33,9 @@ public class LoginController {
 	public String goHome(Principal principal, Model model) {
 		User user = getUserByName(principal.getName());
 		if (user.getRole() == Role.SELLER) {
+
 		} else if (user.getRole() == Role.ADMIN) {
+
 		} else {
 		}
 		model.addAttribute("role", user.getRole().toString().toLowerCase());
@@ -49,10 +53,10 @@ public class LoginController {
 		return user;
 	}
 
-	@RequestMapping(value={"/loginPage"}, method = RequestMethod.GET)
+	@RequestMapping(value={"/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("loginPage");
+		modelAndView.setViewName("login");
 		return modelAndView;
 	}
 
