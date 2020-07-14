@@ -4,17 +4,17 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Shopping Cart</title>
 	<link rel="stylesheet" th:href="@{/css/header.css}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/cart.js}"></script>
-    <style>
-    .re{
-    width:300px;
-    }
-    .max{
-    	width:500px;
-    }
-    </style>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" th:src="@{/js/cart.js}"></script>
+	<style>
+		.re{
+			width:300px;
+		}
+		.max{
+			width:500px;
+		}
+	</style>
 </head>
 
 <body>
@@ -23,80 +23,74 @@
 
 <ul>
 	<li><a href="#">SOKS</a></li>
-	<li style="float:right">
-		<a th:href="@{/contShopping}">Home</a> |
-	</li>
-	<li style="float:right">
-		<a th:href="@{/buyerOrders(buyerId=${buyerId})}">Your Orders</a>|
-	</li>
-	<li style="float: right">
-		<a th:href="@{/shoppingCart(buyerId=${buyerId})}">Shopping Cart</a>
-	</li>
+	<li style="float:right"><a th:href="@{/}">Home</a></li>
+	<li style="float:right"><a th:href="@{/buyerOrders(buyerId=${buyerId})}">Your Orders</a></li>
+	<li style="float: right"><a th:href="@{/shoppingCart(buyerId=${buyerId})}">Shopping Cart</a></li>
 </ul>
 
 
 
 <section>
-    <div class="jumbotron">
-        <div class="container">
-            <h2>Shopping Cart</h2>
-        </div>
-    </div>
+	<div class="jumbotron">
+		<div class="container">
+			<h2>Shopping Cart</h2>
+		</div>
+	</div>
 </section>
 
 <section class="container">
 	<div id="global">
-	    <form action="#" th:action="@{/shoppingCart(buyerId=${buyerId})}" method="post" enctype="multipart/form-data">
-	    	<fieldset>
-	    		<table class="table table-hover" border=1 frame=void rules=rows>
-	    			<tr>
-				      	<th style="text-align:left;" >Items</th>
-				      	<th></th>
-				      	<th style="text-align:right;" >Price</th>
-				    </tr>
-				    <tr th:each="item : ${cartItems}">
-				    	<td><img th:src="@{'/products/' + ${item.value.product.productNumber} + '.png'}" width="200" height="100"/></td>
-                           <td>
-                            <table>
-	                            <tr><td class="max" th:text="${item.value.product.description}">Description</td>   
-                                   </tr>
-	                            <tr><td th:text="${item.value.product.stockQuantity + ' items in stock'}">Stock Quantity</td></tr>
-	                            <tr>
-	                            	<td>
-	                            		<table>
-		                            		<tr>
-		                            			<td th:text="${'Qty: ' + item.value.quantity}">Item Quantity</td>
-                      							<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
-                                            	<td><a href="#" class="label label-success product-add-btn" th:data="${item.value.product.id}" id="product-add-btn" name="product-add-btn">
-                      								<span class="glyphicon glyphicon-plus" /></span></a></td>
-                      							<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
-                                            	<td><a href="#" class="label label-danger product-remove-btn" th:data="${item.value.product.id}" id="product-remove-btn" name="product-remove-btn">
-                      								<span class="glyphicon glyphicon-remove" /></span> remove </a></td>
-                                        	</tr>
-                                       </table>
-                                	</td>
+		<form action="#" th:action="@{/shoppingCart(buyerId=${buyerId})}" method="post" enctype="multipart/form-data">
+			<fieldset>
+				<table class="table table-hover" border=1 frame=void rules=rows>
+					<tr>
+						<th style="text-align:left;" >Items</th>
+						<th></th>
+						<th style="text-align:right;" >Price</th>
+					</tr>
+					<tr th:each="item : ${cartItems}">
+						<td><img th:src="@{'/products/' + ${item.value.product.productNumber} + '.png'}" width="200" height="100"></td>
+						<td>
+							<table>
+								<tr><td class="max" th:text="${item.value.product.description}">Description</td>
 								</tr>
-                            </table>
-                           </td>		      	
-				      	<td style="vertical-align:top;text-align:right" th:text="${'$' + item.value.product.price}">Price</td> 
-				    </tr>
-				    <tr>
-                       	<td></td>
-                        <td></td>
-                        <td>
-                       		<label for="shoppingCartTotalPrice"><span id="shoppingCartTotalPrice" th:text="#{shoppingCart.form.totalPrice}">Subtotal :</span></label>
-                           	<label th:text="${'$' + shoppingCart.totalPrice}">0</label>
-                        </td>
-                       </tr>
+								<tr><td th:text="${item.value.product.stockQuantity + ' items in stock'}">Stock Quantity</td></tr>
+								<tr>
+									<td>
+										<table>
+											<tr>
+												<td th:text="${'Qty: ' + item.value.quantity}">Item Quantity</td>
+												<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
+												<td><a href="#" class="label label-success product-add-btn" th:data="${item.value.product.id}" id="product-add-btn" name="product-add-btn">
+													<span class="glyphicon glyphicon-plus" /></span></a></td>
+												<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
+												<td><a href="#" class="label label-danger product-remove-btn" th:data="${item.value.product.id}" id="product-remove-btn" name="product-remove-btn">
+													<span class="glyphicon glyphicon-remove" /></span> remove </a></td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td style="vertical-align:top;text-align:right" th:text="${'$' + item.value.product.price}">Price</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>
+							<label for="shoppingCartTotalPrice"><span th:text="#{shoppingCart.form.totalPrice}">Subtotal :</span></label>
+							<label id="shoppingCartTotalPrice" th:text="${'$' + shoppingCart.totalPrice}">0</label>
+						</td>
+					</tr>
 				</table>
-	    	</fieldset>
-	    </form>
-	    <br/><br/>
-	    <div>
-	    	<a th:href="@{/contShopping}" class="btn btn-default"><span class="glyphicon-hand-left glyphicon"></span> Continue shopping </a>
-            <a th:href="@{/order(buyerId=${buyerId})}" class="btn btn-success pull-right"> <span class="glyphicon-shopping-cart glyphicon"></span> Check out</a>
-        </div>
-        <br/><br/><br/><br/>
+			</fieldset>
+		</form>
+		<br/><br/>
+		<div>
+			<a th:href="@{/}" class="btn btn-default"><span class="glyphicon-hand-left glyphicon"></span> Continue shopping </a>
+			<a th:href="@{/order(buyerId=${buyerId})}" class="btn btn-success pull-right"> <span class="glyphicon-shopping-cart glyphicon"></span> Check out</a>
+		</div>
+		<br/><br/><br/><br/>
 	</div>
 </section>
 </body>
