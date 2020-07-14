@@ -77,8 +77,15 @@ public class ProductController {
 
     @GetMapping("/showByCategory")
     public String showByCategory(@RequestParam("categoryID") Long productCategoryID, Model model) {
+
+        /*
+        model.addAttribute("UserInfo",buyer);
+        model.addAttribute("buyerId",UserId);
+        model.addAttribute("UserRole",userRole);
+        * */
+
         model.addAttribute("products",productService.getAllProductsPerCategory(productCategoryID));
-        return "home";
+        return "forward:/";
     }
 
 
