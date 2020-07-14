@@ -126,7 +126,7 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
 		shoppingCart.setTotalPrice(new BigDecimal(0.00));
 		shoppingCartService.update(shoppingCart);
 		
-		//sendConfirmationMail(buyer, emailMessage) ;
+		sendConfirmationMail(buyer, emailMessage) ;
 		
 		return placedOrders;
 	}
@@ -138,9 +138,7 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
 		mailMessage.setTo(buyer.getEmail());
 		mailMessage.setSubject(adminService.getConfirmationSubject());
 		mailMessage.setText(emailMessage);
-
-	//	emailSenderService.sendEmail(mailMessage);
-
+		emailSenderService.sendEmail(mailMessage);
 	}
 
 }

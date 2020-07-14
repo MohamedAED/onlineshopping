@@ -193,6 +193,8 @@ public class OnApplicationStartUp {
 
 		sellerAccount.getProducts().add(amrCD);
 		sellerAccount.getProducts().add(titanic);
+
+		sellerService.encryptPassword(sellerAccount);
 		sellerService.saveUser(sellerAccount);
 		/**************************************************************************************************/
 		Buyer buyerUser = new Buyer();
