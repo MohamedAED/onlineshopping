@@ -32,15 +32,21 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light"><a class="navbar-brand" th:href="@{/logout}">Logout</a></nav>
 </span>
 
+
 <div class="LeftPanel" id="categoriesList">
     <tr th:block th:each="category : ${cats}">
-        <a th:href="@{/showByCategory(categoryID=${category.id})}" ><span class="CategoryLink" th:text="${category.name}"/></span></a>
+        <span th:if="${UserRole== null or UserRole.isEmpty()} ">
+        <a th:href="@{/showByCategory(categoryID=${category.id})}" >
+            <span class="CategoryLink" th:text="${category.name}"/></a></span>
+        </span>
+        <span th:if="${UserRole != null} ">
+        <a th:href="@{/showByCategoryLoggedIn(categoryID=${category.id})}" >
+            <span class="CategoryLink" th:text="${category.name}"/></a></span>
+        </a>
+        </span>
         <br>
     </tr>
 </div>
-<!--
-<h1 th:text="${buyerId}"/>
-<h1 th:text="${UserRole}"/>-->
 
 
 <section class="container">

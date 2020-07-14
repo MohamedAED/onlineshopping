@@ -88,6 +88,18 @@ public class ProductController {
         return "forward:/";
     }
 
+    @RequestMapping("/showByCategoryLoggedIn")
+    public String showByCategoryLoggedIn(Principal principal,@RequestParam("categoryID") Long productCategoryID, Model model) {
+        if (principal != null){
+            Buyer buyer= buyerService.findUserByUsername(principal.getName());
+            model.addAttribute("UserInfo",buyer);
+            model.addAttribute("buyerId",buyer.getUserId());
+            model.addAttribute("UserRole",buyer.getRole().toString().toLowerCase());
+        }
+        model.addAttribute("products", productService.getAllProductsPerCategory(productCategoryID));
+        return "home";
+    }
+
 
     @GetMapping("/followSeller")
     public String followSeller(@RequestParam("sellerId") Long sellerID,@RequestParam("buyerid") Long buyerid, Model model) {

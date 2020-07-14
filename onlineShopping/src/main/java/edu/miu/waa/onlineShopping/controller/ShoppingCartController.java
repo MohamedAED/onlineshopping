@@ -15,17 +15,20 @@ import edu.miu.waa.onlineShopping.service.BuyerService;
 public class ShoppingCartController {
 	
 	@Autowired
-	private BuyerService buyerService;
+	BuyerService buyerService;
 	
 	@RequestMapping
 	public String getCart(@RequestParam("buyerId") Long buyerId, Model model) {
 		
 		Buyer buyer = buyerService.findUserById(buyerId);
+		
 		ShoppingCart shoppingCart = buyer.getShoppingCart();
 			
 		model.addAttribute("shoppingCart", shoppingCart);
 		model.addAttribute("cartItems", shoppingCart.getItems());
+		model.addAttribute("buyer", buyer);
 		model.addAttribute("buyerId", buyerId);
+		
 		return "ShoppingCart";
 	}
 	

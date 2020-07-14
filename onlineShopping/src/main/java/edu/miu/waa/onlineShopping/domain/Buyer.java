@@ -1,7 +1,10 @@
 package edu.miu.waa.onlineShopping.domain;
 
+import java.math.BigDecimal;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.Valid;
 
@@ -74,5 +77,8 @@ public class Buyer extends User {
 	}
 	public void setFollowingSellers(Set<Seller> followingSellers) {
 		this.followingSellers = followingSellers;
+	}
+	public void gainPoints(BigDecimal totalPrice) {
+		this.points = this.points + totalPrice.divideToIntegralValue(new BigDecimal(2)).intValue();
 	}
 }
