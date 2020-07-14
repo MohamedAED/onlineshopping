@@ -14,9 +14,9 @@ Values('Fairfield','USA','IA','1000 4th North St.','52557'),
       ('City 3','USA','MM','1000 4th North St.','52557');
 --Card Payment
 INSERT INTO CARD_PAYMENT (CARD_NUMBER,CVV,EXPIRY_DATE,NAME_ON_CARD)
-Values ('12142569875','124','2010-01-01','MOHAMED SALEH'),
-       ('12345698765','987','2023-01-01','Ahmed Mostafa'),
-       ('12345674765','980','2025-01-01','Mostafa Abdel');
+Values ('1214256987525495','124','2010-01-01','MOHAMED SALEH'),
+       ('1234569876529814','987','2023-01-01','Ahmed Mostafa'),
+       ('1234567476528254','980','2025-01-01','Mostafa Abdel');
 --Categories
 INSERT INTO PRODUCT_CATEGORY(NAME)
 Values ('Clothing'),

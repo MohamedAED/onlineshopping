@@ -1,15 +1,28 @@
 package edu.miu.waa.onlineShopping.domain;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import edu.miu.waa.onlineShopping.domain.enums.UserStatus;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import edu.miu.waa.onlineShopping.domain.enums.OrderStatus;
 import edu.miu.waa.onlineShopping.domain.enums.Role;
+import edu.miu.waa.onlineShopping.domain.enums.UserStatus;
 
 
 @MappedSuperclass
@@ -164,6 +177,26 @@ public class User {
 
 	public void setPasswordCheck(String passwordCheck) {
 		this.passwordCheck = passwordCheck;
+	}
+	
+	public Set<PlaceOrder> getNotCanceledOrders() {
+		Set<PlaceOrder> placeOrders = new HashSet<PlaceOrder>();
+		for(PlaceOrder placeOrder : this.orders) {
+			if(placeOrder.getStatus() != OrderStatus.CANCELED) {
+				placeOrders.add(placeOrder);
+			}
+		}
+		return placeOrders;
+	}
+	
+	public Set<PlaceOrder> getCanceledOrders() {
+		Set<PlaceOrder> placeOrders = new HashSet<PlaceOrder>();
+		for(PlaceOrder placeOrder : this.orders) {
+			if(placeOrder.getStatus() == OrderStatus.CANCELED) {
+				placeOrders.add(placeOrder);
+			}
+		}
+		return placeOrders;
 	}
 
 }

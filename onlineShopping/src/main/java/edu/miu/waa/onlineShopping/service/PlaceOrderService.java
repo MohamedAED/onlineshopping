@@ -1,6 +1,5 @@
 package edu.miu.waa.onlineShopping.service;
 
-import java.util.Optional;
 import java.util.Set;
 
 import edu.miu.waa.onlineShopping.domain.Buyer;
@@ -11,7 +10,7 @@ public interface PlaceOrderService {
 
 	PlaceOrder create(PlaceOrder placeOrder);
 
-	Optional<PlaceOrder> read(Long placeOrderId);
+	PlaceOrder read(Long placeOrderId);
 
 	void update(PlaceOrder placeOrder);
 

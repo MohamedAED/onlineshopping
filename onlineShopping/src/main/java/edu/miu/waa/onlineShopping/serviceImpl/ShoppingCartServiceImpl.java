@@ -1,7 +1,5 @@
 package edu.miu.waa.onlineShopping.serviceImpl;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +19,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	}
 
 	@Override
-	public Optional<ShoppingCart> read(Long shoppingCartId) {
-		return shoppingCartRepository.findById(shoppingCartId);
+	public ShoppingCart read(Long shoppingCartId) {
+		return shoppingCartRepository.findById(shoppingCartId).get();
 	}
 
 	@Override

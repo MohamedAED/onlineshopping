@@ -2,18 +2,20 @@ package edu.miu.waa.onlineShopping.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -36,39 +38,33 @@ public class PlaceOrder {
 	private LocalDate orderDeliveryDate;
 	private LocalDate orderShippingDate;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "shippingAddress_id", referencedColumnName = "id")
+	@ManyToOne
+	@JoinColumn(name="shippingAddress_id", nullable=true)
 	private ShippingAddress shippingAddress;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "billingAddress_id", referencedColumnName = "id")
+	@ManyToOne
+	@JoinColumn(name = "billingAddress_id", nullable=true)
 	private BillingAddress billingAddress;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<CartItem> cartItems;
+	//@OneToMany(mappedBy="placeOrder", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
+	private Map<Long, CartItem> cartItems;
 	
 	@JsonIgnore
 	@ManyToOne
 	private Seller seller;
 
-	public Set<CartItem> getCartItems() {
-		return cartItems;
-	}
-
 	public PlaceOrder() {
 	}
-
-	public void setCartItems(Set<CartItem> cartItems) {
-		this.cartItems = cartItems;
-	}
-
-	public PlaceOrder(String orderNumber, BigDecimal totalPrice, Set<CartItem> cartItems, Seller seller, ShippingAddress shippingAddress, BillingAddress billingAddress) {
+	
+	public PlaceOrder(String orderNumber, BigDecimal totalPrice, Map<Long, CartItem> cartItems, Seller seller, ShippingAddress shippingAddress, BillingAddress billingAddress) {
 		this.orderNumber = orderNumber;
 		this.totalPrice = totalPrice;
 		this.status = OrderStatus.PLACED;
 		this.orderDate = LocalDate.now();
-		this.cartItems = new HashSet<CartItem>();
-		this.cartItems.addAll(cartItems);
+		this.cartItems = new HashMap<Long, CartItem>();
+		this.cartItems.putAll(cartItems);
 		this.seller = seller;
 		this.shippingAddress = shippingAddress;
 		this.billingAddress = billingAddress;
@@ -130,11 +126,11 @@ public class PlaceOrder {
 		this.orderShippingDate = orderShippingDate;
 	}
 
-	public Set<CartItem> getItems() {
+	public Map<Long, CartItem> getCartItems() {
 		return cartItems;
 	}
 
-	public void setItems(Set<CartItem> cartItems) {
+	public void setCartItems(Map<Long, CartItem> cartItems) {
 		this.cartItems = cartItems;
 	}
 

@@ -22,7 +22,9 @@ import edu.miu.waa.onlineShopping.domain.PreOrderInfo;
 import edu.miu.waa.onlineShopping.domain.Product;
 import edu.miu.waa.onlineShopping.domain.Review;
 import edu.miu.waa.onlineShopping.domain.ShoppingCart;
+import edu.miu.waa.onlineShopping.domain.enums.OrderStatus;
 import edu.miu.waa.onlineShopping.service.BuyerService;
+import edu.miu.waa.onlineShopping.service.OrderService;
 import edu.miu.waa.onlineShopping.service.PlaceOrderService;
 import edu.miu.waa.onlineShopping.service.ProductService;
 import edu.miu.waa.onlineShopping.service.ReportManagerService;
@@ -43,6 +45,9 @@ public class OrderController {
 	@Autowired
 	ProductService productService;
 	
+	@Autowired
+	OrderService orderService;
+	
 	@RequestMapping(value = "/order")
 	public String getOrderInfo(PreOrderInfo preOrderInfo, @RequestParam("buyerId") Long buyerId, Model model, RedirectAttributes redirectAttributes) {
 		
@@ -50,20 +55,22 @@ public class OrderController {
 		ShoppingCart shoppingCart = buyer.getShoppingCart();
 		
 		String paymentType = "creditCard";
-		preOrderInfo = new PreOrderInfo(buyer.getShippingAddress(), buyer.getBillingAddress(), buyer.getCardPayment(), buyer.getShoppingCart(), buyer, paymentType);
-		redirectAttributes.addFlashAttribute("preOrderInfo", preOrderInfo);
-		redirectAttributes.addFlashAttribute("buyerId", buyerId);
 		
 		Integer allowPointsPayment = 0;
 		int requiredPoints = shoppingCart.getTotalPrice().divideToIntegralValue(new BigDecimal(2)).intValue();
 		if(requiredPoints <= buyer.getPoints()) {
 			allowPointsPayment = 1;
 		}
+		String cardNumberTruncated = "**" + buyer.getCardPayment().getCardNumber().substring(12);
 		
-		//model.addAttribute("paymentType", paymentType);
-		redirectAttributes.addFlashAttribute("requiredPoints", requiredPoints);
-		redirectAttributes.addFlashAttribute("allowPointsPayment", allowPointsPayment);
+		preOrderInfo = new PreOrderInfo(buyer.getShippingAddress(), buyer.getBillingAddress(), buyer.getCardPayment(), 
+				buyer.getShoppingCart(), buyer, paymentType, cardNumberTruncated, requiredPoints);
+		
+		redirectAttributes.addFlashAttribute("preOrderInfo", preOrderInfo);
 		redirectAttributes.addFlashAttribute("buyerId", buyerId);
+		
+		model.addAttribute("allowPointsPayment", allowPointsPayment);
+		model.addAttribute("buyerId", buyerId);
 		
 		return "redirect:/displayOrder";
 	}
@@ -93,7 +100,7 @@ public class OrderController {
 	public String getBuyerOrder(@RequestParam("buyerId") Long buyerId, Model model) {
 		
 		Buyer buyer = buyerervice.findUserById(buyerId);
-		Set<PlaceOrder> placedOrders = buyer.getOrders();
+		Set<PlaceOrder> placedOrders = buyer.getNotCanceledOrders();
 
 		model.addAttribute("buyer", buyer);
 		model.addAttribute("buyerId", buyerId);
@@ -125,6 +132,17 @@ public class OrderController {
 		productService.save(product);
 		
 		return "forward:/buyerOrders?buyerId=" + buyerId;
+	}
+	
+	@RequestMapping(value = "/order/cancelOrder/{orderId}", method = RequestMethod.PUT)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public String cancelOrder(@PathVariable Long orderId, @RequestParam("buyerId") Long buyerId, Model model) throws FileNotFoundException, JRException {
+		
+		PlaceOrder placeOrder = placeOrderService.read(orderId);
+		placeOrder.setStatus(OrderStatus.CANCELED);
+		placeOrderService.update(placeOrder);
+		
+		return "redirect:/buyerOrders?buyerId=" + buyerId;
 	}
 	
 }
