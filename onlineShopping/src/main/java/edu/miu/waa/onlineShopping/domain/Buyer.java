@@ -1,8 +1,13 @@
 package edu.miu.waa.onlineShopping.domain;
 
+import java.math.BigDecimal;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 
 import org.hibernate.annotations.Fetch;
@@ -72,5 +77,8 @@ public class Buyer extends User {
 	}
 	public void setFollowingSellers(Set<Seller> followingSellers) {
 		this.followingSellers = followingSellers;
+	}
+	public void gainPoints(BigDecimal totalPrice) {
+		this.points = this.points + totalPrice.divideToIntegralValue(new BigDecimal(2)).intValue();
 	}
 }

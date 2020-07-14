@@ -6,6 +6,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Online Shopping</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
@@ -14,24 +18,29 @@
 <body>
 
 
+<!--<a th:href="@{/products/product(id=${product.id})}"-->
 
+<span th:if="${UserRole== null or UserRole.isEmpty()} ">
+    <nav class="navbar navbar-expand-lg navbar-light bg-ligh">
+        <a class="navbar-brand" th:href="@{/registration(type='buyer')}" >Register</a>
+        <a class="navbar-brand" th:href="@{/login}">Login</a>
+    </nav>
+</span>
 
-<span th:if="${userRole} == 'buyer'">
+<span th:if="${UserRole == 'buyer'}">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="logout">Logout</a>
-    <a class="navbar-brand" href="cart">Cart</a>
-</nav>
+     <!--<H4>Hello <span th:text="${buyerId}"></span></H4>-->
+    <a class="navbar-brand" th:href="@{/logout}">Logout</a>
+    <a class="navbar-brand" th:href="@{/shoppingCart(buyerId= ${UserInfo.getUserId()})}">Cart</a></nav>
 </span>
-<span th:if="${userRole} == 'seller'" >
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="login">Login</a>
-</nav>
+
+<span th:if="${UserRole== 'seller'} " >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light"><a class="navbar-brand" th:href="@{/logout}">Logout</a></nav>
 </span>
-<span th:if="${userRole} == 'admin'" >
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="logout">Logout</a>
-</nav>
-</span>
+
+<!--<span th:if="${UserRole== 'admin'} " >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light"><a class="navbar-brand" th:href="@{/logout}">Logout</a></nav>
+</span>-->
 
 
 <div class="LeftPanel" id="categoriesList">
@@ -43,19 +52,25 @@
     </tr>
 </div>
 
+<!--<h1 th:text="${buyerId}"/>-->
 
 <section class="container">
     <div class="row">
         <div class="col-sm-6 col-md-3" th:each="product : ${products}">
             <div class="thumbnail">
                 <div class="caption">
-                    <h2 th:text="${product.name}"></h2>
+                    <h5 th:text="${product.name}"></h5>
                     <img th:src="@{'/images/products/' + ${product.id} + '.jpg'}" width="250" height="290">
-                    <p th:text="${product.description}"></p>
-                    <p>$<span th:text="${product.price}"></span></p>
-                    <p><span th:text="${product.getSeller().getName()}"></span></p>
-                    <p>Available <span th:text="${product.stockQuantity}"></span> units in stock</p>
-                    <p><a th:href="@{/products/product(id=${product.id})}" class="btn btn-primary"><span class="glyphicon-info-sign glyphicon"/></span> Details</a></p>
+                    Description :<span th:text="${product.description}"></span><br/>
+                    Price $<span th:text="${product.price}"></span><br/>
+                    Seller <span th:text="${product.getSeller().getName()}"></span><br/>
+                    Available <span th:text="${product.stockQuantity}"></span> units in stock<br/>
+                    <span th:if="${UserRole== null or UserRole.isEmpty()} ">
+                        <a th:href="@{/products/productView(id=${product.id})}" class="btn btn-primary glyphicon-info-sign glyphicon"> Details</a>
+                    </span>
+                    <span th:if="${UserRole== 'buyer'} ">
+                        <a th:href="@{/products/product(id=${product.id},buyerid=${buyerId})}" class="btn btn-primary glyphicon-info-sign glyphicon"> Details</a>
+                    </span>
                 </div>
             </div>
         </div>
@@ -63,24 +78,5 @@
 </section>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
->>>>>>> Mega_Branch
 </body>
 </html>

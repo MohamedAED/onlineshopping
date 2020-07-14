@@ -17,26 +17,26 @@
 </head>
 
 <body>
-	
+
+<input type="hidden" id="buyerId" name="buyerId" th:value="${buyerId}" />
+
 <section>
     <div class="pull-right" style="padding-right:50px">
-        <a th:href="@{/}">Products</a> | <a th:href="@{/shoppingCart(buyerId=${buyerId})}">Shopping Cart</a>
+        <a th:href="@{/}">Home</a> | <a th:href="@{/buyerOrders(buyerId=${buyerId})}">Your Orders</a> | <a th:href="@{/shoppingCart(buyerId=${buyerId})}">Shopping Cart</a>
     </div>
 </section>
 
 <section>
     <div class="jumbotron">
         <div class="container">
-            <h1>Shopping Cart</h1>
+            <h2>Shopping Cart</h2>
         </div>
     </div>
 </section>
 
-<input type="hidden" id="buyerId" name="buyerId" th:value="${buyerId}" />
-	
 <section class="container">
 	<div id="global">
-	    <form action="#" th:action="@{/shoppingCart}" method="post" enctype="multipart/form-data">
+	    <form action="#" th:action="@{/shoppingCart(buyerId=${buyerId})}" method="post" enctype="multipart/form-data">
 	    	<fieldset>
 	    		<table class="table table-hover" border=1 frame=void rules=rows>
 	    			<tr>
@@ -57,14 +57,14 @@
 		                            		<tr>
 		                            			<td th:text="${item.value.quantity}">Item Quantity</td>
 	                                            <td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
-                                            	<td><a href="#" class="label label-danger product-remove-btn" th:data="${item.value.product.id}">
+                                            	<td><a href="#" class="label label-danger product-remove-btn" th:data="${item.value.product.id}" id="product-remove-btn" name="product-remove-btn">
                       								<span class="glyphicon glyphicon-remove" /></span> Delete </a></td>
                       							<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
                                             	<td><a href="#" class="label label-success product-order-btn" th:data="${item.value.product.id}" id="product-order-btn" name="product-order-btn">
                       								<span class="glyphicon glyphicon-plus" /></span> Add to Cart </a></td>
                                         	</tr>
                                        </table>
-                                       </td>
+                                	</td>
 								</tr>
                             </table>
                            </td>		      	
@@ -81,10 +81,12 @@
 				</table>
 	    	</fieldset>
 	    </form>
+	    <br/><br/>
 	    <div>
 	    	<a th:href="@{/}" class="btn btn-default"><span class="glyphicon-hand-left glyphicon"></span> Continue shopping </a>
             <a th:href="@{/order(buyerId=${buyerId})}" class="btn btn-success pull-right"> <span class="glyphicon-shopping-cart glyphicon"></span> Check out</a>
         </div>
+        <br/><br/><br/><br/>
 	</div>
 </section>
 </body>

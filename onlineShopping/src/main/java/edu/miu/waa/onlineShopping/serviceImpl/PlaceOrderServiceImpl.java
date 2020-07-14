@@ -10,12 +10,15 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.miu.waa.onlineShopping.domain.Buyer;
 import edu.miu.waa.onlineShopping.domain.CartItem;
 import edu.miu.waa.onlineShopping.domain.PlaceOrder;
 import edu.miu.waa.onlineShopping.domain.Seller;
 import edu.miu.waa.onlineShopping.domain.ShoppingCart;
 import edu.miu.waa.onlineShopping.repository.PlaceOrderRepository;
+import edu.miu.waa.onlineShopping.service.BuyerService;
 import edu.miu.waa.onlineShopping.service.PlaceOrderService;
+import edu.miu.waa.onlineShopping.service.SellerService;
 import edu.miu.waa.onlineShopping.service.ShoppingCartService;
 
 @Service
@@ -24,10 +27,16 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
 	private Map<Seller, Set<CartItem>> sellerProducts = new HashMap<Seller, Set<CartItem>>();
 	
 	@Autowired
-	private ShoppingCartService shoppingCartService;
+	BuyerService buyerService;
 	
 	@Autowired
-	private PlaceOrderRepository placeOrderRepository;
+	SellerService sellerService;
+	
+	@Autowired
+	ShoppingCartService shoppingCartService;
+	
+	@Autowired
+	PlaceOrderRepository placeOrderRepository;
 	
 	@Override
 	public PlaceOrder create(PlaceOrder placeOrder) {
@@ -50,10 +59,13 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
 	}
 
 	@Override
-	public PlaceOrder placeOrders(ShoppingCart shoppingCart) {
+	public Set<PlaceOrder> placeOrders(ShoppingCart shoppingCart, Buyer buyer, String paymentType) {
 		
+		Set<PlaceOrder> placedOrders = new HashSet<PlaceOrder>();
 		Set<CartItem> cartItems;
 		PlaceOrder placeOrder;
+		BigDecimal cartItemsTotalPrice;
+		Seller seller = new Seller();
 		
 		for(CartItem item : shoppingCart.getItems().values()) {
 			if(sellerProducts.containsKey(item.getProduct().getSeller())) {
@@ -65,17 +77,36 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
 			cartItems.add(item);
 			sellerProducts.put(item.getProduct().getSeller(), cartItems);
 		}
-		
+
 		for(Set<CartItem> sellerCartItems : sellerProducts.values()) {
-			placeOrder = new PlaceOrder(shoppingCart.getTotalPrice(), sellerCartItems);
+			cartItemsTotalPrice = new BigDecimal(0);
+			for(CartItem cartItem : sellerCartItems) {
+				seller = cartItem.getProduct().getSeller();
+				cartItemsTotalPrice = cartItemsTotalPrice.add(cartItem.evaluateTotalPrice());
+			}
+			placeOrder = new PlaceOrder(cartItemsTotalPrice, sellerCartItems, seller, buyer.getShippingAddress(), buyer.getBillingAddress());
 			create(placeOrder);
+			placedOrders.add(placeOrder);
+			seller.getOrders().add(placeOrder);
+			sellerService.save(seller);
 		}
+		
+		int requiredPoints = shoppingCart.getTotalPrice().divideToIntegralValue(new BigDecimal(2)).intValue();
+		buyer.getOrders().addAll(placedOrders);
+		if(paymentType.equals("creditCard")) {
+			buyer.gainPoints(shoppingCart.getTotalPrice());
+		}
+		else {
+			buyer.setPoints(buyer.getPoints() - requiredPoints);
+		}
+			
+		buyerService.saveUser(buyer);
 		
 		shoppingCart.setItems(null);
 		shoppingCart.setTotalPrice(new BigDecimal(0.00));
 		shoppingCartService.update(shoppingCart);
 		
-		return null;
+		return placedOrders;
 	}
 
 }

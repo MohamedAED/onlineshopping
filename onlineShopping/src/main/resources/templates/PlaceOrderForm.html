@@ -7,102 +7,192 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script type="text/javascript" th:src="@{/js/cart.js}"></script>
     <style>
-    .re{
-    width:300px;
-    }
-    .max{
-    	width:500px;
-    }
-    </style>
+	    .re{
+	    width:300px;
+	    }
+	    .max{
+	    	width:500px;
+	    }
+		fieldset {
+		  background-color: #eeeeee;
+		}
+		
+		legend {
+		  background-color: gray;
+		  color: white;
+		  padding: 5px 10px;
+		}
+		
+		input {
+		  margin: 5px;
+		}
+	</style>
+	    
 </head>
 
 <body>
-	
+
+<input type="hidden" id="buyerId" name="buyerId" th:value="${buyerId}" />
+<input type="hidden" id="allowPointsPayment" name="allowPointsPayment" th:value="${allowPointsPayment}" />
+
 <section>
     <div class="pull-right" style="padding-right:50px">
-        <a th:href="@{/}">Products</a> | <a th:href="@{/shoppingCart(buyerId=${buyerId})}">Shopping Cart</a>
+        <a th:href="@{/}">Products</a> | <a th:href="@{/buyerOrders(buyerId=${buyerId})}">Your Orders</a> | <a th:href="@{/shoppingCart(buyerId=${buyerId})}">Shopping Cart</a>
     </div>
 </section>
 
-<input type="hidden" id="buyerId" name="buyerId" th:value="${buyerId}" />
-	
+<section>
+    <div class="jumbotron">
+        <div class="container">
+            <h2>Review Information</h2>
+        </div>
+    </div>
+</section>
+
 <section class="container">
 	<div id="global">
-	    <form action="#" th:action="@{/order}" method="post">
-	    	<fieldset>
-				<legend><span th:text="#{shippingAddress.form.title}">Shipping Address</span></legend>
-				<p>
-					<label for="street"><span th:text="#{shippingAddress.form.street}">Street: </span></label> 
-					<input type="text" th:field="${shippingAddress.street}" disabled/>
-				</p>
-				<p>
-					<label for="state"><span th:text="#{shippingAddress.form.state}">State: </span></label> 
-					<input type="text" th:field="${shippingAddress.state}" disabled/>
-				</p>
-				<p>
-					<label for="zipCode"><span th:text="#{shippingAddress.form.zipCode}">Zip: </span></label> 
-					<input type="text" th:field="${shippingAddress.zipCode}" disabled/>
-				</p>
-				<p>
-					<label for="city"><span th:text="#{shippingAddress.form.city}">City: </span></label> 
-					<input type="text" th:field="${shippingAddress.city}" disabled/>
-				</p>
-				<p>
-					<label for="country"><span th:text="#{shippingAddress.form.country}">Country: </span></label> 
-					<input type="text" th:field="${shippingAddress.country}" disabled/>
-				</p>
-			</fieldset>
-			<p></p>
-			<fieldset>
-				<legend><span th:text="#{billingAddress.form.title}">Billing Address</span></legend>
-				<p>
-					<label for="street"><span th:text="#{billingAddress.form.street}">Street: </span></label> 
-					<input type="text" th:field="${billingAddress.street}" disabled/>
-				</p>
-				<p>
-					<label for="state"><span th:text="#{billingAddress.form.state}">State: </span></label> 
-					<input type="text" th:field="${billingAddress.state}" disabled/>
-				</p>
-				<p>
-					<label for="zipCode"><span th:text="#{billingAddress.form.zipCode}">Zip: </span></label> 
-					<input type="text" th:field="${billingAddress.zipCode}" disabled/>
-				</p>
-				<p>
-					<label for="city"><span th:text="#{billingAddress.form.city}">City: </span></label> 
-					<input type="text" th:field="${billingAddress.city}" disabled/>
-				</p>
-				<p>
-					<label for="country"><span th:text="#{billingAddress.form.country}">Country: </span></label> 
-					<input type="text" th:field="${billingAddress.country}" disabled/>
-				</p>
-			</fieldset>
-			<p></p>
-			<fieldset>
-				<legend><span th:text="#{cardPayment.form.title}">Payment Information</span></legend>
-				<p>
-					<label for="cardNumber"><span th:text="#{cardPayment.form.cardNumber}">Card Number: </span></label> 
-					<input type="text" th:field="${cardPayment.cardNumber}" disabled/>
-				</p>
-				<p>
-					<label for="expiryDate"><span th:text="#{cardPayment.form.expiryDate}">Expiration Date: </span></label> 
-					<input type="text" th:field="${cardPayment.expiryDate}" disabled/>
-				</p>
-				<p>
-					<label for="cvv"><span th:text="#{cardPayment.form.cvv}">CVV: </span></label> 
-					<input type="text" th:field="${cardPayment.cvv}" disabled/>
-				</p>
-				<p>
-					<label for="nameOnCard"><span th:text="#{cardPayment.form.nameOnCard}">Name On Card: </span></label> 
-					<input type="text" th:field="${cardPayment.nameOnCard}" disabled/>
-				</p>
-			</fieldset>
-			<p></p>
+	    <form action="#" th:action="@{/placeOrder(buyerId=${buyerId})}" th:object="${preOrderInfo}" method="post">
+	    	<table>
+				<tr>
+					<td>
+						<fieldset>
+							<legend><span th:text="#{shippingAddress.form.title}">Shipping Address</span></legend>
+							<p>&nbsp;&nbsp;
+								<label for="street"><span th:text="#{shippingAddress.form.street}">Street: </span></label> 
+								<input type="text" th:field="*{shippingAddress.street}" disabled/>
+							</p>
+							<p>&nbsp;&nbsp;
+								<label for="state"><span th:text="#{shippingAddress.form.state}">State: </span></label> 
+								<input type="text" th:field="*{shippingAddress.state}" disabled/>
+							</p>
+							<p>&nbsp;&nbsp;
+								<label for="zipCode"><span th:text="#{shippingAddress.form.zipCode}">Zip: </span></label> 
+								<input type="text" th:field="*{shippingAddress.zipCode}" disabled/>
+							</p>
+							<p>&nbsp;&nbsp;
+								<label for="city"><span th:text="#{shippingAddress.form.city}">City: </span></label> 
+								<input type="text" th:field="*{shippingAddress.city}" disabled/>
+							</p>
+							<p>&nbsp;&nbsp;
+								<label for="country"><span th:text="#{shippingAddress.form.country}">Country: </span></label> 
+								<input type="text" th:field="*{shippingAddress.country}" disabled/>
+							</p>
+						</fieldset>
+					</td>
+					<td><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></td>
+					<td>
+						<fieldset>
+							<legend><span th:text="#{billingAddress.form.title}">Billing Address</span></legend>
+							<p>&nbsp;&nbsp;
+								<label for="street"><span th:text="#{billingAddress.form.street}">Street: </span></label> 
+								<input type="text" th:field="*{billingAddress.street}" disabled/>
+							</p>
+							<p>&nbsp;&nbsp;
+								<label for="state"><span th:text="#{billingAddress.form.state}">State: </span></label> 
+								<input type="text" th:field="*{billingAddress.state}" disabled/>
+							</p>
+							<p>&nbsp;&nbsp;
+								<label for="zipCode"><span th:text="#{billingAddress.form.zipCode}">Zip: </span></label> 
+								<input type="text" th:field="*{billingAddress.zipCode}" disabled/>
+							</p>
+							<p>&nbsp;&nbsp;
+								<label for="city"><span th:text="#{billingAddress.form.city}">City: </span></label> 
+								<input type="text" th:field="*{billingAddress.city}" disabled/>
+							</p>
+							<p>&nbsp;&nbsp;
+								<label for="country"><span th:text="#{billingAddress.form.country}">Country: </span></label> 
+								<input type="text" th:field="*{billingAddress.country}" disabled/>
+							</p>
+						</fieldset>
+					</td>
+				</tr>
+				<tr><td><p>&nbsp;&nbsp;</p></td></tr>
+				<tr>
+					<td>
+						<fieldset>
+							<legend><span th:text="#{cardPayment.form.title}">Credit Card Information</span></legend>
+							<p>&nbsp;&nbsp;
+								<label for="cardNumber"><span th:text="#{cardPayment.form.cardNumber}">Card Number: </span></label> 
+								<input type="text" th:field="*{cardPayment.cardNumber}" disabled/>
+							</p>
+							<p>&nbsp;&nbsp;
+								<label for="expiryDate"><span th:text="#{cardPayment.form.expiryDate}">Expiration Date: </span></label> 
+								<input type="text" th:field="*{cardPayment.expiryDate}" disabled/>
+							</p>
+							<p>&nbsp;&nbsp;
+								<label for="cvv"><span th:text="#{cardPayment.form.cvv}">CVV: </span></label> 
+								<input type="text" th:field="*{cardPayment.cvv}" disabled/>
+							</p>
+							<p>&nbsp;&nbsp;
+								<label for="nameOnCard"><span th:text="#{cardPayment.form.nameOnCard}">Name On Card: </span></label> 
+								<input type="text" th:field="*{cardPayment.nameOnCard}" disabled/>
+							</p>
+						</fieldset>
+					</td>
+					<td><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></td>
+					<td>
+						<fieldset>
+							<legend><span th:text="#{points.form.title}">Points Information</span></legend>
+							<p>&nbsp;&nbsp;
+								<label for="orderTotalPrice"><span th:text="#{shoppingCart.form.totalPrice}">Subtotal: </span></label> 
+								<input type="text" th:field="*{shoppingCart.totalPrice}" disabled/>
+							</p>
+							<p>&nbsp;&nbsp;
+								<label for="pointsBalance"><span th:text="#{points.form.count}">Points Balance: </span></label> 
+								<input type="text" th:field="*{buyer.points}" disabled/>
+							</p>
+							<p>&nbsp;&nbsp;
+								<label for="requiredPoints"><span th:text="#{shoppingCart.totalPrice.points}">Required Points: </span></label> 
+								<input type="text" th:value="${requiredPoints}" disabled/>
+							</p>
+							<p>&nbsp;&nbsp;
+								<label for="pointsNotification">
+									<span th:text="${allowPointsPayment}? 'Points will be deducted from your balance' : 'you are not allowed to use this service'"></span>
+								</label> 
+							</p>
+						</fieldset>
+					</td>
+					<td><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></td>
+					<td>
+						<fieldset>
+							<h4>&nbsp;&nbsp;Please select your payment method</h4>
+							<input onclick="myFunction()" type="radio" id="creditCard" name="payment" value="creditCard" checked>
+							<label for="creditCard"><span th:text="#{payment.form.creditCard}">Credit Card</span></label> 
+							<br/>
+							<input onclick="myFunction()" type="radio" id="pointsBalance" name="payment" value="pointsBalance">
+							<label for="points"><span th:text="#{payment.form.points}">Points</span></label>
+							<br/>
+							<input type="hidden" id="paymentType" name="paymentType" th:field="*{paymentType}" />
+						</fieldset>
+					</td>
+				</tr>
+			</table>
+			<br/><br/>
+	    	<div>
+				<a th:href="@{/}" class="btn btn-default"><span class="glyphicon-hand-left glyphicon"></span> Continue shopping </a>
+				<!-- <a th:href="@{/placeOrder(buyerId=${buyerId},paymentType=${paymentType})}" class="btn btn-success pull-right"> <span class="glyphicon-shopping-cart glyphicon"></span> Check out</a> -->
+				<input class="btn btn-success pull-right" id="submit" type="submit" tabindex="5" value="Place Order">
+			</div>
 	    </form>
-	    <div>
-	    	<a th:href="@{/}" class="btn btn-default"><span class="glyphicon-hand-left glyphicon"></span> Continue shopping </a>
-            <a th:href="@{/placeOrder(buyerId=${buyerId})}" class="btn btn-success pull-right"> <span class="glyphicon-shopping-cart glyphicon"></span> Place Order</a>
-        </div>
+        <br/><br/><br/><br/>
 	</div>
 </section>
+
+<script>
+function myFunction() {
+  var allowPoints = document.getElementById("allowPointsPayment").value;
+  if (allowPoints==0) {
+	  document.getElementById("creditCard").checked = true;
+	  document.getElementById("points").checked = false;
+  }
+  if (document.getElementById("pointsBalance").checked) {
+	  document.getElementById("paymentType").value = "pointsBalance";
+  }
+  else if (document.getElementById("creditCard").checked) {
+	  document.getElementById("paymentType").value = "creditCard";
+  }
+}
+</script>
+
 </body>
 </html>
