@@ -62,8 +62,8 @@ public class PlaceOrder {
 		this.cartItems = cartItems;
 	}
 
-	public PlaceOrder(BigDecimal totalPrice, Set<CartItem> cartItems, Seller seller, ShippingAddress shippingAddress, BillingAddress billingAddress) {
-		this.orderNumber = "1111";
+	public PlaceOrder(String orderNumber, BigDecimal totalPrice, Set<CartItem> cartItems, Seller seller, ShippingAddress shippingAddress, BillingAddress billingAddress) {
+		this.orderNumber = orderNumber;
 		this.totalPrice = totalPrice;
 		this.status = OrderStatus.PLACED;
 		this.orderDate = LocalDate.now();

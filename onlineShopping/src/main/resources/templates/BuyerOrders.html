@@ -56,7 +56,7 @@
 	    				<td th:text="${placeOrder.orderDeliveryDate}? ${placeOrder.orderDeliveryDate}: (${placeOrder.orderShippingDate}? ${placeOrder.orderShippingDate} : ${placeOrder.orderDate})"></td>
 	    				<td>&nbsp;&nbsp;</td>
                        	<td><a href="#" class="label label-success placeOrder-print-btn" th:data="${placeOrder.id}" id="placeOrder-print-btn" name="placeOrder-print-btn">
- 								<span class="glyphicon glyphicon-download-alt" /></span> Print </a></td>
+ 								<span class="glyphicon glyphicon-download-alt" /></span> download receipt </a></td>
 	    			</tr>
 	    			<tr></tr>
 	    			<tr th:each="item : ${placeOrder.cartItems}">

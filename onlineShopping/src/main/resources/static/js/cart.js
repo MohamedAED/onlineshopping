@@ -30,7 +30,7 @@ $(document).ready(function() {
 				location.reload(true);
 			},
 			error: function(){						
-				alert('Error while request..');
+				location.reload(true);
 			} 
 		});
 	});
@@ -46,7 +46,7 @@ $(document).ready(function() {
 				location.reload(true);
 			},
 			error: function(){						
-				alert('Error while request..');
+				location.reload(true);
 			} 
 		});
 	});
