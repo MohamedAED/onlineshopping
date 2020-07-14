@@ -14,4 +14,5 @@ public interface BuyerService {
     void approveBuyer(Long id, String statusId);
     Buyer saveUser(Buyer buyer);
     Buyer findUserById(Long id);
+    void encryptPassword(Buyer buyer);
 }

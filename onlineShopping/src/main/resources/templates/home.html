@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{layouts/dashboard_layout}"
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layouts/dashboard_layout}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
@@ -39,7 +40,7 @@
     </span>
 </ul>
 
-<div class="LeftPanel" id="categoriesList">
+<div>
     <ul class="vertical_list">
         <span th:if="${UserRole== null or UserRole.isEmpty()} ">
         <li th:each="category : ${cats}">
@@ -66,15 +67,29 @@
         <div class="col-sm-6 col-md-3" th:each="product : ${products}">
             <div class="thumbnail">
                 <div class="caption">
-                    <h5 th:text="${product.name}"></h5>
-                    <img th:src="@{'/products/' + ${product.productNumber} + '.png'}" width="300" height="300"/><br/>
-                    Description :<span th:text="${product.description}"></span><br/>
-                    Price $<span th:text="${product.price}"></span><br/>
-                    Seller <span th:text="${product.getSeller().getName()}"></span><br/>
-                    Available <span th:text="${product.stockQuantity}"></span> units in stock<br/>
+                    <h3 class="ProductHeader">
+                        <span th:text="${product.name}"></span>
+                    </h3>
+
+                    <img th:src="@{'/products/' + ${product.productNumber} + '.png'}" width="200" height="250" class="center"/><br/>
+                    <span class="ProdDescription">
+                         Description :<span th:text="${product.description}"></span><br/>
+                    </span>
+
+                    <span class="Price">
+                        Price :$<span th:text="${product.price}"></span><br/>
+                    </span>
+                    <span class="Seller">
+                          Seller :<span th:text="${product.getSeller().getName()}"></span><br/>
+                    </span>
+                    <span class="Avaliable">
+                        Available <span th:text="${product.stockQuantity}"></span> units in stock<br/>
+                    </span>
+
                     <span th:if="${UserRole== null or UserRole.isEmpty()} ">
                         <a th:href="@{/products/productView(id=${product.id})}" class="btn btn-primary glyphicon-info-sign glyphicon"> Details</a>
                     </span>
+
                     <span th:if="${UserRole== 'buyer'} ">
                         <a th:href="@{/products/product(id=${product.id},buyerid=${buyerId})}" class="btn btn-primary glyphicon-info-sign glyphicon"> Details</a>
                     </span>

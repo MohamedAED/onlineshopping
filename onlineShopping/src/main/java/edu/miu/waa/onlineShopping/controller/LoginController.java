@@ -104,6 +104,7 @@ public class LoginController {
 		if (!bindingResult.hasErrors()) {
 			seller.setApproved(UserStatus.PENDING);
 			seller.setUsername(seller.getUsername().toLowerCase());
+			sellerService.encryptPassword(seller);
 			sellerService.saveUser(seller);
 			modelAndView.addObject("successMessage", "User has been registered successfully");
 			modelAndView.setViewName("login");
@@ -127,6 +128,7 @@ public class LoginController {
 			buyer.setApproved(UserStatus.PENDING);
 			buyer.setShoppingCart(new ShoppingCart());
 			buyer.setUsername(buyer.getUsername().toLowerCase());
+			buyerService.encryptPassword(buyer);
 			buyerService.saveUser(buyer);
 			modelAndView.addObject("successMessage", "User has been registered successfully");
 			modelAndView.setViewName("login");
@@ -142,7 +144,10 @@ public class LoginController {
 	* Added By Mohamed Saleh
 	* */
 	@GetMapping("/logout")
-	public String Logout() {
+	public String Logout(HttpSession session,SessionStatus status)
+	{
+		session.invalidate();
+		status.setComplete();
 		return "home";
 	}
 

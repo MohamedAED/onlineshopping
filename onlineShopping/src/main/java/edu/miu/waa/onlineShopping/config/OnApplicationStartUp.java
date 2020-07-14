@@ -156,6 +156,7 @@ public class OnApplicationStartUp {
 		sellerUser1.getProducts().add(product2);
 		sellerUser1.getProducts().add(product3);
 		sellerUser1.getProducts().add(product4);
+		sellerService.encryptPassword(sellerUser1);
 		sellerService.saveUser(sellerUser1);
 
 		/**************************************************************************************************/
@@ -182,8 +183,8 @@ public class OnApplicationStartUp {
 		amrCD.setProductNumber(5L);
 
 		Product titanic = new Product();
-		titanic.setDescription("Dell Laptop 142L");
-		titanic.setName("Dell Laptop 142L");
+		titanic.setDescription("Titanic 2004");
+		titanic.setName("Titanic");
 		titanic.setPrice(new BigDecimal(800));
 		titanic.setStockQuantity((long) 7);
 		titanic.setSeller(sellerAccount);
@@ -229,6 +230,7 @@ public class OnApplicationStartUp {
 		billingAddress.setStreet("1000 north");
 		billingAddress.setZipCode("52557");
 		buyerUser.setBillingAddress(billingAddress);
+		buyerService.encryptPassword(buyerUser);
 		buyerService.saveUser(buyerUser);
 
 

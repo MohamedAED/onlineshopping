@@ -34,7 +34,7 @@
          <li style="float:right"><a th:href="@{/logout}">Logout</a></li>
     </span>
 </ul>
-<div class="LeftPanel" id="categoriesList">
+<div>
     <ul class="vertical_list">
         <span th:if="${UserRole== null or UserRole.isEmpty()} ">
         <li th:each="category : ${cats}">
@@ -59,14 +59,26 @@
 <section class="container">
     <div class="row">
         <div class="col-md-5">
-            <img th:src="@{'/products/' + ${product.productNumber} + '.png'}" width="300" height="300"/><br/>
-            <strong>Product Code : </strong><span class="label label-warning" th:text="${product.id}"></span><br/>
-            <strong>Product Name : <span th:text="${product.name}"></span></strong><br/>
-            Description :<span th:text="${product.description}"></span><br/>
-            Seller <span class="label label-warning" th:text="${product.getSeller().getName()}"></span><br/>
-            Available Stock <span th:text="${product.stockQuantity}"></span> units in stock<br/>
-            Seller <span th:text="${product.getSeller().getName()}"></span><br/>
-            Price $<span th:text="${product.price}"></span><br/>
+
+            <h3 class="ProductHeader">
+                        <span th:text="${product.name}"></span>
+                    </h3>
+
+            <img th:src="@{'/products/' + ${product.productNumber} + '.png'}" width="200" height="250" class="center"/><br/>
+            <span class="ProdDescription">
+                         Description :<span th:text="${product.description}"></span><br/>
+                    </span>
+
+            <span class="Price">
+                        Price :$<span th:text="${product.price}"></span><br/>
+                    </span>
+            <span class="Seller">
+                          Seller :<span th:text="${product.getSeller().getName()}"></span><br/>
+                    </span>
+            <span class="Avaliable">
+                        Available <span th:text="${product.stockQuantity}"></span> units in stock<br/>
+                    </span>
+
             <p>
                 <input type="hidden" id="buyerId" name="buyerId" th:value="${buyerId}"/>
 

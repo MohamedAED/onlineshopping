@@ -33,6 +33,11 @@ public class BuyerServiceImpl implements BuyerService {
         return buyerRepository.findById(id).get();
     }
 
+    @Override
+    public void encryptPassword(Buyer buyer) {
+        buyer.setPassword(bCryptPasswordEncoder.encode(buyer.getPassword()));
+    }
+
     public Buyer findUserByUsername(String username) {
         return buyerRepository.findByUsername(username);
     }
@@ -55,7 +60,6 @@ public class BuyerServiceImpl implements BuyerService {
     }
 
     public Buyer saveUser(Buyer buyer) {
-        buyer.setPassword(bCryptPasswordEncoder.encode(buyer.getPassword()));
         return buyerRepository.save(buyer);
     }
     @Override
