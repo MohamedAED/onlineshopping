@@ -11,10 +11,13 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.servlet.ServletContext;
 
 @Component
 public class OnApplicationStartUp {
@@ -27,12 +30,22 @@ public class OnApplicationStartUp {
 
 	@Autowired
 	private SellerService sellerService;
+	
+	@Autowired
+	ServletContext servletContext;
 
 
 	@EventListener
 	public void onApplicationEvent(ContextRefreshedEvent event) throws Exception {
 		createAdminUser();
 		createSeller();
+		createFolder();
+	}
+	
+	private void createFolder() {
+		File file = new File(servletContext.getRealPath("/") + "/product");
+		file.mkdir();
+
 	}
 
 	private void createAdminUser() throws ParseException, IOException {

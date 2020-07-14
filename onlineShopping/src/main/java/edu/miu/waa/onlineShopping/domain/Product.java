@@ -40,6 +40,9 @@ public class Product {
 
 	@NotNull
 	private Long stockQuantity;
+	
+	@Column(unique=true)
+	private Long productNumber;
 
 	@Transient
 	private MultipartFile image;
@@ -64,6 +67,20 @@ public class Product {
 
 	public Product() {
 	}
+	
+	
+
+	public Long getProductNumber() {
+		return productNumber;
+	}
+
+
+
+	public void setProductNumber(Long productNumber) {
+		this.productNumber = productNumber;
+	}
+
+
 
 	public ProductCategory getProductCategory() {
 		return productCategory;

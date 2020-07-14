@@ -7,13 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
 import edu.miu.waa.onlineShopping.domain.PlaceOrder;
 import edu.miu.waa.onlineShopping.domain.Product;
 import edu.miu.waa.onlineShopping.domain.Seller;
-import edu.miu.waa.onlineShopping.domain.enums.OrderStatus;
 import edu.miu.waa.onlineShopping.service.OrderService;
 import edu.miu.waa.onlineShopping.service.ProductService;
 import edu.miu.waa.onlineShopping.service.SellerService;
+import edu.miu.waa.onlineShopping.service.StorageService;
 
 @Controller
 public class SellerController {
@@ -26,10 +28,23 @@ public class SellerController {
 
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	StorageService storageService;
 
 	/*
 	 * save seller find seller
 	 */
+	
+//	@ModelAttribute("orderStatus")
+//	public void addOrderStatus(Model model) {
+////		List<String> orderStatus = Stream.of(OrderStatus.values())
+////                .map(OrderStatus::name)
+////                .collect(Collectors.toList());
+//		
+//		List<OrderStatus> orderStatus = Arrays.asList(OrderStatus.values());
+//		model.addAttribute("orderStatus", orderStatus);
+//	}
 
 	@GetMapping(value = "/seller/find")
 	public String findSeller(@RequestParam(value = "seller_id") Long seller_id,
@@ -48,13 +63,25 @@ public class SellerController {
 	@PostMapping(value = "/seller/addProduct")
 	public String addProduct(@ModelAttribute("product") Product product,
 			@RequestParam(value = "seller_id") Long seller_id, Model model) {
-
+		
+		
+		MultipartFile employeeImage = product.getImage();
+		
 		Seller seller = sellerService.findById(seller_id);
 
 		product.setSeller(seller);
 		seller.getProducts().add(product);
 
 		seller = sellerService.save(seller);
+		
+
+		if (employeeImage != null && !employeeImage.isEmpty()) {
+			try {
+				storageService.saveImage(employeeImage, product.getProductNumber());
+			} catch (Exception e) {
+				throw new RuntimeException("Product Image saving failed", e);
+			}
+		}
 
 		model.addAttribute("seller", seller);
 		return "sellerPage";
@@ -121,20 +148,23 @@ public class SellerController {
 		PlaceOrder order = orderService.findById(order_id);
 		
 		model.addAttribute("order", order);
+		model.addAttribute("order_id", order.getId());
 		model.addAttribute("seller_id", seller_id);
 		
-		return "reviewSellerOrders";
+		return "ReviewSellerOrders";
 	}
 
-	@GetMapping("/updateOrderStatus")
-	public String updateOrderStatus(@RequestParam(value = "status") String orderStatus,
-			@RequestParam(value = "order_id") Long order_id, @RequestParam(value = "seller_id") Long seller_id,
+	@PostMapping("/seller/updateOrderStatus")
+	public String updateOrderStatus(
+			@ModelAttribute("order") PlaceOrder order, 
+			@RequestParam(value = "order_id") Long order_id,
+			@RequestParam(value = "seller_id") Long seller_id,
 			Model model) {
 		
 		Seller seller = sellerService.findById(seller_id);
 		PlaceOrder old_order = seller.getOrders().stream().filter(p -> p.getId() == order_id).findFirst().get();
 
-		old_order.setStatus(OrderStatus.valueOf(orderStatus));
+		old_order.setStatus(order.getStatus());
 
 		sellerService.save(seller);
 
