@@ -23,7 +23,7 @@ public class CartItem {
 
     private Integer quantity;
     
-    private BigDecimal totalPrice;
+    private BigDecimal price;
 
     public CartItem() {
     }
@@ -32,7 +32,7 @@ public class CartItem {
 		super();
 		this.product = product;
 		this.quantity = 1;
-		this.totalPrice = product.getPrice();
+		this.price = product.getPrice();
 	}
     
     public Long getId() {
@@ -49,7 +49,6 @@ public class CartItem {
 
     public void setProduct(Product product) {
         this.product = product;
-        //this.updateTotalPrice();
     }
 
     public Integer getQuantity() {
@@ -58,18 +57,17 @@ public class CartItem {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-        //this.updateTotalPrice();
     }
 
-	public BigDecimal getTotalPrice() {
-		return totalPrice;
+	public BigDecimal getPrice() {
+		return price;
 	}
 
-	public void setTotalPrice(BigDecimal totalPrice) {
-		this.totalPrice = totalPrice;
+	public void setPrice(BigDecimal price) {
+		this.price = price;
 	}
     
-	public void updateTotalPrice() {
-		totalPrice = this.product.getPrice().multiply(new BigDecimal(this.quantity));
+	public BigDecimal evaluateTotalPrice() {
+		return this.product.getPrice().multiply(new BigDecimal(this.quantity));
 	}
 }

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org/">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Shopping Cart</title>
+	<title>Order Details</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script type="text/javascript" th:src="@{/js/cart.js}"></script>
@@ -20,14 +20,14 @@
 	
 <section>
     <div class="pull-right" style="padding-right:50px">
-        <a th:href="@{/}">Products</a> | <a th:href="@{/shoppingCart(buyerId=${buyerId})}">Shopping Cart</a>
+        <a th:href="@{/}">Products</a> | <a th:href="@{/buyerOrders(buyerId=${buyerId})}">Your Orders</a> | <a th:href="@{/shoppingCart(buyerId=${buyerId})}">Shopping Cart</a>
     </div>
 </section>
 
 <section>
     <div class="jumbotron">
         <div class="container">
-            <h1>Thank you for purchasing with SOKS</h1>
+            <h2>Your Orders</h2>
         </div>
     </div>
 </section>
@@ -36,47 +36,54 @@
 	<div id="global">
 	    <form action="#" th:action="@{/order}" method="post">
 	    	<fieldset>
-	    		<table class="table table-hover" border=1 frame=void rules=rows>
+	    		<table th:each="placeOrder : ${placedOrders}" class="table table-hover" border=1 frame=void rules=rows>
 	    			<tr>
 				      	<th th:text="#{placeOrder.form.orderDate}">Order Placed</th>
 				      	<th th:text="#{placeOrder.form.totalPrice}">Total Price</th>
 				      	<th th:text="#{placeOrder.form.orderNumber}">Order #</th>
 				      	<th th:text="#{placeOrder.form.shipTo}">Ship To</th>
 				    </tr>
-				    <tr>
-				    	<td th:text="${placeOrder.orderDate}"></td>
+	    			<tr>
+	    				<td th:text="${placeOrder.orderDate}"></td>
 				    	<td th:text="${placeOrder.totalPrice}"></td>
 				    	<td th:text="${placeOrder.orderNumber}"></td>
 				    	<td th:text="${buyerName}"></td>
-				    </tr>
-	    		</table>
-				<p></p>
-				<table>
-					<tr>
-						<td th:text="${placeOrder.status}"></td>
-						<td>&nbsp;</td>
-	    				<td th:text="${placeOrder.orderDeliveryDate}? ${placeOrder.orderDeliveryDate}: (${placeOrder.orderShippingDate}? ${placeOrder.orderShippingDate} : ${placeOrder.orderDate})"></td>
 	    			</tr>
-				</table>
-				<p></p>
-				<table class="table table-hover" border=1 frame=void rules=rows>
-				    <tr th:each="item : ${orderItems}">
-				    	<td><img th:src="@{'/product/' + ${item.value.product.id} + '.png'}" width="200" height="100"/></td>
+	    			<tr></tr>
+	    			<tr>
+						<td th:text="${placeOrder.status}"></td>
+						<td>&nbsp;&nbsp;</td>
+	    				<td th:text="${placeOrder.orderDeliveryDate}? ${placeOrder.orderDeliveryDate}: (${placeOrder.orderShippingDate}? ${placeOrder.orderShippingDate} : ${placeOrder.orderDate})"></td>
+	    				<td>&nbsp;&nbsp;</td>
+                       	<td><a href="#" class="label label-success placeOrder-print-btn" th:data="${placeOrder.id}" id="placeOrder-print-btn" name="placeOrder-print-btn">
+ 								<span class="glyphicon glyphicon-download-alt" /></span> Print </a></td>
+	    			</tr>
+	    			<tr></tr>
+	    			<tr th:each="item : ${placeOrder.cartItems}">
+				    	<td><img th:src="@{'/product/' + ${item.product.id} + '.png'}" width="200" height="100"/></td>
                         <td>
                         	<table>
-                          		<tr><td class="max" th:text="${item.value.product.description}">Description</td>   </tr>
-                          		<tr><td th:text="${item.value.quantity}">Quantity</td>   </tr>
-                          		<tr><td th:text="${item.value.product.price}">Price</td></tr>
+                          		<tr><td class="max" th:text="${item.product.description}">Description</td>   </tr>
+                          		<tr><td th:text="${item.quantity}">Quantity</td>   </tr>
+                          		<tr><td th:text="${item.product.price}">Price</td></tr>
+                          		<tr>
+			                       	<td><a href="#" class="label label-success product-review-btn" th:data="${item.product.id}" id="product-review-btn" name="product-review-btn">
+			 								<span class="glyphicon glyphicon-pencil" /></span> Review </a></td>
+                          		</tr>
                         	</table>
-                        </td>		      	
+                        </td>
 				    </tr>
-				</table>
+				    <tr></tr>
+				    <tr></tr>
+	    		</table>
 			</fieldset>
 			<p></p>
 	    </form>
+	    <br/><br/>
 	    <div>
 	    	<a th:href="@{/}" class="btn btn-default"><span class="glyphicon-hand-left glyphicon"></span> Continue shopping </a>
         </div>
+        <br/><br/><br/><br/>
 	</div>
 </section>
 </body>

@@ -9,27 +9,27 @@
 
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/home_product.css}">
-
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/add.js}"></script>
 </head>
 <body>
 
-<span th:if="${userRole} == 'buyer'">
+<span th:if="${UserRole== null or UserRole.isEmpty()} ">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="logout">Logout</a>
-    <a class="navbar-brand" href="cart">Cart</a>
-</nav>
+        <a class="navbar-brand" th:href="@{/registration(type='buyer')}" >Register</a>
+        <a class="navbar-brand" th:href="@{/login}">Login</a>
+    </nav>
 </span>
 
-<span th:if="${userRole} == 'seller'" >
+<span th:if="${UserRole == 'buyer'}">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="login">Login</a>
-</nav>
+     <!--<H4>Hello <span th:text="${buyerId}"></span></H4>-->
+    <a class="navbar-brand" th:href="@{/logout}">Logout</a>
+    <a class="navbar-brand" th:href="@{/shoppingCart(buyerId= ${UserInfo.getUserId()})}">Cart</a></nav>
 </span>
 
-<span th:if="${userRole} == 'admin'" >
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="logout">Logout</a>
-</nav>
+<span th:if="${UserRole== 'seller'} " >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light"><a class="navbar-brand" th:href="@{/logout}">Logout</a></nav>
 </span>
 
 <div class="LeftPanel" id="categoriesList">
@@ -38,35 +38,38 @@
         <br>
     </tr>
 </div>
+<!--
+<h1 th:text="${buyerId}"/>
+<h1 th:text="${UserRole}"/>-->
+
 
 <section class="container">
     <div class="row">
         <div class="col-md-5">
+
             <img th:src="@{'/images/products/' + ${product.id} + '.jpg'}" width="250" height="290"><br/>
-           <h3 th:text="${product.name}"></h3>
-            <p th:text="${product.description}"></p>
+            <strong>Product Code : </strong><span class="label label-warning" th:text="${product.id}"></span><br/>
+            <strong>Product Name : <span th:text="${product.name}"></span></strong><br/>
+            Description :<span th:text="${product.description}"></span><br/>
+            Seller <span class="label label-warning" th:text="${product.getSeller().getName()}"></span><br/>
+            Available Stock <span th:text="${product.stockQuantity}"></span> units in stock<br/>
+            Seller <span th:text="${product.getSeller().getName()}"></span><br/>
+            Price $<span th:text="${product.price}"></span><br/>
             <p>
-                <strong>Item Code : </strong><span class="label label-warning" th:text="${product.id}"></span>
-            </p>
-            <p>
-                <strong>Availble units in stock </strong> : <span th:text="${product.stockQuantity}" th:remove="tag"></span>
-            </p>
-            <p>
-                <strong>Seller </strong> : <span th:text="${product.getSeller().getName()}" th:remove="tag"></span>
-            </p>
-            <h4><span th:text="${product.price}" th:remove="tag"></span>USD</h4>
-            <p>
-                <a  class="btn btn-warning btn-large order-btn" th:data="${product.id}">
-                    <span class="glyphicon-shopping-cart glyphicon"></span> Order Now </a>
+                <input type="hidden" id="buyerId" name="buyerId" th:value="${buyerId}"/>
+
+                <span th:if="${UserRole} == 'buyer'">
+                    <input type="button" name="product-order-btn" id="product-order-btn" value="Add to Cart"  th:data="${product.id}" class="btn btn-success"/>
+                </span>
 
                 <span th:if="${following} == false" >
-                   <a th:href="@{/products/followSeller(sellerId=${product.seller.userId})}"
+                   <a th:href="@{/products/followSeller(sellerId=${product.seller.userId},buyerid=${buyerId})}"
                       class="btn btn-success btn-large order-btn">
                     <span class="glyphicon glyphicon-heart-empty"></span> Follow Seller </a>
                 </span>
 
                 <span th:if="${following} == true" >
-                  <a th:href="@{/products/unfollowSeller(sellerId=${product.seller.userId})}"
+                  <a th:href="@{/products/unfollowSeller(sellerId=${product.seller.userId},buyerid=${buyerId})}"
                      class="btn btn-danger btn-large order-btn">
                     <span class="glyphicon glyphicon-thumbs-down"></span> Un-follow Seller</a>
                 </span>
@@ -84,12 +87,6 @@
     </div>
 
 </section>
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 </body>
 </html>
