@@ -6,7 +6,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script type="text/javascript" th:src="@{/js/cart.js}"></script>
-    <style>
+	<link rel="stylesheet" th:href="@{/css/header.css}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<style>
 	    .re{
 	    width:300px;
 	    }
@@ -35,12 +38,13 @@
 <input type="hidden" id="buyerId" name="buyerId" th:value="${buyerId}" />
 <input type="hidden" id="allowPointsPayment" name="allowPointsPayment" th:value="${allowPointsPayment}" />
 
-<section>
-    <div class="pull-right" style="padding-right:50px">
+<ul>
+	<li><a href="#">SOKS</a></li>
+	<li style="float:right">
+		<a th:href="@{/contShopping}">Products</a> | <a th:href="@{/buyerOrders(buyerId=${buyerId})}">Your Orders</a> | <a th:href="@{/shoppingCart(buyerId=${buyerId})}">Shopping Cart</a>
+	</li>
+</ul>
 
-        <a th:href="@{/contShopping}">Products</a> | <a th:href="@{/buyerOrders(buyerId=${buyerId})}">Your Orders</a> | <a th:href="@{/shoppingCart(buyerId=${buyerId})}">Shopping Cart</a>
-    </div>
-</section>
 
 <section>
     <div class="jumbotron">

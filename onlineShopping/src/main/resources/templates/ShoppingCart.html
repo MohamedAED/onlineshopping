@@ -18,14 +18,15 @@
 
 <body>
 
-
 <input type="hidden" id="buyerId" name="buyerId" th:value="${buyerId}" />
 
-<section>
-    <div class="pull-right" style="padding-right:50px">
-        <a th:href="@{/contShopping}">Home</a> | <a th:href="@{/buyerOrders(buyerId=${buyerId})}">Your Orders</a> | <a th:href="@{/shoppingCart(buyerId=${buyerId})}">Shopping Cart</a>
-    </div>
-</section>
+<ul>
+	<li><a href="#">SOKS</a></li>
+	<li style="float:right">
+		<a th:href="@{/contShopping}">Home</a> | <a th:href="@{/buyerOrders(buyerId=${buyerId})}">Your Orders</a> | <a th:href="@{/shoppingCart(buyerId=${buyerId})}">Shopping Cart</a>
+	</li>
+</ul>
+
 
 
 <section>

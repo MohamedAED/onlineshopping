@@ -15,8 +15,8 @@
     <li><a th:href="@{/goHome}">Home</a></li>
     <li style="float:right"><a th:href="@{/logout}">Logout</a></li>
 </ul>
-
-<span th:if="${unapprovedReviews!=null and !unapprovedReviews.isEmpty()}" >
+<div class="container">
+    <span th:if="${unapprovedReviews!=null and !unapprovedReviews.isEmpty()}" >
     <table class="table table-striped">
         <thead>
         <tr>
@@ -42,8 +42,9 @@
         </tbody>
     </table>
 </span>
-<span th:if="${unapprovedReviews == null or unapprovedReviews.isEmpty()}" >
-    <h2> There is No New List!</h2>
+    <span th:if="${unapprovedReviews == null or unapprovedReviews.isEmpty()}" >
+    <h3> There is No New List!</h3>
 </span>
+</div>
 </body>
 </html>
