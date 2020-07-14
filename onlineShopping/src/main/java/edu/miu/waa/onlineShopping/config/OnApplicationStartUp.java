@@ -139,7 +139,6 @@ public class OnApplicationStartUp {
 		product2.setStockQuantity((long) 17);
 		product2.setSeller(user);
 		product2.setProductCategory(productCategoryService.getProductCategoryByName("Books"));
-
 		user.getProducts().add(product);
 		user.getProducts().add(product2);
 		sellerService.saveUser(user);
