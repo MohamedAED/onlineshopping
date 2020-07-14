@@ -70,8 +70,7 @@
 					</label>
                 </div>
                 <div class="col-sm-9">
-                    <label>Image</label>
-                    <span th:text="*{image}">Product Image: </span></label>
+                    <label>Product Image</label>
                     <input th:field="*{image}" type="file"/>
                 </div>
             </div>
@@ -111,7 +110,7 @@
 				<td><span th:text="${product.price}"> Price </span></td>
 				<td><span th:text="${product.stockQuantity}"> Stock Quantity </span></td>
 				<td><span th:text="${product.productNumber}"> Product Number </span></td>
-				<th><img th:src="@{'/product/' + ${product.productNumber} + '.png'}" width="300" height="300"/></th>
+				<th><img th:src="@{'/products/' + ${product.productNumber} + '.png'}" width="300" height="300"/></th>
 				<td>
 					<a th:href="@{/seller/deleteProduct(product_id=${product.id})}">Delete</a>
 				</td>

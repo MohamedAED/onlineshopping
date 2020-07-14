@@ -58,8 +58,8 @@ public class OnApplicationStartUp {
 		createBuyer("buyer3",UserStatus.APPROVED);
 
 		createSeller("seller",UserStatus.APPROVED);
-		createSeller("seller3",UserStatus.APPROVED);
-		createSeller("seller2",UserStatus.PENDING);
+/*		createSeller("seller3",UserStatus.APPROVED);
+		createSeller("seller2",UserStatus.PENDING);*/
 
 	}
 
@@ -128,22 +128,47 @@ public class OnApplicationStartUp {
 		product.setSeller(user);
 		product.setStockQuantity((long) 15);
 		product.setProductCategory(productCategoryService.getProductCategoryByName("Clothing"));
-
-
-
+		product.setProductNumber(1L);
 
 		Product product2 = new Product();
-		product2.setDescription("WAA desc2");
-		product2.setName("WAA");
-		product2.setPrice(new BigDecimal(100));
-		product2.setStockQuantity((long) 17);
+		product2.setDescription("Dell Laptop 142L");
+		product2.setName("Dell Laptop 142L");
+		product2.setPrice(new BigDecimal(800));
+		product2.setStockQuantity((long) 7);
 		product2.setSeller(user);
-		product2.setProductCategory(productCategoryService.getProductCategoryByName("Books"));
+		product2.setProductCategory(productCategoryService.getProductCategoryByName("Computers"));
+		product2.setProductNumber(2L);
+
+
+
+		Product product3 = new Product();
+		product3.setDescription("Men Shirt");
+		product3.setName("Men Shirt");
+		product3.setPrice(new BigDecimal(15));
+		product3.setStockQuantity((long) 10);
+		product3.setSeller(user);
+		product3.setProductCategory(productCategoryService.getProductCategoryByName("Clothing"));
+		product3.setProductNumber(4L);
+
+
+		Product product4 = new Product();
+		product4.setDescription("C++ for Beginners");
+		product4.setName("C++");
+		product4.setPrice(new BigDecimal(100));
+		product4.setStockQuantity((long) 17);
+		product4.setSeller(user);
+		product4.setProductCategory(productCategoryService.getProductCategoryByName("Books"));
+		product4.setProductNumber(4L);
+
+
+		user.getProducts().add(product4);
+		user.getProducts().add(product3);
 		user.getProducts().add(product);
 		user.getProducts().add(product2);
-		sellerService.saveUser(user);
 
+		sellerService.saveUser(user);
 	}
+
 
 	private void createBuyer(String username, UserStatus userStatus) throws ParseException, IOException {
 		Buyer user = new Buyer();

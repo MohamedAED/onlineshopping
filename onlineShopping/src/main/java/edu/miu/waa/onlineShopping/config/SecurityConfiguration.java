@@ -29,7 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http
                 .authorizeRequests().antMatchers("/","products/showByCategory",
-                "/showByCategory","/products/product","rest/shoppingCart/add/**","/products/productView", "/js/**","/images/**","/css/**", "/registration_seller", "/registration_buyer", "/registration/**" ,"/home/**").permitAll() // Enable css when logged out
+                "/showByCategory","/products/product","rest/shoppingCart/add/**","/products/productView", "/products/**","/js/**","/images/**","/css/**", "/registration_seller", "/registration_buyer", "/registration/**" ,"/home/**").permitAll() // Enable css when logged out
                 .and()
                 .authorizeRequests()
                 .anyRequest().authenticated()

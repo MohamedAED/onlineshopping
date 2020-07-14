@@ -68,7 +68,7 @@
             <div class="thumbnail">
                 <div class="caption">
                     <h5 th:text="${product.name}"></h5>
-                    <img th:src="@{'/products/' + ${product.id} + '.png'}" width="300" height="300"/>
+                    <img th:src="@{'/products/' + ${product.productNumber} + '.png'}" width="300" height="300"/><br/>
                     Description :<span th:text="${product.description}"></span><br/>
                     Price $<span th:text="${product.price}"></span><br/>
                     Seller <span th:text="${product.getSeller().getName()}"></span><br/>
