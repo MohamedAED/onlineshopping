@@ -95,7 +95,7 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
 				cartItemsTotalPrice = cartItemsTotalPrice.add(cartItem.evaluateTotalPrice());
 			}
 			int randomValue = (int) (1000 + (Math.random() * 9999));
-			String orderNumber = "ORDER # - 111-" + randomValue;
+			String orderNumber = "ORDER # -111-" + randomValue;
 			placeOrder = new PlaceOrder(orderNumber, cartItemsTotalPrice, sellerCartItems, seller, buyer.getShippingAddress(), buyer.getBillingAddress());
 			emailMessage = emailMessage + orderNumber + ", ";
 			create(placeOrder);

@@ -40,7 +40,7 @@
 	    	<fieldset>
 	    		<table class="table table-hover" border=1 frame=void rules=rows>
 	    			<tr>
-				      	<th></th>
+				      	<th style="text-align:left;" >Items</th>
 				      	<th></th>
 				      	<th style="text-align:right;" >Price</th>
 				    </tr>
@@ -50,12 +50,12 @@
                             <table>
 	                            <tr><td class="max" th:text="${item.value.product.description}">Description</td>   
                                    </tr>
-	                            <tr><td th:text="${item.value.product.stockQuantity}">Stock Quantity</td></tr>
+	                            <tr><td th:text="${item.value.product.stockQuantity + ' items in stock'}">Stock Quantity</td></tr>
 	                            <tr>
 	                            	<td>
 	                            		<table>
 		                            		<tr>
-		                            			<td th:text="${item.value.quantity}">Item Quantity</td>
+		                            			<td th:text="${'Qty: ' + item.value.quantity}">Item Quantity</td>
                       							<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
                                             	<td><a href="#" class="label label-success product-order-btn" th:data="${item.value.product.id}" id="product-order-btn" name="product-order-btn">
                       								<span class="glyphicon glyphicon-plus" /></span></a></td>
@@ -68,14 +68,14 @@
 								</tr>
                             </table>
                            </td>		      	
-				      	<td style="vertical-align:top;text-align:right" th:text="${item.value.product.price}">Price</td> 
+				      	<td style="vertical-align:top;text-align:right" th:text="${'$' + item.value.product.price}">Price</td> 
 				    </tr>
 				    <tr>
                        	<td></td>
                         <td></td>
                         <td>
                        		<label for="shoppingCartTotalPrice"><span th:text="#{shoppingCart.form.totalPrice}">Subtotal :</span></label>
-                           	<label th:text="${shoppingCart.totalPrice}">0</label>
+                           	<label th:text="${'$' + shoppingCart.totalPrice}">0</label>
                         </td>
                        </tr>
 				</table>

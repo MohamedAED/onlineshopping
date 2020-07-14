@@ -38,61 +38,86 @@
 	<div id="global">
 	    <form action="#" th:action="@{/order}" method="post">
 	    	<fieldset>
-	    		<table th:each="placeOrder : ${placedOrders}" class="table table-hover" border=1 frame=void rules=rows>
-	    			<tr>
-				      	<th th:text="#{placeOrder.form.orderDate}">Order Placed</th>
-				      	<th th:text="#{placeOrder.form.totalPrice}">Total Price</th>
-				      	<th th:text="#{placeOrder.form.orderNumber}">Order #</th>
-				      	<th th:text="#{placeOrder.form.shipTo}">Ship To</th>
-				    </tr>
-	    			<tr>
-	    				<td th:text="${placeOrder.orderDate}"></td>
-				    	<td th:text="${placeOrder.totalPrice}"></td>
-				    	<td th:text="${placeOrder.orderNumber}"></td>
-				    	<td th:text="${buyerName}"></td>
+	    		<table th:each="placeOrder : ${placedOrders}" class="table table-bordered">
+	    			<thead>
+	    			<tr style="background-color:#DCDCDC" >
+	    				<td>
+		    				<table style="background-color:#DCDCDC" class="table table-borderless">
+		    					<thead>
+		    					<tr>
+		    						<th th:text="#{placeOrder.form.orderDate}">Order Placed</th>
+							      	<th th:text="#{placeOrder.form.totalPrice}">Total Price</th>
+							      	<th th:text="#{placeOrder.form.shipTo}">Ship To</th>
+							      	<th th:text="${placeOrder.orderNumber}">Order #</th>
+		    					</tr>
+		    					</thead>
+		    					<tbody>
+		    					<tr>
+		    						<td th:text="${placeOrder.orderDate}"></td>
+							    	<td th:text="${'$' + placeOrder.totalPrice}"></td>
+							    	<td th:text="${buyerName}"></td>
+							    	<td><a href="#" class="label label-success placeOrder-print-btn" th:data="${placeOrder.id}" id="placeOrder-print-btn" name="placeOrder-print-btn">
+			 							<span class="glyphicon glyphicon-download-alt" /></span> download receipt </a></td>
+		    					<tr>
+		    					</tr>
+		    					</tbody>
+		    				</table>
+		    			</td>
 	    			</tr>
-	    			<tr></tr>
+	    			</thead>
+	    			<tbody>
 	    			<tr>
-						<td th:text="${placeOrder.status}"></td>
-						<td>&nbsp;&nbsp;</td>
-	    				<td th:text="${placeOrder.orderDeliveryDate}? ${placeOrder.orderDeliveryDate}: (${placeOrder.orderShippingDate}? ${placeOrder.orderShippingDate} : ${placeOrder.orderDate})"></td>
-	    				<td>&nbsp;&nbsp;</td>
-                       	<td><a href="#" class="label label-success placeOrder-print-btn" th:data="${placeOrder.id}" id="placeOrder-print-btn" name="placeOrder-print-btn">
- 								<span class="glyphicon glyphicon-download-alt" /></span> download receipt </a></td>
+	    				<td>
+		    				<table>
+		    					<tr>
+									<td><h4 th:text="${placeOrder.status}"></h4></td>	    					
+		    					</tr>
+		    					<tr>
+		    						<td><h4 th:text="${placeOrder.orderDeliveryDate}? ${placeOrder.orderDeliveryDate}: (${placeOrder.orderShippingDate}? ${placeOrder.orderShippingDate} : ${placeOrder.orderDate})"></h4></td>
+		    					</tr>
+		    					<tr>
+		    						<td><h6>Please check your mailbox.</h6></td>
+		    					</tr>
+		    					<tr><td><p>&nbsp;&nbsp;&nbsp;&nbsp;</p></td></tr>
+		    					<tr th:each="item : ${placeOrder.cartItems}">
+		    						<td><table><tr>
+							    	<td><img th:src="@{'/images/products/' + ${item.product.id} + '.jpg'}" width="200" height="100"><br/></td>
+							    	<td><p>&nbsp;&nbsp;&nbsp;&nbsp;</p></td>
+			                        <td>
+			                        	<table>
+			                          		<tr><td class="max" th:text="${item.product.description}">Description</td></tr>
+			                          		<tr><td th:text="${'Sold by: ' + item.product.seller.lastName + ', ' + item.product.seller.firstName}">Price</td></tr>
+			                          		<tr><td th:text="${item.quantity + ' items each $' + item.product.price}">Quantity</td></tr>
+			                          		<tr>
+			                          			<td>
+			                          				<a href="#" th:id="${item.product.id}" onclick="manageReview(this.id)" class="label label-success" th:data="${item.product.id}">
+			                          					<span class="glyphicon glyphicon-pencil" /></span> Write a product review </a>
+						 						</td>
+						 					</tr>
+			                          		<tr>
+			                          			<td>
+				                          			<div th:id="${'div' + item.product.id}" style="display:none">
+				                          				<br/>
+														<textarea th:id="${'textReview' + item.product.id}" name="textReview" rows="4" cols="50"></textarea>
+														<br/>
+														<a href="#" class="label label-success product-review-btn" th:data="${item.product.id}" id="product-review-btn" name="product-review-btn">
+						 									<span class="glyphicon glyphicon-ok" /></span> Submit </a>
+						 								&nbsp;&nbsp;
+						 								<a href="#" th:id="${item.product.id}" onclick="manageReview(this.id)" class="label label-danger">
+			                      							<span class="glyphicon glyphicon-remove" /></span> Cancel </a>
+													</div>
+												</td>
+											</tr>
+			                        	</table>
+			                        </td>
+			                        <tr><td><p>&nbsp;&nbsp;&nbsp;&nbsp;</p></td></tr>
+			                        </tr></table></td>
+							    </tr>
+		    				</table>
+	    				</td>
 	    			</tr>
-	    			<tr></tr>
-	    			<tr th:each="item : ${placeOrder.cartItems}">
-				    	<td><img th:src="@{'/images/products/' + ${item.product.id} + '.jpg'}" width="200" height="100"></td>
-                        <td>
-                        	<table>
-                          		<tr><td class="max" th:text="${item.product.description}">Description</td></tr>
-                          		<tr><td th:text="${item.quantity}">Quantity</td>   </tr>
-                          		<tr><td th:text="${item.product.price}">Price</td></tr>
-                          		<tr>
-                          			<td>
-                          				<a href="#" th:id="${item.product.id}" onclick="manageReview(this.id)" class="label label-success" th:data="${item.product.id}">
-                          					<span class="glyphicon glyphicon-pencil" /></span> Write a product review </a>
-			 						</td>
-			 					</tr>
-                          		<tr>
-                          			<td>
-	                          			<div th:id="${'div' + item.product.id}" style="display:none">
-	                          				<br/>
-											<textarea th:id="${'textReview' + item.product.id}" name="textReview" rows="4" cols="50"></textarea>
-											<br/>
-											<a href="#" class="label label-success product-review-btn" th:data="${item.product.id}" id="product-review-btn" name="product-review-btn">
-			 									<span class="glyphicon glyphicon-ok" /></span> Submit </a>
-			 								&nbsp;&nbsp;
-			 								<a href="#" th:id="${item.product.id}" onclick="manageReview(this.id)" class="label label-danger">
-                      							<span class="glyphicon glyphicon-remove" /></span> Cancel </a>
-										</div>
-									</td>
-								</tr>
-                        	</table>
-                        </td>
-				    </tr>
 				    <tr></tr>
-				    <tr></tr>
+				    </tbody>
 	    		</table>
 			</fieldset>
 			<p></p>

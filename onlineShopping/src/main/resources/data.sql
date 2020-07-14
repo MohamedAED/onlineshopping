@@ -3,15 +3,15 @@ INSERT INTO SHOPPING_CART (Total_Price)
 Values (800.00),(0.00),(0.00);
 --Billing Address
 INSERT INTO BILLING_ADDRESS(CITY,Country,State,Street,Zip_Code)
-Values('Giza','Egypt','GA','Street 1','41526'),
-      ('City 1','USA','IO','Street 2','96857'),
-      ('City 2','USA','IO','Street 2','14256'),
-      ('City 3','USA','IO','Street 2','12365');
+Values('Fairfield','USA','IA','1000 4th North St.','52557'),
+      ('City 1','USA','IO','1000 4th North St.','52557'),
+      ('City 2','USA','IO','1000 4th North St.','52557'),
+      ('City 3','USA','IO','1000 4th North St.','52557');
 --Shipping Address
 INSERT INTO SHIPPING_ADDRESS (CITY,Country,State,Street,Zip_Code)
-Values('IOWA','USA','MM','Street','11111'),
-      ('City 2','USA','MM','Street','14852'),
-      ('City 3','USA','MM','Street','14852');
+Values('Fairfield','USA','IA','1000 4th North St.','52557'),
+      ('City 2','USA','MM','1000 4th North St.','52557'),
+      ('City 3','USA','MM','1000 4th North St.','52557');
 --Card Payment
 INSERT INTO CARD_PAYMENT (CARD_NUMBER,CVV,EXPIRY_DATE,NAME_ON_CARD)
 Values ('12142569875','124','2010-01-01','MOHAMED SALEH'),

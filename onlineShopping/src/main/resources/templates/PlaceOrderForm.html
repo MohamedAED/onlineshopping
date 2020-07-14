@@ -57,52 +57,16 @@
 					<td>
 						<fieldset>
 							<legend><span th:text="#{shippingAddress.form.title}">Shipping Address</span></legend>
-							<p>&nbsp;&nbsp;
-								<label for="street"><span th:text="#{shippingAddress.form.street}">Street: </span></label> 
-								<input type="text" th:field="*{shippingAddress.street}" disabled/>
-							</p>
-							<p>&nbsp;&nbsp;
-								<label for="state"><span th:text="#{shippingAddress.form.state}">State: </span></label> 
-								<input type="text" th:field="*{shippingAddress.state}" disabled/>
-							</p>
-							<p>&nbsp;&nbsp;
-								<label for="zipCode"><span th:text="#{shippingAddress.form.zipCode}">Zip: </span></label> 
-								<input type="text" th:field="*{shippingAddress.zipCode}" disabled/>
-							</p>
-							<p>&nbsp;&nbsp;
-								<label for="city"><span th:text="#{shippingAddress.form.city}">City: </span></label> 
-								<input type="text" th:field="*{shippingAddress.city}" disabled/>
-							</p>
-							<p>&nbsp;&nbsp;
-								<label for="country"><span th:text="#{shippingAddress.form.country}">Country: </span></label> 
-								<input type="text" th:field="*{shippingAddress.country}" disabled/>
-							</p>
+							<h4 th:text="*{shippingAddress.street}"></h4>
+							<h4 th:text="*{shippingAddress.city + ', ' + shippingAddress.state + ' ' + shippingAddress.zipCode}"></h4>
 						</fieldset>
 					</td>
 					<td><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></td>
 					<td>
 						<fieldset>
 							<legend><span th:text="#{billingAddress.form.title}">Billing Address</span></legend>
-							<p>&nbsp;&nbsp;
-								<label for="street"><span th:text="#{billingAddress.form.street}">Street: </span></label> 
-								<input type="text" th:field="*{billingAddress.street}" disabled/>
-							</p>
-							<p>&nbsp;&nbsp;
-								<label for="state"><span th:text="#{billingAddress.form.state}">State: </span></label> 
-								<input type="text" th:field="*{billingAddress.state}" disabled/>
-							</p>
-							<p>&nbsp;&nbsp;
-								<label for="zipCode"><span th:text="#{billingAddress.form.zipCode}">Zip: </span></label> 
-								<input type="text" th:field="*{billingAddress.zipCode}" disabled/>
-							</p>
-							<p>&nbsp;&nbsp;
-								<label for="city"><span th:text="#{billingAddress.form.city}">City: </span></label> 
-								<input type="text" th:field="*{billingAddress.city}" disabled/>
-							</p>
-							<p>&nbsp;&nbsp;
-								<label for="country"><span th:text="#{billingAddress.form.country}">Country: </span></label> 
-								<input type="text" th:field="*{billingAddress.country}" disabled/>
-							</p>
+							<h4 th:text="*{billingAddress.street}"></h4>
+							<h4 th:text="*{billingAddress.city + ', ' + billingAddress.state + ' ' + billingAddress.zipCode}"></h4>
 						</fieldset>
 					</td>
 				</tr>
@@ -110,41 +74,21 @@
 				<tr>
 					<td>
 						<fieldset>
-							<legend><span th:text="#{cardPayment.form.title}">Credit Card Information</span></legend>
-							<p>&nbsp;&nbsp;
-								<label for="cardNumber"><span th:text="#{cardPayment.form.cardNumber}">Card Number: </span></label> 
-								<input type="text" th:field="*{cardPayment.cardNumber}" disabled/>
-							</p>
-							<p>&nbsp;&nbsp;
-								<label for="expiryDate"><span th:text="#{cardPayment.form.expiryDate}">Expiration Date: </span></label> 
-								<input type="text" th:field="*{cardPayment.expiryDate}" disabled/>
-							</p>
-							<p>&nbsp;&nbsp;
-								<label for="cvv"><span th:text="#{cardPayment.form.cvv}">CVV: </span></label> 
-								<input type="text" th:field="*{cardPayment.cvv}" disabled/>
-							</p>
-							<p>&nbsp;&nbsp;
-								<label for="nameOnCard"><span th:text="#{cardPayment.form.nameOnCard}">Name On Card: </span></label> 
-								<input type="text" th:field="*{cardPayment.nameOnCard}" disabled/>
-							</p>
+							<legend><span th:text="#{cardPayment.form.title}">Credit Card Payment</span></legend>
+							<h4 th:text="*{'Credit Card ending with ' + cardPayment.cardNumber}"></h4>
+							<h4 th:text="*{'expired in ' + cardPayment.expiryDate}"></h4>
+							<h4 th:text="*{'CVV: ' + cardPayment.cvv}"></h4>
+							<h4 th:text="*{'Name On Card: ' + cardPayment.nameOnCard}"></h4>
 						</fieldset>
 					</td>
 					<td><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></td>
 					<td>
 						<fieldset>
-							<legend><span th:text="#{points.form.title}">Points Information</span></legend>
-							<p>&nbsp;&nbsp;
-								<label for="orderTotalPrice"><span th:text="#{shoppingCart.form.totalPrice}">Subtotal: </span></label> 
-								<input type="text" th:field="*{shoppingCart.totalPrice}" disabled/>
-							</p>
-							<p>&nbsp;&nbsp;
-								<label for="pointsBalance"><span th:text="#{points.form.count}">Points Balance: </span></label> 
-								<input type="text" th:field="*{buyer.points}" disabled/>
-							</p>
-							<p>&nbsp;&nbsp;
-								<label for="requiredPoints"><span th:text="#{shoppingCart.totalPrice.points}">Required Points: </span></label> 
-								<input type="text" th:value="${requiredPoints}" disabled/>
-							</p>
+							<legend><span th:text="#{points.form.title}">Points Payment</span></legend>
+							<h4 th:text="*{'Order Total Price: ' + shoppingCart.totalPrice}"></h4>
+							<h4 th:text="*{'Points Balance: ' + buyer.points}"></h4>
+							<h4 th:value="${'The required points ' + requiredPoints}"></h4>
+							<h4 th:text="*{'Order Total Price: ' + shoppingCart.totalPrice}"></h4>
 							<p>&nbsp;&nbsp;
 								<label for="pointsNotification">
 									<span th:text="${allowPointsPayment}? 'Points will be deducted from your balance' : 'you are not allowed to use this service'"></span>
