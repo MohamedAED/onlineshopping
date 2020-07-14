@@ -22,4 +22,14 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         return productCategoryList;
     }
 
+    @Override
+    public void save(ProductCategory productCategory) {
+        productCategoryRepository.save(productCategory);
+    }
+
+    @Override
+    public ProductCategory getProductCategoryByName(String name) {
+        return productCategoryRepository.findByName(name);
+    }
+
 }

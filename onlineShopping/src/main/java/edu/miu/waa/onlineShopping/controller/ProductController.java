@@ -34,7 +34,6 @@ public class ProductController {
     public String getProductById(@RequestParam("id") Long productId,
                                  @RequestParam("buyerid") Long buyerId,
                                  Model model, HttpSession session) {
-
         String userRole = (String) session.getAttribute("UserRole");
 
         if(userRole == null)
@@ -62,8 +61,7 @@ public class ProductController {
     }
 
     @GetMapping("/productView")
-    public String getProductByIdView(@RequestParam("id") Long productId,
-                                 Model model, HttpSession session) {
+    public String getProductByIdView(@RequestParam("id") Long productId, Model model, HttpSession session) {
 
         Product product = productService.getProductById(productId);
         this.product = product;

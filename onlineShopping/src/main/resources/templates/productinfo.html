@@ -39,7 +39,7 @@
         <a th:href="@{/showByCategory(categoryID=${category.id})}" >
             <span class="CategoryLink" th:text="${category.name}"/></a></span>
         </span>
-        <span th:if="${UserRole != null} ">
+        <span th:if="${UserRole != null and !UserRole.isEmpty()} ">
         <a th:href="@{/showByCategoryLoggedIn(categoryID=${category.id})}" >
             <span class="CategoryLink" th:text="${category.name}"/></a></span>
         </a>
@@ -47,8 +47,6 @@
         <br>
     </tr>
 </div>
-
-
 <section class="container">
     <div class="row">
         <div class="col-md-5">

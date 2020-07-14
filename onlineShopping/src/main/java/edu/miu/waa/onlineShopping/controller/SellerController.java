@@ -3,19 +3,15 @@ package edu.miu.waa.onlineShopping.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import edu.miu.waa.onlineShopping.domain.*;
+import edu.miu.waa.onlineShopping.service.*;
 
-import edu.miu.waa.onlineShopping.domain.PlaceOrder;
-import edu.miu.waa.onlineShopping.domain.Product;
-import edu.miu.waa.onlineShopping.domain.Seller;
-import edu.miu.waa.onlineShopping.service.OrderService;
-import edu.miu.waa.onlineShopping.service.ProductService;
-import edu.miu.waa.onlineShopping.service.SellerService;
-import edu.miu.waa.onlineShopping.service.StorageService;
+import javax.validation.Valid;
+import java.security.Principal;
+
 
 @Controller
 public class SellerController {
@@ -32,61 +28,36 @@ public class SellerController {
 	@Autowired
 	StorageService storageService;
 
-	/*
-	 * save seller find seller
-	 */
-	
-//	@ModelAttribute("orderStatus")
-//	public void addOrderStatus(Model model) {
-////		List<String> orderStatus = Stream.of(OrderStatus.values())
-////                .map(OrderStatus::name)
-////                .collect(Collectors.toList());
-//		
-//		List<OrderStatus> orderStatus = Arrays.asList(OrderStatus.values());
-//		model.addAttribute("orderStatus", orderStatus);
-//	}
-
 	@GetMapping(value = "/seller/find")
-	public String findSeller(@RequestParam(value = "seller_id") Long seller_id,
-			@ModelAttribute("product") Product product, Model model) {
-
-		Seller seller = sellerService.findById(seller_id);
-
+	public String findSeller(@ModelAttribute("product") Product product, Model model, Principal principal) {
+		Seller seller = sellerService.findUserByUsername(principal.getName());
 		model.addAttribute("seller", seller);
-
 		model.addAttribute("product", new Product());
+		model.addAttribute("successMessage", "");
 		return "sellerPage";
-
-//		return seller;
 	}
 
 	@PostMapping(value = "/seller/addProduct")
-	public String addProduct(@ModelAttribute("product") Product product,
-			@RequestParam(value = "seller_id") Long seller_id, Model model) {
-		
-		
-		MultipartFile employeeImage = product.getImage();
-		
-		Seller seller = sellerService.findById(seller_id);
+	public String addProduct(Principal principal,@Valid Product product, BindingResult bindingResult, Model model) {
+		Seller seller1 = sellerService.findUserByUsername(principal.getName());
+		if(!bindingResult.hasErrors()){
+			MultipartFile employeeImage = product.getImage();
+			product.setSeller(seller1);
+			seller1.getProducts().add(product);
+			seller1 = sellerService.saveUser(seller1);
+			model.addAttribute("successMessage", "product saved successfully");
+			if (employeeImage != null && !employeeImage.isEmpty()) {
+				try {
+					storageService.saveImage(employeeImage, product.getProductNumber());
 
-		product.setSeller(seller);
-		seller.getProducts().add(product);
-
-		seller = sellerService.save(seller);
-		
-
-		if (employeeImage != null && !employeeImage.isEmpty()) {
-			try {
-				storageService.saveImage(employeeImage, product.getProductNumber());
-			} catch (Exception e) {
-				throw new RuntimeException("Product Image saving failed", e);
+				} catch (Exception e) {
+					throw new RuntimeException("Product Image saving failed", e);
+				}
 			}
 		}
-
-		model.addAttribute("seller", seller);
+		model.addAttribute("product", new Product());
+		model.addAttribute("seller", seller1);
 		return "sellerPage";
-
-//		return seller;
 	}
 
 	@GetMapping(value = "/seller/updateProductPage")
@@ -114,13 +85,11 @@ public class SellerController {
 		old_product.setPrice(product.getPrice());
 		old_product.setStockQuantity(product.getStockQuantity());
 
-		sellerService.save(seller);
-
+		sellerService.saveUser(seller);
 		model.addAttribute("seller", seller);
 		model.addAttribute("product", new Product());
-		return "SellerPage";
 
-//		return seller;
+		return "SellerPage";
 	}
 
 	@GetMapping(value = "/seller/deleteProduct")
@@ -130,14 +99,11 @@ public class SellerController {
 		Seller seller = sellerService.findById(seller_id);
 		seller.getProducts().removeIf(p -> p.getId() == product_id);
 
-		sellerService.save(seller);
-
+		sellerService.saveUser(seller);
 		model.addAttribute("seller", seller);
 		model.addAttribute("product", new Product());
+
 		return "SellerPage";
-
-//		return seller;
-
 	}
 	
 	
@@ -166,7 +132,7 @@ public class SellerController {
 
 		old_order.setStatus(order.getStatus());
 
-		sellerService.save(seller);
+		sellerService.saveUser(seller);
 
 		model.addAttribute("seller", seller);
 		model.addAttribute("product", new Product());

@@ -27,6 +27,7 @@ public class User {
 	@NotBlank
 	private String lastName;
 
+	@NotNull
 	@Column(name = "date_of_birth")
 	@Past
 	@DateTimeFormat(pattern = "MM/dd/yyyy")

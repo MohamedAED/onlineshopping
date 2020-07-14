@@ -35,7 +35,6 @@ public class ShoppingCartRestController {
 	@RequestMapping(value = "/add/{productId}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void addItem(@PathVariable Long productId, @RequestParam("buyerId") Long buyerId) {
-		
 		Buyer buyer = buyerService.findUserById(buyerId);
 		ShoppingCart shoppingCart = buyer.getShoppingCart();
 

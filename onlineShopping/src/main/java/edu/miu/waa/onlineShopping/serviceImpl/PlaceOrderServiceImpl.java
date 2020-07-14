@@ -101,7 +101,7 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
 			create(placeOrder);
 			placedOrders.add(placeOrder);
 			seller.getOrders().add(placeOrder);
-			sellerService.save(seller);
+			sellerService.saveUser(seller);
 		}
 		
 		int requiredPoints = shoppingCart.getTotalPrice().divideToIntegralValue(new BigDecimal(2)).intValue();

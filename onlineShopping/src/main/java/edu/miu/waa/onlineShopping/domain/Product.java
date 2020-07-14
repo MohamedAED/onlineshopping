@@ -3,24 +3,16 @@ package edu.miu.waa.onlineShopping.domain;
 import java.math.BigDecimal;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Product {
@@ -29,10 +21,10 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotEmpty
+	@NotBlank
 	private String name;
 
-	@NotEmpty
+	@NotBlank
 	private String description;
 
 	@NotNull
@@ -50,11 +42,11 @@ public class Product {
 	@Transient
 	private String photoBase64;
 
+	@Transient
 	@Lob
 	@Column(name = "photo", columnDefinition = "BLOB")
 	private byte[] photo;
 
-	@JsonIgnore
 	@ManyToOne
 	private Seller seller;
 

@@ -9,14 +9,11 @@ import edu.miu.waa.onlineShopping.domain.Admin;
 import edu.miu.waa.onlineShopping.domain.ShoppingCart;
 import edu.miu.waa.onlineShopping.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.miu.waa.onlineShopping.domain.*;
 import edu.miu.waa.onlineShopping.domain.enums.*;
@@ -41,34 +38,39 @@ public class LoginController {
 	@RequestMapping("/goHome")
 	public String goHome(Principal principal, Model model) {
 
-		String role ="";
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String pageURL="";
-
-		if(sellerService.findUserByUsername(principal.getName()) != null){
-			role = "seller";
+		User user = getUserByName(principal.getName());
+		String role = user.getRole().toString().toLowerCase();
+		if (user.getRole() == Role.SELLER) {
 			pageURL = "forward:/seller/find";
 			Seller seller = sellerService.findUserByUsername(principal.getName());
 			model.addAttribute("UserInfo",seller);
-		}
-		else if (adminService.findUserByUsername(principal.getName()) != null){
-			role = "admin";
+
+		} else if (user.getRole() == Role.ADMIN) {
 			pageURL = "AdminHomePage";
 			Admin admin =  adminService.findUserByUsername(principal.getName());
 			model.addAttribute("UserInfo",admin);
-		}
-		else if (buyerService.findUserByUsername(principal.getName()) != null){
-
+		} else if (user.getRole() == Role.BUYER){
 			Buyer buyer =  buyerService.findUserByUsername(principal.getName());
 			model.addAttribute("UserInfo",buyer);
-			role = "buyer";
 			pageURL = "forward:/SignedIn?UserId=" + buyer.getUserId() +"&UserRole=" + role;
 		}
 		model.addAttribute("UserRole",role);
 
 		return pageURL;
-	}
 
+	}
+	public User getUserByName(String username){
+		User user;
+		if (sellerService.findUserByUsername(username) != null) {
+			user = sellerService.findUserByUsername(username);
+		} else if (adminService.findUserByUsername(username) != null) {
+			user = adminService.findUserByUsername(username);
+		} else {
+			user = buyerService.findUserByUsername(username);
+		}
+		return user;
+	}
 
 	@RequestMapping(value={"/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
@@ -94,12 +96,12 @@ public class LoginController {
 		ModelAndView modelAndView = new ModelAndView();
 		seller.setRole(Role.SELLER);
 		if (sellerService.findUserByUsername(seller.getUsername()) != null) {
-			bindingResult.rejectValue("email", "error.user",
-							"There is already a user registered with the email provided");
+			bindingResult.rejectValue("username", "error.user",
+							"There is already a user registered with the provided username");
 		}
 		if (!bindingResult.hasErrors()) {
 			seller.setApproved(UserStatus.PENDING);
-
+			seller.setUsername(seller.getUsername().toLowerCase());
 			sellerService.saveUser(seller);
 			modelAndView.addObject("successMessage", "User has been registered successfully");
 		}
@@ -114,12 +116,13 @@ public class LoginController {
 		ModelAndView modelAndView = new ModelAndView();
 		buyer.setRole(Role.BUYER);
 		if (buyerService.findUserByUsername(buyer.getUsername()) != null) {
-			bindingResult.rejectValue("email", "error.user",
-					"There is already a user registered with the email provided");
+			bindingResult.rejectValue("username", "error.user",
+					"There is already a user registered with the provided username");
 		}
 		if (!bindingResult.hasErrors()) {
 			buyer.setApproved(UserStatus.PENDING);
 			buyer.setShoppingCart(new ShoppingCart());
+			buyer.setUsername(buyer.getUsername().toLowerCase());
 			buyerService.saveUser(buyer);
 			modelAndView.addObject("successMessage", "User has been registered successfully");
 		}

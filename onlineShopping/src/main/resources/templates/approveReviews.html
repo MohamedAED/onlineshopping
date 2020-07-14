@@ -6,34 +6,33 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>Approve Buyers Reviews</title>
+    <title>Approve Reviews</title>
 </head>
 <body>
-<h1 > Approve users list</h1>
-<span th:if="${unapprovedUsers!=null and !unapprovedUsers.isEmpty()}" >
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="/goHome">Admin Home Page</a>
+    <a class="navbar-brand" th:href="@{/logout}">Logout</a>
+</nav>
+
+<span th:if="${unapprovedReviews!=null and !unapprovedReviews.isEmpty()}" >
     <table class="table table-striped">
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">UserName</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Role</th>
+         <th scope="col">Description</th>
+            <th scope="col">Made By</th>
             <th scope="col">Approve</th>
             <th scope="col">&nbsp;</th>
             <th scope="col">&nbsp;</th>
         </tr>
         </thead>
         <tbody>
-            <tr th:each="user: ${unapprovedUsers}">
+            <tr th:each="review: ${unapprovedReviews}">
                 <td scope="col">#</td>
-                <td th:text="${user.username}" />
-                <td th:text="${user.firstName}" />
-                <td th:text="${user.lastName}" />
-                <td th:text="${user.email}" />
-                <td th:text="${user.role}" />
-                <td><a th:href="@{/approve(userId=${user.userId},role=${user.role})}" >Approve me<a/></td>
+                <td th:text="${review.description}" />
+                <td th:text="${review.buyer.firstName}"/>
+                <td><a th:href="@{/approveReviewById(reviewId=${review.id}, status=${2})}" >Approve</a>/
+                <a th:href="@{/approveReviewById(reviewId=${review.id}, status=${1})}" >Reject</a></td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
@@ -41,7 +40,7 @@
         </tbody>
     </table>
 </span>
-<span th:if="${unapprovedUsers == null or unapprovedUsers.isEmpty()}" >
+<span th:if="${unapprovedReviews == null or unapprovedReviews.isEmpty()}" >
     <h2> There is No New List!</h2>
 </span>
 </body>
