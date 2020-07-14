@@ -45,8 +45,8 @@ VALUES ( 1,1 ),( 1,2 ),(2,3),(2,4),(3,5);
 --Buyer
 INSERT INTO BUYER(Date_Of_Birth,Email,First_Name,Last_Name,Password,Phone_Number,Role,User_Name,Points,BILLING_ADDRESS_id,Shipping_ADDRESS_id,Card_Payment_Id,shopping_cart_id)
 Values('2011-01-01 10:00:00+01','Mohamedsaleh1984@hotmail.com','Mostafa','Salem','12345','6418192921',2,'buyer1',10,1,1,1,1),
-      ('1982-01-01 10:00:00+01','Mega_unknown@hotmail.com','Mohamed','Saleh','12345','6418192921',2,'buyer2',30,2,2,2,2),
-      ('1982-01-01 10:00:00+01','Dummy@hotmail.com','Mohamed','Saleh','12345','6418192921',2,'buyer3',30,2,3,3,3);
+      ('1982-01-01 10:00:00+01','Mohamedsaleh1984@hotmail.com','Mohamed','Saleh','12345','6418192921',2,'buyer2',30,2,2,2,2),
+      ('1982-01-01 10:00:00+01','Mohamedsaleh1984@hotmail.com','Mohamed','Saleh','12345','6418192921',2,'buyer3',30,2,3,3,3);
 --Cart Items
 INSERT INTO CART_ITEM(quantity, price, product_id)
 Values (1,100.00,1),(3,100.00,4),(5,80.00,2);

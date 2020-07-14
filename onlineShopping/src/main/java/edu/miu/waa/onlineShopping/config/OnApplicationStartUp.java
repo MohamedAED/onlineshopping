@@ -48,8 +48,11 @@ public class OnApplicationStartUp {
 	}
 	
 	private void createFolder() {
-		File file = new File(servletContext.getRealPath("/") + "/product");
+		File file = new File(servletContext.getRealPath("/") + "/products");
 		file.mkdir();
+
+		File fileInv = new File(servletContext.getRealPath("/") + "/invoices");
+		fileInv.mkdir();
 	}
 
 	private void createAdminUser() throws ParseException, IOException {
@@ -84,7 +87,7 @@ public class OnApplicationStartUp {
 		Buyer user = new Buyer();
 		user.setFirstName("buyer4");
 		user.setLastName("buyer4");
-		user.setEmail("buyer4@miu.edu");
+		user.setEmail("Mohamedsaleh1984@hotmail.com");
 		user.setPhoneNumber("6418192921");
 		user.setDateOfBirth(new SimpleDateFormat("MM/dd/yyyy").parse("03/22/1990"));
 		user.setUsername("mega_unknown");
