@@ -7,15 +7,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Users</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
-
-<nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="/goHome">Admin Home Page</a>
-    <a class="navbar-brand" th:href="@{/logout}">Logout</a>
-</nav>
+<ul>
+    <li><a href="#">SOKS</a></li>
+    <li><a th:href="@{/goHome}">Home</a></li>
+    <li style="float:right"><a th:href="@{/logout}">Logout</a></li>
+</ul>
 <span th:if="${unapprovedUsers!=null and !unapprovedUsers.isEmpty()}" >
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+    <input class="myInput" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
     <table class="table table-striped" id="myTable" name="myTable">
         <thead>
         <tr>

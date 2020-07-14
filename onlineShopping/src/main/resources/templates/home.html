@@ -13,44 +13,53 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Online Shopping</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="shortcut icon" th:href="@{/images/ico/favicon.ico}" >
     <link rel="stylesheet" th:href="@{/css/home_product.css}">
+    <link rel="stylesheet" th:href="@{/css/vertical_list.css}">
+
 </head>
 <body>
-
-
-<!--<a th:href="@{/products/product(id=${product.id})}"-->
-
-<span th:if="${UserRole== null or UserRole.isEmpty()} ">
-    <nav class="navbar navbar-expand-lg navbar-light bg-ligh">
-        <a class="navbar-brand" th:href="@{/registration(type='buyer')}" >Register</a>
-        <a class="navbar-brand" th:href="@{/login}">Login</a>
-    </nav>
-</span>
-
-<span th:if="${UserRole == 'buyer'}">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" th:href="@{/logout}">Logout</a>
-    <a class="navbar-brand" th:href="@{/shoppingCart(buyerId= ${UserInfo.getUserId()})}">Cart</a></nav>
-</span>
-
-<span th:if="${UserRole== 'seller'} " >
-    <nav class="navbar navbar-expand-lg navbar-light bg-light"><a class="navbar-brand" th:href="@{/logout}">Logout</a></nav>
-</span>
-
+<ul>
+    <span th:if="${UserRole== null or UserRole.isEmpty()} ">
+         <li><a th:href="@{/}">SOKS</a></li>
+    </span>
+    <span th:unless="${UserRole== null or UserRole.isEmpty()} ">
+         <li><a href="#">SOKS</a></li>
+    </span>
+    <span th:if="${UserRole== null or UserRole.isEmpty()} ">
+        <li style="float:right"><a th:href="@{/login}">Login</a></li>
+        <li style="float:right"><a th:href="@{/registration(type='buyer')}" >Sign-up</a></li>
+    </span>
+    <span th:if="${UserRole == 'buyer'}">
+        <li style="float:right"><a th:href="@{/shoppingCart(buyerId= ${UserInfo.getUserId()})}">Cart</a></li>
+        <li style="float:right"><a th:href="@{/logout}">Logout</a></li>
+    </span>
+    <span th:if="${UserRole== 'seller'} " >
+         <li style="float:right"><a th:href="@{/logout}">Logout</a></li>
+    </span>
+</ul>
 
 <div class="LeftPanel" id="categoriesList">
-    <tr th:block th:each="category : ${cats}">
+    <ul class="vertical_list">
         <span th:if="${UserRole== null or UserRole.isEmpty()} ">
-        <a th:href="@{/showByCategory(categoryID=${category.id})}" >
-            <span class="CategoryLink" th:text="${category.name}"/></a></span>
+        <li th:each="category : ${cats}">
+            <a class="vertical_list" th:href="@{/showByCategory(categoryID=${category.id})}" th:text="${category.name}" ></a>
+        </li>
         </span>
         <span th:if="${UserRole != null} ">
-        <a th:href="@{/showByCategoryLoggedIn(categoryID=${category.id})}" >
-            <span class="CategoryLink" th:text="${category.name}"/></a></span>
-        </a>
+        <li th:each="category : ${cats}">
+            <a class="vertical_list" th:href="@{/showByCategoryLoggedIn(categoryID=${category.id})}" th:text="${category.name}" ></a>
+        </li>
         </span>
-        <br>
-    </tr>
+        <span th:if="${UserRole== null or UserRole.isEmpty()} ">
+            <li> <a class="vertical_list" th:href="@{/showByCategory(categoryID=-1)}">All</a></li>
+             <br>
+        </span>
+        <span th:if="${UserRole != null} ">
+            <li><a  class="vertical_list" th:href="@{/showByCategoryLoggedIn(categoryID= -1)}" >All</a></li>
+        </span>
+    </ul>
 </div>
 
 <section class="container">
@@ -59,7 +68,7 @@
             <div class="thumbnail">
                 <div class="caption">
                     <h5 th:text="${product.name}"></h5>
-                    <img th:src="@{'/images/products/' + ${product.id} + '.jpg'}" width="250" height="290">
+                    <img th:src="@{'/products/' + ${product.id} + '.png'}" width="300" height="300"/>
                     Description :<span th:text="${product.description}"></span><br/>
                     Price $<span th:text="${product.price}"></span><br/>
                     Seller <span th:text="${product.getSeller().getName()}"></span><br/>
@@ -75,7 +84,5 @@
         </div>
     </div>
 </section>
-
-
 </body>
 </html>

@@ -32,4 +32,10 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         return productCategoryRepository.findByName(name);
     }
 
+    @Override
+    public ProductCategory getProductCategoryById(Long categoryId) {
+        return productCategoryRepository.findById(categoryId).get();
+    }
+
+
 }

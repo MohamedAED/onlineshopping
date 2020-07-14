@@ -37,7 +37,6 @@ public class ShoppingCartRestController {
     public void addItem(@PathVariable Long productId, @RequestParam("buyerId") Long buyerId) {
 		Buyer buyer = buyerService.findUserById(buyerId);
 		ShoppingCart shoppingCart = buyer.getShoppingCart();
-
         Product product = productService.getProductById(productId);
         System.out.println("product: " + product);
         

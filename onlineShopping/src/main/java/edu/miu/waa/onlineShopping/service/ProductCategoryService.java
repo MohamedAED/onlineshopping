@@ -11,5 +11,7 @@ public interface ProductCategoryService {
     void save(ProductCategory productCategory) ;
 
     ProductCategory getProductCategoryByName(String name);
+
+    ProductCategory getProductCategoryById(Long categoryId);
 }
 

@@ -26,9 +26,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
         http
                 .authorizeRequests().antMatchers("/","products/showByCategory",
-                "/showByCategory","/products/product","/products/productView","/images/**","/css/**", "/registration_seller", "/registration_buyer", "/registration/**" ,"/home/**").permitAll() // Enable css when logged out
+                "/showByCategory","/products/product","rest/shoppingCart/add/**","/products/productView", "/js/**","/images/**","/css/**", "/registration_seller", "/registration_buyer", "/registration/**" ,"/home/**").permitAll() // Enable css when logged out
                 .and()
                 .authorizeRequests()
                 .anyRequest().authenticated()

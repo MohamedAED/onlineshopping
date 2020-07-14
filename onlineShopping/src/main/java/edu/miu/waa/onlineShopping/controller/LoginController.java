@@ -104,6 +104,8 @@ public class LoginController {
 			seller.setUsername(seller.getUsername().toLowerCase());
 			sellerService.saveUser(seller);
 			modelAndView.addObject("successMessage", "User has been registered successfully");
+			modelAndView.setViewName("login");
+			return modelAndView;
 		}
 		modelAndView.addObject("seller", seller);
 		modelAndView.addObject("type", "seller");
@@ -125,6 +127,8 @@ public class LoginController {
 			buyer.setUsername(buyer.getUsername().toLowerCase());
 			buyerService.saveUser(buyer);
 			modelAndView.addObject("successMessage", "User has been registered successfully");
+			modelAndView.setViewName("login");
+			return modelAndView;
 		}
 		modelAndView.addObject("buyer", buyer);
 		modelAndView.addObject("type", "buyer");

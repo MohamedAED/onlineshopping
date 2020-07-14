@@ -8,13 +8,18 @@
 		  border-collapse: collapse;
 		}
 	</style>
-	<title>Insert title here</title>
+	<link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 <body>
+	<ul>
+		<li><a href="#">SOKS</a></li>
+		<li><a th:href="@{/seller/find}">Home</a></li>
+		<li style="float:right"><a th:href="@{/logout}">Logout</a></li>
+	</ul>
 
 	<h1>Edit Product</h1>
 	<form action="#"
-		th:action="@{/seller/updateProduct(seller_id=${seller_id}, product_id=${product.id})}"
+		th:action="@{/seller/updateProduct(product_id=${product.id})}"
 		th:object="${product}" method="post">
 		
 		<table>

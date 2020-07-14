@@ -67,7 +67,12 @@ public class HomeController {
 
     @RequestMapping("/showByCategory")
     public String showByCategory(@RequestParam("categoryID") Long productCategoryID, Model model) {
-        model.addAttribute("products", productService.getAllProductsPerCategory(productCategoryID));
+        if(productCategoryID == -1){
+            model.addAttribute("products", productService.getAllProducts());
+        }
+        else {
+            model.addAttribute("products", productService.getAllProductsPerCategory(productCategoryID));
+        }
         return "home";
     }
 
@@ -79,7 +84,12 @@ public class HomeController {
             model.addAttribute("buyerId",buyer.getUserId());
             model.addAttribute("UserRole",buyer.getRole().toString().toLowerCase());
         }
-        model.addAttribute("products", productService.getAllProductsPerCategory(productCategoryID));
+        if(productCategoryID == -1){
+            model.addAttribute("products", productService.getAllProducts());
+        }
+        else {
+            model.addAttribute("products", productService.getAllProductsPerCategory(productCategoryID));
+        }
         return "home";
     }
 

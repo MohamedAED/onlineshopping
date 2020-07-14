@@ -3,10 +3,14 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Admin Home Page</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 <body>
-
+<ul>
+    <li><a href="#">SOKS</a></li>
+    <li style="float:right"><a th:href="@{/logout}">Logout</a></li>
+</ul>
 <h1 >Admin Home Page </h1>
 <div><a th:href="@{/approveUsers}"> click here to approve users</a></div>
 <div><a th:href="@{/approveReviews}">click here to approve reviews</a></div>

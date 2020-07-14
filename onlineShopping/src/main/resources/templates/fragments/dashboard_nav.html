@@ -1,35 +1,44 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-            xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #111;
+        }
+
+        .active {
+            background-color: #4CAF50;
+        }
+    </style>
 </head>
 <body>
-<nav th:fragment="nav" class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="index.html" th:href="@{/index}">
-        <div class="nav-header">
-            <div class="logo"> Maharishi University<span>OF MANAGEMENT</span></div>
-        </div>
-    </a>
+<ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li style="float:right"><a class="active" href="#about">About</a></li>
+</ul>
 
-
-    <!-- Navbar -->
-    <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown no-arrow active">
-           Welcome to register.cs
-        </li>
-        <li class="nav-item dropdown no-arrow">
-           
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#" th:href="@{~/logout}">
-                    Logout
-                </a>
-            </div>
-        </li>
-    </ul>
-
-</nav>
 </body>
 </html>

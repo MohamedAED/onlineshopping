@@ -4,15 +4,19 @@
 <head>
     <meta charset="ISO-8859-1">
     <title>Seller home page</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" th:href="@{/css/home_product.css}">
+	<link rel="stylesheet" th:href="@{/css/header.css}">
+
 </head>
 <body>
-
-<nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" th:href="@{/logout}">Logout</a>
-</nav>
-
+<ul>
+	<li><a href="#">SOKS</a></li>
+	<li style="float:right"><a th:href="@{/logout}">Logout</a></li>
+</ul>
 <h1>Add Product</h1>
 <form autocomplete="off" enctype="multipart/form-data" action="#"
       th:action="@{/seller/addProduct}"
@@ -50,12 +54,20 @@
                         th:if="${#fields.hasErrors('stockQuantity')}" th:errors="*{stockQuantity}"
                         class="validation-message"></label>
                 </div>
+				<div class="col-sm-9">
+					<label>Category</label>
+					<select th:field="*{categoryId}">
+						<option th:each="cat: ${categories}" th:value="${cat.id}" th:text="${cat.name}"/>
+					</select>
+				</div>
                 <div class="col-sm-9">
                     <label>Product Number</label>
                     <input type="text" th:field="*{productNumber}"
-                           placeholder="" class="form-control"/> <label
+                           placeholder="" class="form-control"/>
+					<label
                         th:if="${#fields.hasErrors('productNumber')}" th:errors="*{productNumber}"
-                        class="validation-message"></label>
+                        class="validation-message">
+					</label>
                 </div>
                 <div class="col-sm-9">
                     <label>Image</label>
@@ -101,10 +113,10 @@
 				<td><span th:text="${product.productNumber}"> Product Number </span></td>
 				<th><img th:src="@{'/product/' + ${product.productNumber} + '.png'}" width="300" height="300"/></th>
 				<td>
-					<a th:href="@{/seller/deleteProduct(product_id=${product.id},seller_id=${seller.userId})}">Delete</a>
+					<a th:href="@{/seller/deleteProduct(product_id=${product.id})}">Delete</a>
 				</td>
 				<td>
-					<a th:href="@{/seller/updateProductPage(product_id=${product.id},seller_id=${seller.userId})}">Edit</a>
+					<a th:href="@{/seller/updateProductPage(product_id=${product.id})}">Edit</a>
 				</td>
 			</tr>
 		</tbody>
