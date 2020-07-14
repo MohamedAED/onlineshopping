@@ -12,13 +12,15 @@ public class PreOrderInfo implements Serializable {
 	private ShoppingCart shoppingCart;
 	private Buyer buyer;
 	private String paymentType;
+	private String cardNumberTruncated;
+	private int requiredPoints;
 	
 	public PreOrderInfo() {
 		super();
 	}
 
 	public PreOrderInfo(ShippingAddress shippingAddress, BillingAddress billingAddress, CardPayment cardPayment,
-			ShoppingCart shoppingCart, Buyer buyer, String paymentType) {
+			ShoppingCart shoppingCart, Buyer buyer, String paymentType, String cardNumberTruncated, int requiredPoints) {
 		super();
 		this.shippingAddress = shippingAddress;
 		this.billingAddress = billingAddress;
@@ -26,6 +28,8 @@ public class PreOrderInfo implements Serializable {
 		this.shoppingCart = shoppingCart;
 		this.buyer = buyer;
 		this.paymentType = paymentType;
+		this.cardNumberTruncated = cardNumberTruncated;
+		this.requiredPoints = requiredPoints;
 	}
 	
 	public ShippingAddress getShippingAddress() {
@@ -78,6 +82,22 @@ public class PreOrderInfo implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getCardNumberTruncated() {
+		return cardNumberTruncated;
+	}
+
+	public void setCardNumberTruncated(String cardNumberTruncated) {
+		this.cardNumberTruncated = cardNumberTruncated;
+	}
+
+	public int getRequiredPoints() {
+		return requiredPoints;
+	}
+
+	public void setRequiredPoints(int requiredPoints) {
+		this.requiredPoints = requiredPoints;
 	}
 	
 }

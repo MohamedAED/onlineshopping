@@ -42,7 +42,7 @@
 	    	<fieldset>
 	    		<table class="table table-hover" border=1 frame=void rules=rows>
 	    			<tr>
-				      	<th></th>
+				      	<th style="text-align:left;" >Items</th>
 				      	<th></th>
 				      	<th style="text-align:right;" >Price</th>
 				    </tr>
@@ -52,32 +52,32 @@
                             <table>
 	                            <tr><td class="max" th:text="${item.value.product.description}">Description</td>   
                                    </tr>
-	                            <tr><td th:text="${item.value.product.stockQuantity}">Stock Quantity</td></tr>
+	                            <tr><td th:text="${item.value.product.stockQuantity + ' items in stock'}">Stock Quantity</td></tr>
 	                            <tr>
 	                            	<td>
 	                            		<table>
 		                            		<tr>
-		                            			<td th:text="${item.value.quantity}">Item Quantity</td>
-	                                            <td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
-                                            	<td><a href="#" class="label label-danger product-remove-btn" th:data="${item.value.product.id}" id="product-remove-btn" name="product-remove-btn">
-                      								<span class="glyphicon glyphicon-remove" /></span> Delete </a></td>
+		                            			<td th:text="${'Qty: ' + item.value.quantity}">Item Quantity</td>
                       							<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
-                                            	<td><a href="#" class="label label-success product-order-btn" th:data="${item.value.product.id}" id="product-order-btn" name="product-order-btn">
-                      								<span class="glyphicon glyphicon-plus" /></span> Add to Cart </a></td>
+                                            	<td><a href="#" class="label label-success product-add-btn" th:data="${item.value.product.id}" id="product-add-btn" name="product-add-btn">
+                      								<span class="glyphicon glyphicon-plus" /></span></a></td>
+                      							<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
+                                            	<td><a href="#" class="label label-danger product-remove-btn" th:data="${item.value.product.id}" id="product-remove-btn" name="product-remove-btn">
+                      								<span class="glyphicon glyphicon-remove" /></span> remove </a></td>
                                         	</tr>
                                        </table>
                                 	</td>
 								</tr>
                             </table>
                            </td>		      	
-				      	<td style="vertical-align:top;text-align:right" th:text="${item.value.product.price}">Price</td> 
+				      	<td style="vertical-align:top;text-align:right" th:text="${'$' + item.value.product.price}">Price</td> 
 				    </tr>
 				    <tr>
                        	<td></td>
                         <td></td>
                         <td>
-                       		<label for="shoppingCartTotalPrice"><span th:text="#{shoppingCart.form.totalPrice}">Subtotal :</span></label>
-                           	<label id="shoppingCartTotalPrice" th:text="${shoppingCart.totalPrice}">0</label>
+                       		<label for="shoppingCartTotalPrice"><span id="shoppingCartTotalPrice" th:text="#{shoppingCart.form.totalPrice}">Subtotal :</span></label>
+                           	<label th:text="${'$' + shoppingCart.totalPrice}">0</label>
                         </td>
                        </tr>
 				</table>

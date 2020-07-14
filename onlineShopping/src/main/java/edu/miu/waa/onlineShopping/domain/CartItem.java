@@ -24,11 +24,28 @@ public class CartItem {
     private Integer quantity;
     
     private BigDecimal price;
+    
+	/*
+	 * @ManyToOne
+	 * 
+	 * @JoinColumn(name="plcaeOrder_id", nullable=true) PlaceOrder placeOrder;
+	 */
 
     public CartItem() {
     }
 
-    public CartItem(Product product) {
+	/*
+	 * public PlaceOrder getPlaceOrder() { return placeOrder; }
+	 * 
+	 * 
+	 * 
+	 * public void setPlaceOrder(PlaceOrder placeOrder) { this.placeOrder =
+	 * placeOrder; }
+	 */
+
+
+
+	public CartItem(Product product) {
 		super();
 		this.product = product;
 		this.quantity = 1;

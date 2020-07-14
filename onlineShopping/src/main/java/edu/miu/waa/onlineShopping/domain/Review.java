@@ -31,6 +31,12 @@ public class Review {
 	public Review(){
 	}
 
+	public Review(Buyer buyer, String description) {
+		this.description = description;
+		this .buyer = buyer;
+		this.reviewStatus = ReviewStatus.PENDING;
+	}
+	
 	public Long getId() {
 		return id;
 	}
