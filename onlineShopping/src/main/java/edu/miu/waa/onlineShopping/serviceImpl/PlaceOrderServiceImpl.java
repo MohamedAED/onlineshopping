@@ -119,7 +119,7 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
 		shoppingCart.setTotalPrice(new BigDecimal(0.00));
 		shoppingCartService.update(shoppingCart);
 		
-		sendConfirmationMail(buyer, emailMessage) ;
+		//sendConfirmationMail(buyer, emailMessage) ;
 		
 		return placedOrders;
 	}
