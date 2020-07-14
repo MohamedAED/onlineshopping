@@ -3,6 +3,7 @@ package edu.miu.waa.onlineShopping.controller;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import edu.miu.waa.onlineShopping.domain.Admin;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.miu.waa.onlineShopping.domain.*;
@@ -140,8 +142,7 @@ public class LoginController {
 	* Added By Mohamed Saleh
 	* */
 	@GetMapping("/logout")
-	public String Logout()
-	{
+	public String Logout() {
 		return "home";
 	}
 

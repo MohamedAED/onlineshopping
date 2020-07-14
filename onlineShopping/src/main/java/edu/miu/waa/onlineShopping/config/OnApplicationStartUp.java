@@ -148,7 +148,7 @@ public class OnApplicationStartUp {
 		product3.setStockQuantity((long) 10);
 		product3.setSeller(user);
 		product3.setProductCategory(productCategoryService.getProductCategoryByName("Clothing"));
-		product3.setProductNumber(4L);
+		product3.setProductNumber(3L);
 
 
 		Product product4 = new Product();
@@ -161,10 +161,10 @@ public class OnApplicationStartUp {
 		product4.setProductNumber(4L);
 
 
-		user.getProducts().add(product4);
-		user.getProducts().add(product3);
 		user.getProducts().add(product);
 		user.getProducts().add(product2);
+		user.getProducts().add(product3);
+		user.getProducts().add(product4);
 
 		sellerService.saveUser(user);
 	}

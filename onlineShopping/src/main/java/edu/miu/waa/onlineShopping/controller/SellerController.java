@@ -102,9 +102,14 @@ public class SellerController {
 	public String deleteProduct(@RequestParam(value = "product_id") Long product_id,Principal principal, Model model) {
 
 		Seller seller = sellerService.findUserByUsername(principal.getName());
-		seller.getProducts().removeIf(p -> p.getId() == product_id);
 
+		seller.getProducts().remove(productService.getProductById(product_id));
 		sellerService.saveUser(seller);
+
+		productService.deleteById(product_id);
+/*
+		seller.getProducts().removeIf(p -> p.getId() == product_id);
+*/
 		model.addAttribute("seller", seller);
 		model.addAttribute("product", new Product());
 		return "SellerPage";

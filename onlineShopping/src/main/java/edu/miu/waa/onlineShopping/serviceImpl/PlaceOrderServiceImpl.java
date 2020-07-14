@@ -132,7 +132,7 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
 		mailMessage.setSubject(adminService.getConfirmationSubject());
 		mailMessage.setText(emailMessage);
 
-		emailSenderService.sendEmail(mailMessage);
+	//	emailSenderService.sendEmail(mailMessage);
 
 	}
 
