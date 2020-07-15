@@ -51,7 +51,7 @@ public class ProductController {
 
         Product product = productService.getProductById(productId);
         this.product = product;
-        Set<Review> reviews = product.getReviews();
+        Set<Review> reviews = productService.getProductReviews(productId);
         model.addAttribute("product",product);
         model.addAttribute("reviews",reviews);
         model.addAttribute("UserRole",userRole);
@@ -65,7 +65,7 @@ public class ProductController {
 
         Product product = productService.getProductById(productId);
         this.product = product;
-        Set<Review> reviews = product.getReviews();
+        Set<Review> reviews = productService.getProductReviews(productId);
         model.addAttribute("product",product);
         model.addAttribute("reviews",reviews);
         model.addAttribute("UserRole","");

@@ -26,7 +26,7 @@ import edu.miu.waa.onlineShopping.service.ShoppingCartService;
 @Service
 public class PlaceOrderServiceImpl implements PlaceOrderService {
 
-	private Map<Seller, Map<Long, CartItem>> sellerProducts = new HashMap<Seller, Map<Long, CartItem>>();
+
 	
 	@Autowired
 	BuyerService buyerService;
@@ -68,6 +68,8 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
 
 	@Override
 	public Set<PlaceOrder> placeOrders(ShoppingCart shoppingCart, Buyer buyer, String paymentType) {
+
+		Map<Seller, Map<Long, CartItem>> sellerProducts = new HashMap<Seller, Map<Long, CartItem>>();
 		
 		Set<PlaceOrder> placedOrders = new HashSet<PlaceOrder>();
 		Map<Long, CartItem> cartItems;
@@ -98,11 +100,10 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
 			
 			placeOrder = new PlaceOrder(orderNumber, cartItemsTotalPrice, sellerCartItems, seller, buyer.getShippingAddress(), buyer.getBillingAddress());
 
-			/*
-			 * for(CartItem cItem : sellerCartItems) { cItem.setPlaceOrder(placeOrder); }
-			 * 
-			 * placeOrder.setCartItems(sellerCartItems);
-			 */
+			for(CartItem cItem : sellerCartItems.values()) {
+				cItem.setPlaceOrder(placeOrder);
+			}
+			placeOrder.setCartItems(sellerCartItems);
 			
 			emailMessage = emailMessage + orderNumber + ", ";
 			create(placeOrder);
@@ -126,7 +127,7 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
 		shoppingCart.setTotalPrice(new BigDecimal(0.00));
 		shoppingCartService.update(shoppingCart);
 		
-		sendConfirmationMail(buyer, emailMessage) ;
+//		sendConfirmationMail(buyer, emailMessage) ;
 		
 		return placedOrders;
 	}

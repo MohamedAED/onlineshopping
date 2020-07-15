@@ -107,9 +107,6 @@ public class SellerController {
 		sellerService.saveUser(seller);
 
 		productService.deleteById(product_id);
-/*
-		seller.getProducts().removeIf(p -> p.getId() == product_id);
-*/
 		model.addAttribute("seller", seller);
 		model.addAttribute("product", new Product());
 		return "SellerPage";
@@ -121,7 +118,8 @@ public class SellerController {
 			@RequestParam(value = "seller_id") Long seller_id, Model model) {
 
 		PlaceOrder order = orderService.findById(order_id);
-		
+
+		model.addAttribute("product", new Product());
 		model.addAttribute("order", order);
 		model.addAttribute("order_id", order.getId());
 		model.addAttribute("seller_id", seller_id);

@@ -27,17 +27,19 @@
     <span th:unless="${UserRole== null or UserRole.isEmpty()} ">
          <li><a href="#">SOKS</a></li>
     </span>
+    <span th:if="${UserRole== 'seller'} " >
+         <li style="float:right"><a th:href="@{/logout}">Logout</a></li>
+    </span>
     <span th:if="${UserRole== null or UserRole.isEmpty()} ">
         <li style="float:right"><a th:href="@{/login}">Login</a></li>
         <li style="float:right"><a th:href="@{/registration(type='buyer')}" >Sign-up</a></li>
     </span>
     <span th:if="${UserRole == 'buyer'}">
-        <li style="float:right"><a th:href="@{/shoppingCart(buyerId= ${UserInfo.getUserId()})}">Cart</a></li>
         <li style="float:right"><a th:href="@{/logout}">Logout</a></li>
+        <li style="float:right"><a th:href="@{/buyerOrders(buyerId=${buyerId})}">Your Orders</a></li>
+        <li style="float:right"><a th:href="@{/shoppingCart(buyerId= ${UserInfo.getUserId()})}">Cart</a></li>
     </span>
-    <span th:if="${UserRole== 'seller'} " >
-         <li style="float:right"><a th:href="@{/logout}">Logout</a></li>
-    </span>
+
 </ul>
 
 <div>
