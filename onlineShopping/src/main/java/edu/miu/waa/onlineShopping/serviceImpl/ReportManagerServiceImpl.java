@@ -40,7 +40,7 @@ public class ReportManagerServiceImpl implements ReportManagerService {
 		// load file and compile it
 		File file = ResourceUtils.getFile("classpath:invoice.jrxml");
 		JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(order.getCartItems());
+		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(order.getCartItems().values());
 		Map<String, Object> parameters = new HashMap<>();
 
 		parameters.put("billAddress", order.getBillingAddress().getStreet() + "\n"

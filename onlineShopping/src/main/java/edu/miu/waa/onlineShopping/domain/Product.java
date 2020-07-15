@@ -55,29 +55,34 @@ public class Product {
 	private Set<Review> reviews;
 
 	@ManyToOne
+	@JoinColumn(name="category_id", nullable=false)
 	private ProductCategory productCategory;
+
+	@Transient
+	private Long categoryId;
 
 	public Product() {
 	}
-	
-	
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
 
 	public Long getProductNumber() {
 		return productNumber;
 	}
 
-
-
 	public void setProductNumber(Long productNumber) {
 		this.productNumber = productNumber;
 	}
 
-
-
 	public ProductCategory getProductCategory() {
 		return productCategory;
 	}
-
 	public void setProductCategory(ProductCategory productCategory) {
 		this.productCategory = productCategory;
 	}

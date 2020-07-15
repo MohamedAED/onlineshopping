@@ -1,12 +1,16 @@
 package edu.miu.waa.onlineShopping.domain;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
-import javax.persistence.*;
 import javax.validation.constraints.*;
 import edu.miu.waa.onlineShopping.domain.enums.UserStatus;
-
+import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import edu.miu.waa.onlineShopping.domain.enums.OrderStatus;
 import edu.miu.waa.onlineShopping.domain.enums.Role;
 
 
@@ -164,6 +168,26 @@ public class User {
 
 	public void setPasswordCheck(String passwordCheck) {
 		this.passwordCheck = passwordCheck;
+	}
+	
+	public Set<PlaceOrder> getNotCanceledOrders() {
+		Set<PlaceOrder> placeOrders = new HashSet<PlaceOrder>();
+		for(PlaceOrder placeOrder : this.orders) {
+			if(placeOrder.getStatus() != OrderStatus.CANCELED) {
+				placeOrders.add(placeOrder);
+			}
+		}
+		return placeOrders;
+	}
+	
+	public Set<PlaceOrder> getCanceledOrders() {
+		Set<PlaceOrder> placeOrders = new HashSet<PlaceOrder>();
+		for(PlaceOrder placeOrder : this.orders) {
+			if(placeOrder.getStatus() == OrderStatus.CANCELED) {
+				placeOrders.add(placeOrder);
+			}
+		}
+		return placeOrders;
 	}
 
 }

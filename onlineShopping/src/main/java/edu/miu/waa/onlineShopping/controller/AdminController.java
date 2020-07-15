@@ -22,6 +22,7 @@ public class AdminController {
     @Autowired
     UserService userService;
 
+
     @ModelAttribute("unapprovedUsers")
     public List<User> UnapprovedUsers(){
         return userService.getUnapprovedUsers();

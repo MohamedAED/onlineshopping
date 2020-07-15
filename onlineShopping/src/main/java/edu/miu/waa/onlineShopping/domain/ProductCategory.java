@@ -21,8 +21,7 @@ public class ProductCategory {
 
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
+    @OneToMany(mappedBy="productCategory")
     private Set<Product> products;
 
     public ProductCategory() {

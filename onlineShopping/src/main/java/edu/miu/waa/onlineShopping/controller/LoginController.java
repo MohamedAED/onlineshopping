@@ -3,6 +3,7 @@ package edu.miu.waa.onlineShopping.controller;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import edu.miu.waa.onlineShopping.domain.Admin;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.miu.waa.onlineShopping.domain.*;
@@ -102,8 +104,11 @@ public class LoginController {
 		if (!bindingResult.hasErrors()) {
 			seller.setApproved(UserStatus.PENDING);
 			seller.setUsername(seller.getUsername().toLowerCase());
+			sellerService.encryptPassword(seller);
 			sellerService.saveUser(seller);
 			modelAndView.addObject("successMessage", "User has been registered successfully");
+			modelAndView.setViewName("login");
+			return modelAndView;
 		}
 		modelAndView.addObject("seller", seller);
 		modelAndView.addObject("type", "seller");
@@ -123,8 +128,11 @@ public class LoginController {
 			buyer.setApproved(UserStatus.PENDING);
 			buyer.setShoppingCart(new ShoppingCart());
 			buyer.setUsername(buyer.getUsername().toLowerCase());
+			buyerService.encryptPassword(buyer);
 			buyerService.saveUser(buyer);
 			modelAndView.addObject("successMessage", "User has been registered successfully");
+			modelAndView.setViewName("login");
+			return modelAndView;
 		}
 		modelAndView.addObject("buyer", buyer);
 		modelAndView.addObject("type", "buyer");
@@ -136,8 +144,10 @@ public class LoginController {
 	* Added By Mohamed Saleh
 	* */
 	@GetMapping("/logout")
-	public String Logout()
+	public String Logout(HttpSession session,SessionStatus status)
 	{
+		session.invalidate();
+		status.setComplete();
 		return "home";
 	}
 

@@ -22,7 +22,7 @@ public class StorageServiceImpl implements StorageService {
 		if (productImage != null && !productImage.isEmpty()) {
 			try {
 
-				File file = new File(servletContext.getRealPath("product/") + product_id + ".png");
+				File file = new File(servletContext.getRealPath("products/") + product_id + ".png");
 				productImage.transferTo(file);
 
 			} catch (Exception e) {

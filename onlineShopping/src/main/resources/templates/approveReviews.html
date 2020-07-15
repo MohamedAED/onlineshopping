@@ -7,14 +7,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Approve Reviews</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 <body>
-<nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="/goHome">Admin Home Page</a>
-    <a class="navbar-brand" th:href="@{/logout}">Logout</a>
-</nav>
-
-<span th:if="${unapprovedReviews!=null and !unapprovedReviews.isEmpty()}" >
+<ul>
+    <li><a href="#">SOKS</a></li>
+    <li><a th:href="@{/goHome}">Home</a></li>
+    <li style="float:right"><a th:href="@{/logout}">Logout</a></li>
+</ul>
+<div class="container">
+    <span th:if="${unapprovedReviews!=null and !unapprovedReviews.isEmpty()}" >
     <table class="table table-striped">
         <thead>
         <tr>
@@ -40,8 +42,9 @@
         </tbody>
     </table>
 </span>
-<span th:if="${unapprovedReviews == null or unapprovedReviews.isEmpty()}" >
-    <h2> There is No New List!</h2>
+    <span th:if="${unapprovedReviews == null or unapprovedReviews.isEmpty()}" >
+    <h3> There is No New List!</h3>
 </span>
+</div>
 </body>
 </html>

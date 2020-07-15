@@ -3,6 +3,7 @@ package edu.miu.waa.onlineShopping.serviceImpl;
 import edu.miu.waa.onlineShopping.domain.Admin;
 import edu.miu.waa.onlineShopping.domain.Buyer;
 import edu.miu.waa.onlineShopping.domain.Seller;
+import edu.miu.waa.onlineShopping.domain.enums.UserStatus;
 import edu.miu.waa.onlineShopping.repository.AdminRepository;
 import edu.miu.waa.onlineShopping.repository.BuyerRepository;
 import edu.miu.waa.onlineShopping.repository.SellerRepository;
@@ -34,25 +35,26 @@ public class UserDetailServiceImpl implements UserDetailsService  {
 		Buyer currentBuyer = buyerRepository.findByUsername(username);
 		Seller currentSeller = sellerRepository.findByUsername(username);
     	System.out.println("found it");
-		UserDetails user;
-    	if(currentAdmin != null){
+		UserDetails user = null;
+    	if(currentAdmin != null ){
 			user = new org.springframework.security.core.userdetails.User(username, currentAdmin.getPassword()
 					,AuthorityUtils.createAuthorityList(currentAdmin.getRole().toString()));
 			System.out.println(user.getUsername() + " " + "  " + user.getPassword());
 			System.out.println("match it admin");
 		}
-    	else if(currentBuyer != null){
+    	else if(currentBuyer != null && currentBuyer.getApproved() == UserStatus.APPROVED){
 			user = new org.springframework.security.core.userdetails.User(username, currentBuyer.getPassword()
 					,AuthorityUtils.createAuthorityList(currentBuyer.getRole().toString()));
 			System.out.println(user.getUsername() + " " + "  " + user.getPassword());
-			System.out.println("match it admin");
+			System.out.println("match it buyer");
 		}
-        else{
+        else if(currentSeller!= null && currentSeller.getApproved() == UserStatus.APPROVED){
 			user = new org.springframework.security.core.userdetails.User(username, currentSeller.getPassword()
 					,AuthorityUtils.createAuthorityList(currentSeller.getRole().toString()));
 			System.out.println(user.getUsername() + " " + "  " + user.getPassword());
-			System.out.println("match it admin");
+			System.out.println("match it seller");
 		}
+
         return user;
     } 
 }

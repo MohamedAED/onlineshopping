@@ -2,13 +2,7 @@ package edu.miu.waa.onlineShopping.domain;
 
 import java.math.BigDecimal;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class CartItem {
@@ -24,11 +18,24 @@ public class CartItem {
     private Integer quantity;
     
     private BigDecimal price;
+    
+	@ManyToOne
+    @JoinColumn(name="plcaeOrder_id", nullable=true)
+    PlaceOrder placeOrder;
+
 
     public CartItem() {
     }
 
-    public CartItem(Product product) {
+	public PlaceOrder getPlaceOrder() { return placeOrder; }
+
+	public void setPlaceOrder(PlaceOrder placeOrder) {
+        this.placeOrder = placeOrder;
+    }
+
+
+
+	public CartItem(Product product) {
 		super();
 		this.product = product;
 		this.quantity = 1;

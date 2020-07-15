@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.*;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -15,7 +16,7 @@ import javax.sql.DataSource;
 
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -26,9 +27,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
         http
                 .authorizeRequests().antMatchers("/","products/showByCategory",
-                "/showByCategory","/products/product","/products/productView","/images/**","/css/**", "/registration_seller", "/registration_buyer", "/registration/**" ,"/home/**").permitAll() // Enable css when logged out
+                "/showByCategory","/products/product","rest/shoppingCart/add/**","/products/productView", "/products/**","/js/**","/images/**","/css/**", "/registration_seller", "/registration_buyer", "/registration/**" ,"/home/**").permitAll() // Enable css when logged out
                 .and()
                 .authorizeRequests()
                 .anyRequest().authenticated()
@@ -40,11 +42,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login")
-                .permitAll()
-                .and()
-                .rememberMe();
+                .permitAll();
     }
 
     @Autowired

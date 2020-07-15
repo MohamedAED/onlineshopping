@@ -20,11 +20,11 @@ public class Address {
 	private String street;
 
 	@NotBlank
-	@Size(min = 2,  message = "{validation.number.min}")
+	@Size(min = 2)
 	private String city;
 
 	@NotBlank
-	@Size(min = 2,  message = "{validation.number.min}")
+	@Size(min = 2)
 	private String state;
 
 	@NotBlank
@@ -32,7 +32,7 @@ public class Address {
 	private String zipCode;
 
 	@NotBlank
-	@Size(min = 2,  message = "{validation.number.min}")
+	@Size(min = 2)
 	private String country;
 
 	public Address() {

@@ -1,5 +1,6 @@
 package edu.miu.waa.onlineShopping.service;
 
+import edu.miu.waa.onlineShopping.domain.Buyer;
 import edu.miu.waa.onlineShopping.domain.Seller;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface SellerService {
     void approveSeller(Long id, String statusId);
     void deleteById(Long seller_id);
     Seller findById(Long seller_id);
+    public void encryptPassword(Seller seller);
 }

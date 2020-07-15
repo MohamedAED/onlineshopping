@@ -3,8 +3,10 @@ package edu.miu.waa.onlineShopping.serviceImpl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import edu.miu.waa.onlineShopping.domain.Review;
+import edu.miu.waa.onlineShopping.domain.enums.ReviewStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,6 +80,7 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public Set<Review> getProductReviews(Long productId) {
-		return getProductById(productId).getReviews();
+		return getProductById(productId).getReviews().stream().filter
+				(x -> x.getReviewStatus() == ReviewStatus.APPROVED).collect(Collectors.toSet());
 	}
 }

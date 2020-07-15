@@ -1,5 +1,6 @@
 package edu.miu.waa.onlineShopping.serviceImpl;
 
+import edu.miu.waa.onlineShopping.domain.Buyer;
 import edu.miu.waa.onlineShopping.domain.enums.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,6 +33,11 @@ public class SellerServiceImpl implements SellerService {
 		return sellerRepository.findById(seller_id).get();
 	}
 
+	@Override
+	public void encryptPassword(Seller seller) {
+		seller.setPassword(bCryptPasswordEncoder.encode(seller.getPassword()));
+	}
+
 
 	@Override
 	public Seller findUserByUsername(String username) {
@@ -57,10 +63,10 @@ public class SellerServiceImpl implements SellerService {
 		return sellerRepository.findAll();
 	}
 
-	@Override
 
+
+	@Override
 	public Seller saveUser(Seller seller) {
-		seller.setPassword(bCryptPasswordEncoder.encode(seller.getPassword()));
 		return sellerRepository.save(seller);
 	}
 

@@ -7,13 +7,18 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 <body>
-<form th:action="@{/login}" method="get">
-    <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Login Page</button>
-</form>
+<ul>
+    <li><a href="#">SOKS</a></li>
+    <li style="float:right">
+        <a th:href="@{/login}" >Login</a>
+    </li>
+</ul>
 <div class="container">
     <h1>Registration Form</h1>
+    <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
     <span th:if="${type} == 'buyer'" >
     <form autocomplete="off" action="#" th:action="@{/registration_buyer}" th:data="buyer" id="buyerForm"
           th:object="${buyer}" method="post" class="form-horizontal"
@@ -226,7 +231,6 @@
                         <button type="submit" class="btn btn-primary btn-block">Register User</button>
                     </div>
                 </div>
-                <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
             </div>
         </div>
     </form>
@@ -306,7 +310,6 @@
                         <button type="submit" class="btn btn-primary btn-block">Register User</button>
                     </div>
                 </div>
-                <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
             </div>
         </div>
     </form>
