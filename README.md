@@ -3,7 +3,7 @@
 
 # Used Technologies 
 -----------------
-Spring Boot, Hibernate, Spring Security, Web 2.0 REST & Ajax
+Spring Boot, Hibernate, Spring Validation, Spring Security, Web 2.0 REST & Ajax, H2 InMemory Database
 HTML5, CSS3, Thymeleaf, JavaScript
 
 # Team
